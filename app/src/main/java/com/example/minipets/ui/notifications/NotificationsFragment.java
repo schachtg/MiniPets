@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,5 +32,12 @@ public class NotificationsFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override       //TODO what the heck is this doing?
+    public void onViewCreated(View view, Bundle savedInstanceState){
+
+        //create the button you push to play fetch
+        Button baseball_button = (Button) findViewById(R.id.baseball_button);
     }
 }
