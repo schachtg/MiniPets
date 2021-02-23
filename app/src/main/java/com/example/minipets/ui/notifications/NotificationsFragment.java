@@ -1,19 +1,18 @@
 package com.example.minipets.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
+import com.example.minipets.ui.fetch.FetchActivity;
 
 public class NotificationsFragment extends Fragment {
 
@@ -24,13 +23,6 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel =
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 
@@ -38,6 +30,17 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
 
         //create the button you push to play fetch
-        Button baseball_button = (Button) findViewById(R.id.baseball_button);
+        Button play_fetch_button = (Button) getView().findViewById(R.id.play_fetch_button);
+
+        //create click listener for that button
+        play_fetch_button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent play_fetch = new Intent(getContext() /*replacing getAplicationContext()*/, FetchActivity.class);
+                //TODO make start intent pass the pet image and whatever ball/toy the player has equiped if this is relevant
+                startActivity(play_fetch);
+            }
+        });
     }
 }

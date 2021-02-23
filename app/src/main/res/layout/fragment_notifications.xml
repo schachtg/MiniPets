@@ -9,28 +9,15 @@
     tools:context=".ui.notifications.NotificationsFragment">
 
     <Button
-        android:id="@+id/baseball_button"
-        android:layout_width="261dp"
-        android:layout_height="150dp"
-        android:text="Push to blay basebool"
-        android:textSize="30sp"
+        android:id="@+id/play_fetch_button"
+        android:layout_width="265dp"
+        android:layout_height="74dp"
+        android:text="@String Play Fetch"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <ImageView
-        android:id="@+id/fetch_ball_1"
-        android:layout_width="99dp"
-        android:layout_height="104dp"
-        android:src="@drawable/baseball"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.17" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
