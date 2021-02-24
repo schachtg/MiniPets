@@ -1,6 +1,7 @@
 package com.example.minipets.ui.fetch;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
@@ -12,8 +13,11 @@ import com.example.minipets.R;
 public class FetchActivity extends AppCompatActivity {
 //    private FetchLogic logic;   //stores the logic that the UI must respond to and inform
 //    private FetchPet pet;       //stores the needed info about our pet that is being used to play fetch
-//    private int center_x;       //the x coordinate of the center of this scree
-//    private int center_y;       //the y coordinate of the senter of this screen
+    private DisplayMetrics display;    //stores the metrics for this display
+    private int center_x;       //the x coordinate of the center of this scree
+    private int center_y;       //the y coordinate of the senter of this screen
+    private int screen_height;
+    private int screen_width;
     private TextView fech_text_temp;
 
     @Override
@@ -25,6 +29,11 @@ public class FetchActivity extends AppCompatActivity {
 //        this.logic = new FetchLogic(this);  //does fetch logic need arguments?
         //create temp text view for testing TODO delete this
         this.fech_text_temp = (TextView) findViewById(R.id.fetch_test_text);
+
+
+        this.display = this.getResources().getDisplayMetrics();
+        this.screen_height = this.display.heightPixels;
+        this.screen_width = this.display.widthPixels;
     }
 
 
