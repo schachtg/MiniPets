@@ -11,7 +11,7 @@ public class FetchLogic {
         //this.ball_image = (ImageView) findViewById(R.id.baseball); //TODO interface with file system to get ball image or recieve as arg
         //this.pet_image = (ImageView) findViewById(R.drawable.cat);      //TODO interface with file system to get pet image or recieve as arg
     }
-
+/*
     public FetchActivityDirective recieveFetchEvent(FetchEvent event){
         FetchActivityDirective directive = null;
 
@@ -24,11 +24,12 @@ public class FetchLogic {
             }
         }
 
-        return directive
+        return directive;
     }
 
 
     protected FetchActivityDirective processReleaseTouch(ReleaseTouchEvent event){
 
     }
+ */
 }
