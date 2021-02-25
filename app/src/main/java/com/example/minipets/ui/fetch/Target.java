@@ -1,5 +1,7 @@
 package com.example.minipets.ui.fetch;
 
+import java.util.Random;
+
 public class Target extends FetchCollisionObject{
     protected int x_pos;    //the target's official x position on the screen
     protected int y_pos;    //The target's official y position on the screen
@@ -14,17 +16,37 @@ public class Target extends FetchCollisionObject{
     protected float y_unit_lo;
 
 
-    public Target(int width, int height, int x_origine, int y_origine, int x_pos, int y_pos, float hitbox_factor) {
+    public Target(int width, int height, int x_origine, int y_origine, float hitbox_factor) {
         super(width, height, x_origine, y_origine);
-        this.x_pos = x_pos;
-        this.y_pos = y_pos;
-        this.hitbox_factor = hitbox_factor + 1;
+        this.x_pos = 0;
+        this.y_pos = 0;
+        this.position = TargetPosition.MID_MID;
+
+        this.hitbox_factor = hitbox_factor;
 
         //ensure hitbox_factor is in valid range. if not, set to default of 0.05
-        if ((this.hitbox_factor < 0) || (this.hitbox_factor > 1))
-            this.hitbox_factor = 0.05;
+        if ((this.hitbox_factor < 0.0) || (this.hitbox_factor > 1.0))
+            this.hitbox_factor = (float) 0.05;
 
-        this.findTargetPosition();
+        this.generateRandomTargetPosition();
+    }
+
+
+    // generates a random position to put the target
+    // generates a new position if the targets hitbox
+    // overlaps with the origine in that position
+    //-------------------------------------------------
+    public void generateRandomTargetPosition(){
+        Random rand;
+        int max_x = this.x_origine * 2 - this.width;
+        int max_y = this.y_origine * 2 - this.height;
+        do {
+            this.x_pos = rand.nextInt((max_x ) + 1);
+            this.y_pos = rand.nextInt((max_y ) + 1);
+            this.findTargetPosition();
+        }while(this.position == TargetPosition.MID_MID);
+
+        findUnitVectorConstraintsTarget();  //find the constraints a unit vector must satisfy here. This way we can't skip that step.
     }
 
 
@@ -59,12 +81,12 @@ public class Target extends FetchCollisionObject{
             if (right_side < this.x_origine) {        //left half
                 this.position = TargetPosition.MID_LEFT;
             } else if (left_side > this.x_origine) {    //right half
-                this.position = TargetPosition.MID_RIGHT
+                this.position = TargetPosition.MID_RIGHT;
             }
             //MID_MID is not a valid position. If a target tries to take this position it's coordinates
             // should be re-assigned.
             else {                                  //middle
-                this.position - TargetPosition.MID_MID;
+                this.position = TargetPosition.MID_MID;
             }
         }
     }
@@ -117,7 +139,7 @@ public class Target extends FetchCollisionObject{
                                 y_unit_up = 0;// TODO del dont care(float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 y_unit_lo = 0;// TODO del dont care(float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 break;
-            case TOP_LEFT:      //use top-left and bottom-right corners
+            case TOP_RIGHT:      //use top-left and bottom-right corners
             case BOTTOM_LEFT:   //uses same corners
                                 x_unit_up = (float) corner_vect[3][0] / vectMag(corner_vect[3][0], corner_vect[3][1]);
                                 x_unit_lo = (float) corner_vect[0][0] / vectMag(corner_vect[0][0], corner_vect[0][1]);
@@ -156,8 +178,7 @@ public class Target extends FetchCollisionObject{
     // with the corresponding x and y components
     //------------------------------------------------
     protected float vectMag(float x, float y){
-        float magnitude = (float) Math.pow( (Math.pow(x,2) + Math.pow(y,2)) , 0.5 );
-        return magnitude;
+        return (float) Math.pow( (Math.pow(x,2) + Math.pow(y,2)) , 0.5 );
     }
 
 
@@ -168,27 +189,50 @@ public class Target extends FetchCollisionObject{
     public boolean isHitByProjectile(Projectile projectile) {       //TODO include a pointer to an array so this can return at what point the projectile hits the target
         boolean hit = false;
 
-        //if target is top_mid or bottom_mid only the x property of the projectiles trajectory will matter (and the sign of it's y property)
-        if((this.position ==TargetPosition.TOP_MID)||(this.position == TargetPosition.BOTTOM_MID)){
-            hit = this.verifyHitOnAxisY(projectile);
+        switch(this.position){
+            case TOP_LEFT:
+            case TOP_RIGHT:
+            case BOTTOM_LEFT:
+            case BOTTOM_RIGHT:
+                if( (projectile.getUnitVectorX() >= this.x_unit_lo) &&
+                        (projectile.getUnitVectorX() <= this.x_unit_up) &&
+                        (projectile.getUnitVectorY() >= this.y_unit_lo) &&
+                        (projectile.getUnitVectorY() <= this.y_unit_up)){
+                    hit = true;
+                }
+                break;
+            case TOP_MID:
+                if( (projectile.getUnitVectorY() < 0) &&
+                        (projectile.getUnitVectorX() >= this.x_unit_lo) &&
+                        (projectile.getUnitVectorX() <= this.x_unit_up)){
+                    hit = true;
+                }
+                break;
+            case BOTTOM_MID:
+                if( (projectile.getUnitVectorY() > 0) &&
+                        (projectile.getUnitVectorX() >= this.x_unit_lo) &&
+                        (projectile.getUnitVectorX() <= this.x_unit_up)){
+                    hit = true;
+                }
+                break;
+            case MID_LEFT:
+                if( (projectile.getUnitVectorX() < 0) &&
+                        (projectile.getUnitVectorY() >= this.y_unit_lo) &&
+                        (projectile.getUnitVectorY() <= this.y_unit_up)){
+                    hit = true;
+                }
+                break;
+            case MID_RIGHT:
+                if( (projectile.getUnitVectorX() > 0) &&
+                        (projectile.getUnitVectorY() >= this.y_unit_lo) &&
+                        (projectile.getUnitVectorY() <= this.y_unit_up)){
+                    hit = true;
+                }
+                break;
+            default:
+                hit = false;
+                break;
         }
-    }
-
-
-    //checks if projectile hits when the target is in the TOP_MID or BOTTOM_MID position
-    protected boolean verifyHitOnAxisY(Projectile projectile){
-        boolean hit = false;
-
-        //these will keep track of the bounds a unit vector's x component must be between to hit this target
-        float x_unit_lo =0;
-
-        //verify the y component of the projectiles vector is in the right direction for a hit to
-        //even be possible
-        if( ( (projectile.getUnitVectorY() < 0) && (this.position == TargetPosition.TOP_MID) )
-           ||((projectile.getUnitVectorY() > 0) && (this.position == TargetPosition.BOTTOM_MID)){
-
-            //if the target is above, verify that projectile, when at a position
-
-        }
+        return hit;
     }
 }
