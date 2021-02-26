@@ -18,11 +18,11 @@ public class PetFakeDatabase//creates fake database
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
 
-    public void newPet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg)
+    public void newPet(ImageView newReactionImg, ImageView newPetImg)//String newName, String newType, ImageView newReactionImg, ImageView newPetImg
     {
-        this.name = newName;
+        this.name = "Chester";
         this.happiness = MAX_HAPPINESS/2;
-        this.type = newType;
+        this.type = "cat";
         this.outfit = 0;
         this.reactionImg = newReactionImg;
 
