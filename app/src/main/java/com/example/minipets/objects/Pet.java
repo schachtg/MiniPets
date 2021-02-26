@@ -1,8 +1,10 @@
-package com.example.minipets;
+package com.example.minipets.objects;
 
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.minipets.R;
 
 // Class which handles all information about the pet
 public class Pet

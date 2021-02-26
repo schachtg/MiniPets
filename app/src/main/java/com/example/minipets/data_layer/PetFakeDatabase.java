@@ -1,8 +1,9 @@
-package com.example.minipets;
+package com.example.minipets.data_layer;
 
 import android.widget.ImageView;
-import com.example.minipets.Pet;
+
 import com.example.minipets.R;
+import com.example.minipets.objects.Pet;
 
 public class PetFakeDatabase//creates fake database
 {

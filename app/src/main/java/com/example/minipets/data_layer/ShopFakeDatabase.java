@@ -1,4 +1,4 @@
-package com.example.minipets;
+package com.example.minipets.data_layer;
 
 import android.widget.ImageView;
 

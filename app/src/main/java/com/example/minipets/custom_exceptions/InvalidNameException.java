@@ -1,4 +1,4 @@
-package com.example.minipets;
+package com.example.minipets.custom_exceptions;
 
 
 public class InvalidNameException extends Exception {
