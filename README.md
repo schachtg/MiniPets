@@ -14,4 +14,7 @@ Our app will be considered successful if the user returns to the app at least on
 ### Links
 
 [Branching strategy](https://code.cs.umanitoba.ca/3350-winter-2021-a03/minipets-comp3350-a03-group12/-/blob/master/Branching%20Strategy.md)
+
 [Worksheet for Iteration 1](https://code.cs.umanitoba.ca/3350-winter-2021-a03/minipets-comp3350-a03-group12/-/blob/master/Worksheet%20Iteration%201%2051940d9d3d194832a933501f3401b290.md)
+
+[Architecture (view source to see boxes)](https://code.cs.umanitoba.ca/3350-winter-2021-a03/minipets-comp3350-a03-group12/-/blob/master/architecture.md)
