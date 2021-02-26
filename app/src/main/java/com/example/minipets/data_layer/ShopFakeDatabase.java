@@ -2,7 +2,7 @@ package com.example.minipets.data_layer;
 
 import android.widget.ImageView;
 
-import com.example.minipets.ShopItem;
+import com.example.minipets.objects.ShopItem;
 
 public class ShopFakeDatabase {
     private ShopItem[] availableItems; //list of available shop items
