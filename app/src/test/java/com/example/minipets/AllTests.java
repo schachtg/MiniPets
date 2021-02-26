@@ -1,4 +1,4 @@
-package com.example.minipets.tests;
+package com.example.minipets;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
