@@ -10,6 +10,7 @@
         android:id="@+id/pet_target"
         android:layout_width="120dp"
         android:layout_height="155dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.762"
@@ -22,6 +23,7 @@
         android:id="@+id/ball_projectile"
         android:layout_width="62dp"
         android:layout_height="62dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.277"
@@ -29,4 +31,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.239"
         app:srcCompat="@drawable/baseball" />
+
+    <TextView
+        android:id="@+id/the_last_test_text"
+        android:layout_width="119dp"
+        android:layout_height="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

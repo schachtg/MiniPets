@@ -26,6 +26,8 @@ public class FetchActivity extends AppCompatActivity {
 
     protected FetchGameLogic game_logic;
 
+    protected TextView text_test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,13 @@ public class FetchActivity extends AppCompatActivity {
         //create a game logic controller for this game of fetch
         this.game_logic = new FetchLogic(this.display_metrics.widthPixels,
                 this.display_metrics.heightPixels, this.pet_image.getWidth(),
-                this.pet_image.getHeight(), -0.15, this.ball_image.getWidth(),
+                this.pet_image.getHeight(), (float) -0.15, this.ball_image.getWidth(),
                 this.ball_image.getHeight());
 
         //get an initial location for the pet image
         this.getPetLocation();
+
+        this.text_test = (TextView) findViewById(R.id.the_last_test_text);
 
     }
 
@@ -56,11 +60,32 @@ public class FetchActivity extends AppCompatActivity {
     //detect touch interaction occuring to the game screen
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        ThrowBallDirective directive;
         int action = MotionEventCompat.getActionMasked(event);
 
         //read this as the ball being released
         if(action == MotionEvent.ACTION_UP){
-            //TODO figure out if the throw made it.
+            //finger up means throw the ball
+            directive = this.game_logic.ballReleased(event.getX(), event.getY());
+
+            //handel errors
+            if(directive == null) {
+                this.text_test.setText("an error has occurred");
+            }
+            //handel if the catch was made
+            else if(directive.isTheCatchMade()){
+                this.text_test.setText("The ball was caught");
+            }
+            else{
+                this.text_test.setText("the ball was not caught");
+            }
+
+            //TODO show message
+
+            //TODO dealay
+
+            //TODO reset
+            this.getPetLocation();
         }
         return true;
     }
