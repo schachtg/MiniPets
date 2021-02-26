@@ -36,12 +36,11 @@ public class FetchActivity extends AppCompatActivity {
     protected float ball_end_x;
     protected float ball_end_y;
 
-    protected boolean locked = true;    //program does not allow clicking
+    protected ImageView calc_center_img; // TODO delete this
+    protected ImageView act_center_img; //TODO delete this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        this.locked = true;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch);
@@ -59,7 +58,7 @@ public class FetchActivity extends AppCompatActivity {
         //create a game logic controller for this game of fetch
         this.game_logic = new FetchLogic(this.display_metrics.widthPixels,
                 this.display_metrics.heightPixels, this.pet_image.getWidth(),
-                this.pet_image.getHeight(), (float) -0.15, this.ball_image.getWidth(),      //can be set to -0.15 to make it more dificult
+                this.pet_image.getHeight(), (float) 0, this.ball_image.getWidth(),      //can be set to -0.15 to make it more dificult
                 this.ball_image.getHeight());
 
         //get an initial location for the pet image
@@ -69,6 +68,13 @@ public class FetchActivity extends AppCompatActivity {
 
         this.ball_offset_x = this.ball_image.getWidth() / 2;
         this.ball_offset_y = this.ball_image.getHeight() / 2;
+
+        //TODO delete these
+        this.act_center_img = (ImageView) findViewById(R.id.actual_center);
+        this.calc_center_img = (ImageView) findViewById(R.id.measured_center);
+        this.calc_center_img.setX(this.center_x);
+        this.calc_center_img.setY(this.center_y);
+        //TODO delete those
     }
 
 
