@@ -21,6 +21,9 @@ public class FetchActivity extends AppCompatActivity {
     protected ImageView pet_image;
     protected ImageView ball_image;
 
+    protected DisplayMetrics pet_metrics;
+    protected DisplayMetrics ball_metrics;
+
     protected FetchGameLogic game_logic;
 
     @Override
@@ -39,7 +42,14 @@ public class FetchActivity extends AppCompatActivity {
         this.findViewCenter(this.display_metrics.widthPixels, this.display_metrics.heightPixels);
 
         //create a game logic controller for this game of fetch
-        
+        this.game_logic = new FetchLogic(this.display_metrics.widthPixels,
+                this.display_metrics.heightPixels, this.pet_image.getWidth(),
+                this.pet_image.getHeight(), -0.15, this.ball_image.getWidth(),
+                this.ball_image.getHeight());
+
+        //get an initial location for the pet image
+        this.getPetLocation();
+
     }
 
 
@@ -50,14 +60,7 @@ public class FetchActivity extends AppCompatActivity {
 
         //read this as the ball being released
         if(action == MotionEvent.ACTION_UP){
-            //TODO for now, just record the releasing of touch on the screen.
-            //TODO later, we will want to send the location of the relase to the user.
-            String stuff = "You just pressed on the scree! is this fetch yet?";
-            this.fech_text_temp.setText(stuff);
-            String screenCent = String.format("Screen is centered at x = %d and y = %d", this.center_x, this.center_y);
-            this.test_center_position.setText(screenCent);
-            String releasePoint = String.format("Pointer released at x = %f, y = %f", event.getX(), event.getY());
-            this.test_pointer_position.setText(releasePoint);
+            //TODO figure out if the throw made it.
         }
         return true;
     }
@@ -67,5 +70,11 @@ public class FetchActivity extends AppCompatActivity {
     protected void findViewCenter(int width, int height){
         this.center_x = width / 2;
         this.center_y = height / 2;
+    }
+
+
+    protected void getPetLocation(){
+        this.pet_image.setX(this.game_logic.getPetX());
+        this.pet_image.setY(this.game_logic.getPetY());
     }
 }
