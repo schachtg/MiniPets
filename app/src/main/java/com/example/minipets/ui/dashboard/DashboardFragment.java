@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
-import com.example.minipets.Shop;
-import com.example.minipets.ShopItem;
+import com.example.minipets.objects.Shop;
+import com.example.minipets.objects.ShopItem;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
 

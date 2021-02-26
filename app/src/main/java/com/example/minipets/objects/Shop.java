@@ -1,4 +1,4 @@
-package com.example.minipets;
+package com.example.minipets.objects;
 
 import android.widget.ImageView;
 
@@ -30,6 +30,9 @@ public class Shop {
     public ShopItem[] getAvailableItems() {
         return availableItems;
     }
+
+    //return the Array list of bought items
+    public ArrayList<ShopItem> getBoughtItems(){ return boughtItems;}
 
     //returns a string array of the current available shop items
     public String[] itemsList(){

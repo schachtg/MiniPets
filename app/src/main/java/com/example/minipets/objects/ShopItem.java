@@ -1,4 +1,4 @@
-package com.example.minipets;
+package com.example.minipets.objects;
 
 public class ShopItem {
     private String name; //name of shop item
@@ -18,6 +18,10 @@ public class ShopItem {
 
     public int getCost() {
         return cost;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     //increment the item count by 1
