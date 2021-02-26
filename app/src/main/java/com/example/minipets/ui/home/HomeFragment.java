@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.minipets.InvalidNameException;
 import com.example.minipets.Pet;
 import com.example.minipets.R;
 
@@ -57,6 +58,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         };
 
         thePet = new Pet("Chester", "Cat", reactionImg, petImg, countDownTimer);
+        if (thePet.getName().equals("")){
+            try {
+                throw new InvalidNameException("You must have at least one character for your pets name");
+            } catch (InvalidNameException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Displays the pet's reaction when the user pets the pet

@@ -68,4 +68,8 @@ public class Pet
             }
         }
     }
+
+    public String getName(){
+        return name;
+    }
 }
