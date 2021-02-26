@@ -22,7 +22,7 @@ public class Shop {
         availableItems[0] = new ShopItem("Chicken", 3);
         availableItems[1] =  new ShopItem("Fish", 4);
         availableItems[2] = new ShopItem("Beef", 3);
-        availableItems[3] = new ShopItem("Frisbee", 3);
+        availableItems[3] = new ShopItem("Frisbee", 5);
         availableItems[4] = new ShopItem("Ball", 3);
     }
 
@@ -42,10 +42,22 @@ public class Shop {
     }
 
     //adds a bought items into the purchases shop items list
-//    public void addBoughtItems(ShopItem newboughtItems) {
-//        ShopItem two = null;
-//        if(boughtItems.isEmpty()){
-//
-//        }
-//    }
+    public void addBoughtItems(ShopItem newItem) {
+        if(boughtItems.isEmpty()){
+            boughtItems.add(newItem);
+        }else{
+            if(boughtItems.contains(newItem))
+                boughtItems.get(boughtItems.indexOf(newItem)).addCount();
+            else
+                boughtItems.add(newItem);
+        }
+
+        //updates tokens after purchase
+        tokens = tokens - newItem.getCost();
+    }
+
+    //returns tokens left
+    public int remTokens(){
+        return this.tokens;
+    }
 }
