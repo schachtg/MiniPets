@@ -16,12 +16,13 @@ public class Shop {
         boughtItems = new ShopItem[MAX_ITEMS];
         tokens = newTokens;
 
-
+        //initializing list of available items
         availableItems[0] = new ShopItem("Chicken", 3);
         availableItems[1] =  new ShopItem("Fish", 4);
         availableItems[2] = new ShopItem("Beef", 3);
     }
 
+    //returns a string array of the current available items
     public String[] getAvailableItems() {
         String[] items = new String[MAX_ITEMS];
 
@@ -31,6 +32,7 @@ public class Shop {
         return items;
     }
 
+    //setter for list of bought items
     public void setBoughtItems(ShopItem[] boughtItems) {
         this.boughtItems = boughtItems;
     }
