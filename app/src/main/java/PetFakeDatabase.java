@@ -2,7 +2,8 @@ import android.widget.ImageView;
 import com.example.minipets.Pet;
 import com.example.minipets.R;
 
-public class PetFakeDatabase {
+public class PetFakeDatabase//creates fake database
+{
 
     private Pet myPet;
     private String name;    // The name of the pet
