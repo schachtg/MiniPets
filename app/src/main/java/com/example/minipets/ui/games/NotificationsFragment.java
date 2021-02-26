@@ -1,4 +1,4 @@
-package com.example.minipets.ui.notifications;
+package com.example.minipets.ui.games;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

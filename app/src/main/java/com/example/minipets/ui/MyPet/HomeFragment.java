@@ -1,4 +1,4 @@
-package com.example.minipets.ui.home;
+package com.example.minipets.ui.MyPet;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;

@@ -3,25 +3,23 @@ package com.example.minipets.data_layer;
 import android.widget.ImageView;
 
 import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Shop;
 
 public class ShopFakeDatabase {
     private ShopItem[] availableItems; //list of available shop items
     private ShopItem[] boughtItems; //list of purchased shop items
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
+    private Shop shop;
 
     public final int MAX_ITEMS = 3; //maximum number of shop items
 
     //constructor
-    public ShopFakeDatabase(int newTokens){
+    public ShopFakeDatabase(Shop newShop){
         availableItems = new ShopItem[MAX_ITEMS];
         boughtItems = new ShopItem[MAX_ITEMS];
-        tokens = newTokens;
-
-        //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 3);
-        availableItems[1] =  new ShopItem("Fish", 4);
-        availableItems[2] = new ShopItem("Beef", 3);
+        tokens = 1000;
+        shop = newShop;
     }
 
     //returns a string array of the current available items
@@ -49,5 +47,13 @@ public class ShopFakeDatabase {
     public void deleteItem(int itemSpot)//delete an item from the shop
     {
         availableItems[itemSpot]=null;
+    }
+
+    public int getCurrentTokens(){
+        return tokens;
+    }
+
+    public void updateTokens(){
+        tokens = shop.remTokens();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.minipets.ui.notifications;
+package com.example.minipets.ui.games;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

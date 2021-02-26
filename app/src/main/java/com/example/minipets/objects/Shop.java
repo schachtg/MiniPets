@@ -3,20 +3,22 @@ package com.example.minipets.objects;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import com.example.minipets.data_layer.ShopFakeDatabase;
 
 public class Shop {
     private ShopItem[] availableItems; //list of available shop items
     private ArrayList<ShopItem>  boughtItems; //list of purchased shop items
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
-
+    private ShopFakeDatabase DB;
     public final int MAX_ITEMS = 5; //maximum number of shop items
 
     //constructor
-    public Shop(int newTokens){
+    public Shop(){
         availableItems = new ShopItem[MAX_ITEMS];
         boughtItems = new ArrayList(MAX_ITEMS);
-        tokens = newTokens;
+        DB = new ShopFakeDatabase(this);
+        tokens = DB.getCurrentTokens();
 
         //initializing list of available items
         availableItems[0] = new ShopItem("Chicken", 3);

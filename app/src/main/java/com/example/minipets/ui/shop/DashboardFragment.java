@@ -1,4 +1,4 @@
-package com.example.minipets.ui.dashboard;
+package com.example.minipets.ui.shop;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
+import com.example.minipets.data_layer.ShopFakeDatabase;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -25,7 +26,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private ShopItem[] shopItems;
     private Shop newShop;
     int tokens;
-    
+    private ShopFakeDatabase DB;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,8 +46,9 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         lvShopItems = (ListView) getView().findViewById(R.id.lvShopItems);
-        tokens = 1000;
-        newShop = new Shop(tokens);
+        newShop = new Shop();
+        DB = new ShopFakeDatabase(newShop);
+        tokens = DB.getCurrentTokens();
         items = newShop.itemsList();
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvShopItems.setAdapter(itemAdapter);
@@ -58,7 +60,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         //String item = items[position];
         shopItems = newShop.getAvailableItems();
         newShop.addBoughtItems(shopItems[position]);
+        DB.updateTokens();
         Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
-        Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity(), "Tokens left "+DB.getCurrentTokens(), Toast.LENGTH_SHORT ).show();
     }
 }

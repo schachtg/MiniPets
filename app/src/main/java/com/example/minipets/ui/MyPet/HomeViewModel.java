@@ -1,4 +1,4 @@
-package com.example.minipets.ui.home;
+package com.example.minipets.ui.MyPet;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
