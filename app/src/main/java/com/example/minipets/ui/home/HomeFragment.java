@@ -1,6 +1,7 @@
 package com.example.minipets.ui.home;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ImageView reactionImg;  // Shows the pet's reaction image
     private ImageView petImg;   // Shows the pet's image
     private Pet thePet; // Object containing details about the pet
+    private CountDownTimer countDownTimer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +42,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         reactionImg.setVisibility(View.GONE);
         petImg = (ImageView) getView().findViewById(R.id.petImage);
         petImg.setOnClickListener(this);    // Sets function for when the pet is clicked
-        thePet = new Pet("Chester", "Cat", reactionImg, petImg);
+
+        countDownTimer = new CountDownTimer(1000, 1000)
+        {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                reactionImg.setVisibility(View.GONE);
+            }
+        };
+
+        thePet = new Pet("Chester", "Cat", reactionImg, petImg, countDownTimer);
     }
 
     // Displays the pet's reaction when the user pets the pet
