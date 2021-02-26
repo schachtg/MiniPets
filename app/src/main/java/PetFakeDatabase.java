@@ -1,5 +1,4 @@
 import android.widget.ImageView;
-
 import com.example.minipets.Pet;
 import com.example.minipets.R;
 
@@ -18,7 +17,7 @@ public class PetFakeDatabase {
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
 
-    public void Pet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg)
+    public void newPet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg)
     {
         this.name = newName;
         this.happiness = MAX_HAPPINESS/2;
@@ -31,8 +30,13 @@ public class PetFakeDatabase {
         petImg.setImageResource(R.drawable.cat);
 
         //Set favourite food to salmon
-        this.likedFood="Salmon";
+        this.likedFood="Fish";
 
         this.coins=10000000;
+    }
+
+    public void deletePet() //delete you pet :(
+    {
+        myPet=null;
     }
 }
