@@ -10,7 +10,7 @@ Target (used for the fetch mini game) and FetchLogic
 
 Below is a general architecture for MiniPets for iteration one (more to be added in future iterations).
 
-*NOTE* Open in Web IDE to actually see the boxes (was having issues with this, sometimes it does not look normal)
+*NOTE* Open in Web IDE or "display source" to actually see the boxes (was having issues with this, sometimes it does not look normal)
 
 
 
