@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.InvalidNameException;
 import com.example.minipets.Pet;
+import com.example.minipets.PetFakeDatabase;
 import com.example.minipets.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ImageView petImg;   // Shows the pet's image
     private Pet thePet; // Object containing details about the pet
     private CountDownTimer countDownTimer;
+    private PetFakeDatabase DB = new PetFakeDatabase();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 reactionImg.setVisibility(View.GONE);
             }
         };
-
+        //yes this is hardcoded. Iteration one is just the start *100 emoji*
         thePet = new Pet("Chester", "Cat", reactionImg, petImg, countDownTimer);
         if (thePet.getName().equals("")){
             try {
@@ -64,6 +66,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             } catch (InvalidNameException e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            DB.newPet(reactionImg, petImg);
         }
     }
 
