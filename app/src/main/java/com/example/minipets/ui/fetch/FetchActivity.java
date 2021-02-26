@@ -3,6 +3,7 @@ package com.example.minipets.ui.fetch;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,8 +36,12 @@ public class FetchActivity extends AppCompatActivity {
     protected float ball_end_x;
     protected float ball_end_y;
 
+    protected boolean locked = true;    //program does not allow clicking
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        this.locked = true;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch);
@@ -145,7 +150,7 @@ public class FetchActivity extends AppCompatActivity {
         this.ball_image.setTranslationY(this.ball_start_y);
 
         //make the ball visible
-        this.ball_image.setVisibility(this.ball_image.VISIBLE);
+        this.ball_image.setVisibility(View.VISIBLE);
 
         //a feeble attempt
         this.ball_image.animate().translationXBy(delta_x).translationYBy(delta_y).setDuration(2000); //2 seconds
@@ -158,8 +163,8 @@ public class FetchActivity extends AppCompatActivity {
         float temp_end_y;
         //start point is at x = screen_center - 1/2*ball_width
         //end point is at y = screen_center - 1/2* ball width
-        this.ball_start_x = (float) this.center_x - (this.ball_image.getWidth() / 2);
-        this.ball_start_y = (float) this.center_y - (this.ball_image.getHeight() / 2);
+        this.ball_start_x = (float) this.center_x - (float) (this.ball_image.getWidth() / 2);
+        this.ball_start_y = (float) this.center_y - (float) (this.ball_image.getHeight() / 2);
 
         temp_end_x = this.ball_start_x;
         temp_end_y = this.ball_start_y;
