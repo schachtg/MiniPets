@@ -1,5 +1,6 @@
 package com.example.minipets;
 
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,13 +14,14 @@ public class Pet
     private boolean[] likedFoods;   // If the pet likes the food for some food id
     private ImageView reactionImg;  // ImageView which displays the pet's reaction
     private ImageView petImg;   // ImageView which displays the pet
+    private CountDownTimer timer;
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
 
     // Constructor
     // Initialize the values for the pet
-    public Pet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg)
+    public Pet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg, CountDownTimer newTimer)
     {
         name = newName;
         happiness = MAX_HAPPINESS/2;
@@ -32,6 +34,8 @@ public class Pet
         // Sets the image of the pet
         if(type.equals("Cat"))
             petImg.setImageResource(R.drawable.cat);
+
+        timer = newTimer;
     }
 
     // Pass a string through to have the corresponding reaction displayed
@@ -44,6 +48,7 @@ public class Pet
         }
 
         reactionImg.setVisibility(View.VISIBLE);
+        timer.start();
     }
 
     // Pass a foodItem id to have your pet eat the food
