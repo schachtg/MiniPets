@@ -3,6 +3,7 @@ package com.example.minipets.ui.fetch;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,27 +17,29 @@ public class FetchActivity extends AppCompatActivity {
     protected DisplayMetrics display_metrics;    //stores the metrics for this display
     protected int center_x;       //the x coordinate of the center of this scree
     protected int center_y;       //the y coordinate of the senter of this screen
-    protected TextView fech_text_temp;          //Temp textBox TODO remove
-    protected TextView test_center_position;   //Temp textbox TODO remove
-    protected TextView test_pointer_position;   //temp textbox TODO remove
+
+    protected ImageView pet_image;
+    protected ImageView ball_image;
+
+    protected FetchGameLogic game_logic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch);
 
-        //create a FetchLogic item to interface with
-//        this.logic = new FetchLogic(this);  //does fetch logic need arguments?
-        //create temp text view for testing TODO delete this
-        this.fech_text_temp = (TextView) findViewById(R.id.fetch_test_text);
-        this.test_center_position = (TextView) findViewById(R.id.test_center_position);
-        this.test_pointer_position = (TextView) findViewById(R.id.test_pointer_position);
+        //get our images
+        this.pet_image  = (ImageView) findViewById(R.id.pet_target);
+        this.ball_image = (ImageView) findViewById(R.id.ball_projectile);
 
         //get the display metrics of this activity
         this.display_metrics = this.getResources().getDisplayMetrics();
 
         //find the center of this activity (screen's center)
         this.findViewCenter(this.display_metrics.widthPixels, this.display_metrics.heightPixels);
+
+        //create a game logic controller for this game of fetch
+        
     }
 
 

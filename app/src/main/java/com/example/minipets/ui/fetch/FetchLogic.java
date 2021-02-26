@@ -1,18 +1,41 @@
 package com.example.minipets.ui.fetch;
 
-import android.widget.ImageView;
+public class FetchLogic implements FetchGameLogic{
 
-public class FetchLogic {
-    private ImageView ball_image;//Ball image
-    private ImageView pet_image;//Pet image
+    protected Projectile projectile;    //stores the height and width of the ball used to play fetch
+    protected Target     target;     //stores the position, height, and width of the pet on the map
+    protected int x_origine;
+    protected int y_origine;
+    protected int screen_height;
+    protected int screen_width;
 
-    private Projectile ball;    //stores the height and width of the ball used to play fetch
-    private Target     pet;     //stores the position, height, and width of the pet on the map
+    protected boolean target_position_is_old;  //this is a flag used internally to determine if the position of the target
+                                               //has changed since the creation of this object or since the last time a
+                                               //ball-toss was requested
+
+    //protected FetchLogicState state;
 
     //
-    public FetchLogic(FetchActivity fetch_ui){
+    public FetchLogic(int screen_width, int screen_height, int pet_width, int pet_height, float target_hitbox, int ball_width, int ball_height){
         //this.ball_image = (ImageView) findViewById(R.id.baseball); //TODO interface with file system to get ball image or recieve as arg
         //this.pet_image = (ImageView) findViewById(R.drawable.cat);      //TODO interface with file system to get pet image or recieve as arg
+
+        if(screen_height > 10)
+            this.screen_height = screen_height;
+        else
+            this.screen_height = 10; //a default. for safety. If you passed a screen size of zero you're trying to mess this up.//TODO I ought to just crash the thing if they pass this
+
+        if(screen_width > 10)
+            this.screen_width = screen_width;
+        else
+            this.screen_width = 10;
+
+        this.x_origine = screen_width / 2;//x_origine;
+        this.y_origine = screen_height / 2;//y_origine;
+
+        //these two can decide if thier input works. if they are given a size larger than half the screen they will shrink themselves
+        this.projectile = new Projectile(ball_width,ball_height, this.x_origine,this.y_origine,0,0);  //abstract default Projecctile characteristics. can be changed
+        this.target = new Target(pet_width,pet_height,this.x_origine,this.y_origine,target_hitbox);              //abstract default Target characteristics. can be changed
     }
 
 
@@ -29,31 +52,86 @@ public class FetchLogic {
     // to determine how this directive should be dealt with.
     //
     // INPUT:
-    //  center_x :  the x coordinate of the center of the screen
-    //  center_y :  the y coordinate of the center of the screen
     //  release_x : the x coordinate for where the touch release occurred on the screen
     //  release_y : the y coordinate for where the touch release occurred on the screen
     //---------------------------------------------------------------------------------------------
-    public FetchDirective touchReleased(int center_x, int center_y, float release_x, float release_y){
-        FetchDirective directive = null;
+    public ThrowBallDirective ballReleased(float release_x, float release_y){
+        ThrowBallDirective directive;
 
+        //verify the target has been updated
+        if(this.target_position_is_old){
+            //if this is an old target you're not allowed to throw at it. You don't even kn
+            directive = null;
+        }
         // Verify input is valid
-        if(center_x <= 0 || center_y <= 0                                   //check that location of center is reasonable
-                || release_x < 0 || release_y < 0                           //check that release is not off the screen in a negative direction
-                || release_x > 2*center_x+1 || release_y > 2*center_y+1){   //check that release is not off the screen in a positive direction
+        else if(release_x < 0 || release_y < 0                           //check that release is not off the screen in a negative direction
+                || release_x > this.screen_width || release_y > this.screen_height){   //check that release is not off the screen in a positive direction
                                                                             //+1 is added to the bounds just incase an integer devision and rounding resulted in a dropped value.
+            //the input is invalid. Returning anything that COULD be treated as valid data would be reckless
+            directive = null;
+        }
+        //if all is good
+        else{
 
-            // Create an error Directive
-            directive = new ErrorDirective();
+            //indicate the target has been thrown at in this position for the future.
+            this.target_position_is_old = true;
 
-            //add on error messages depending on what is wrong with the input args
-            if(center_x <= 0 || center_y <= 0)
-                ((ErrorDirective)directive).appendToErrorMsg("Passed coordinates for screen center are not possible.");
-            if(release_x < 0 || release_y < 0 || release_x > 2*center_x+1 || release_y > 2*center_x+1)
-                ((ErrorDirective)directive).appendToErrorMsg("Passed location of release would be off of the screen and therefore not possible.");
+            //generate the vector the ball is thrown at, and wether or not it reaches the target
+            directive = this.generateBallToss(release_x, release_y);
         }
 
+        return directive;
+    }
 
-        return final_directive;
+
+    //handels the trowing of the ball and generates a directive for said ball throw
+    protected ThrowBallDirective generateBallToss(float x_release, float y_release){
+        ThrowBallDirective directive;
+        boolean caught = false;     //will the pet catch the ball given the vector of the ball throw
+
+        // find the release vector of the projectile
+        this.calculateProjectileVector(x_release, y_release);
+
+        // determine weather the ball will be caught by the pet
+        caught = this.target.isHitByProjectile(this.projectile);
+
+        directive = new ThrowBallDirective(caught, this.projectile.getUnitVectorX(), this.projectile.getUnitVectorY());  //TODO later allow magnitude of vector to alter the speed of the ball
+
+        return directive;
+    }
+
+
+    // calculates the vector components of a projectile
+    // based on the point of release and the centre of the screen
+    //-------------------------------------------------------------
+    protected void calculateProjectileVector(float x_release, float y_release){
+        float x_vect = 0;
+        float y_vect = 0;
+        if(this.projectile != null){
+            x_vect = this.x_origine - x_release;
+            y_vect = this.y_origine - y_release;
+            this.projectile.setVector(x_vect, y_vect);
+        }
+    }
+
+
+    public int getPetX(){
+        if(this.target_position_is_old)
+            this.generateNewPosition();
+
+        return this.target.getX_pos();
+    }
+
+    public int getPetY(){
+        if(this.target_position_is_old)
+            this.generateNewPosition();
+
+        return this.target.getY_pos();
+    }
+
+
+    public void generateNewPosition(){
+        this.target_position_is_old = false;
+        this.target.generateRandomTargetPosition();
     }
 }

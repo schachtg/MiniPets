@@ -6,7 +6,7 @@ public class Target extends FetchCollisionObject{
     protected int x_pos;    //the target's official x position on the screen
     protected int y_pos;    //The target's official y position on the screen
 
-    protected float hitbox_factor;  //how much bigger the hitbox for this target is. accepts numbers between 0 and 1, but defaults to 0.05
+    protected float hitbox_factor;  //how much bigger the hitbox for this target is. accepts numbers between -1 and 1, but defaults to 0.05
 
     protected TargetPosition position;  //where the pet is located if we draw a graph centered at the provided origine
 
@@ -25,19 +25,25 @@ public class Target extends FetchCollisionObject{
         this.hitbox_factor = hitbox_factor;
 
         //ensure hitbox_factor is in valid range. if not, set to default of 0.05
-        if ((this.hitbox_factor < 0.0) || (this.hitbox_factor > 1.0))
+        if ((this.hitbox_factor < -1.0) || (this.hitbox_factor > 1.0))
             this.hitbox_factor = (float) 0.05;
 
         this.generateRandomTargetPosition();
     }
 
+    public int getX_pos(){
+        return this.x_pos;
+    }
 
+    public int getY_pos(){
+        return this.y_pos;
+    }
     // generates a random position to put the target
     // generates a new position if the targets hitbox
     // overlaps with the origine in that position
     //-------------------------------------------------
     public void generateRandomTargetPosition(){
-        Random rand;
+        Random rand = new Random();
         int max_x = this.x_origine * 2 - this.width;
         int max_y = this.y_origine * 2 - this.height;
         do {
@@ -55,10 +61,10 @@ public class Target extends FetchCollisionObject{
     // this is important when determining what trajectories will hit this target
     //----------------------------------------------------------------------------
     protected void findTargetPosition() {
-        float top_side = (float) (this.y_pos - (this.height * this.hitbox_factor));         //highest point of the target's hitbox
-        float bottom_side = (float) (this.y_pos + (this.height * (1 + this.hitbox_factor)));   //lowest point of the target's hitbox
-        float left_side = (float) (this.x_pos - (this.width * this.hitbox_factor));          //leftmost point of the target's hitbox
-        float right_side = (float) (this.x_pos + (this.width * (1 + this.hitbox_factor)));    //rightmost pont of the target's hitbox
+        float top_side = (this.y_pos - (this.height * this.hitbox_factor));         //highest point of the target's hitbox
+        float bottom_side = (this.y_pos + (this.height * (1 + this.hitbox_factor)));   //lowest point of the target's hitbox
+        float left_side = (this.x_pos - (this.width * this.hitbox_factor));          //leftmost point of the target's hitbox
+        float right_side = (this.x_pos + (this.width * (1 + this.hitbox_factor)));    //rightmost pont of the target's hitbox
 
 
         if (bottom_side < this.y_origine) {       //target is entirely in top half
@@ -108,16 +114,16 @@ public class Target extends FetchCollisionObject{
                                                     //corner_vect[i][n] -> i=0 is to left corner, i = 1 is top right corner, i = 2 = bottom left corner, i = 3 is bottom right corner
                                                     //                  -> n=0 is x component, n = 1 is y component
         //Top-Left Corner
-        corner_vect[0][0] = (float)(this.x_pos - this.width*this.hitbox_factor) - (float)this.x_origine;
-        corner_vect[0][1] = (float)(this.y_pos - this.height*this.hitbox_factor) - (float)this.y_origine;
+        corner_vect[0][0] = (this.x_pos - this.width*this.hitbox_factor) - (float)this.x_origine;
+        corner_vect[0][1] = (this.y_pos - this.height*this.hitbox_factor) - (float)this.y_origine;
 
         //Top-Right Corner
-        corner_vect[1][0] = (float)(this.x_pos + this.width*(1+this.hitbox_factor)) - (float)this.x_origine;
+        corner_vect[1][0] = (this.x_pos + this.width*(1+this.hitbox_factor)) - (float)this.x_origine;
         corner_vect[1][1] = corner_vect[0][1];
 
         //Bottom-Left Corner
         corner_vect[2][0] = corner_vect[0][0];
-        corner_vect[2][1] = (float)(this.y_pos + this.height*(1+this.hitbox_factor)) - (float)this.y_origine;
+        corner_vect[2][1] = (this.y_pos + this.height*(1+this.hitbox_factor)) - (float)this.y_origine;
 
         //Bottom-Right Corner
         corner_vect[3][0] = corner_vect[1][0];
@@ -128,39 +134,39 @@ public class Target extends FetchCollisionObject{
         switch(this.position){
             case BOTTOM_RIGHT:  //uses same corners for same bounds as top_left
             case TOP_LEFT:  //we use top-right and bottom left corners to define all upper and lower bounds
-                                x_unit_up = (float) corner_vect[1][0] / vectMag(corner_vect[1][0], corner_vect[1][1]);
-                                x_unit_lo = (float) corner_vect[2][0] / vectMag(corner_vect[2][0], corner_vect[2][1]);
-                                y_unit_up = (float) corner_vect[2][1] / vectMag(corner_vect[2][0], corner_vect[2][1]);//because down means higher y value
-                                y_unit_lo = (float) corner_vect[1][1] / vectMag(corner_vect[1][0], corner_vect[1][1]);
+                                x_unit_up = corner_vect[1][0] / vectMag(corner_vect[1][0], corner_vect[1][1]);
+                                x_unit_lo = corner_vect[2][0] / vectMag(corner_vect[2][0], corner_vect[2][1]);
+                                y_unit_up = corner_vect[2][1] / vectMag(corner_vect[2][0], corner_vect[2][1]);//because down means higher y value
+                                y_unit_lo = corner_vect[1][1] / vectMag(corner_vect[1][0], corner_vect[1][1]);
                                 break;
             case TOP_MID:       //use bottom left and bottom right corners of target. only x component matters
-                                x_unit_up = (float) corner_vect[3][0] / vectMag(corner_vect[3][0], corner_vect[3][1]);
-                                x_unit_lo = (float) corner_vect[2][0] / vectMag(corner_vect[2][0], corner_vect[2][1]);
+                                x_unit_up = corner_vect[3][0] / vectMag(corner_vect[3][0], corner_vect[3][1]);
+                                x_unit_lo = corner_vect[2][0] / vectMag(corner_vect[2][0], corner_vect[2][1]);
                                 y_unit_up = 0;// TODO del dont care(float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 y_unit_lo = 0;// TODO del dont care(float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 break;
             case TOP_RIGHT:      //use top-left and bottom-right corners
             case BOTTOM_LEFT:   //uses same corners
-                                x_unit_up = (float) corner_vect[3][0] / vectMag(corner_vect[3][0], corner_vect[3][1]);
-                                x_unit_lo = (float) corner_vect[0][0] / vectMag(corner_vect[0][0], corner_vect[0][1]);
-                                y_unit_up = (float) corner_vect[3][1] / vectMag(corner_vect[3][0], corner_vect[3][1]);
-                                y_unit_lo = (float) corner_vect[0][1] / vectMag(corner_vect[0][0], corner_vect[0][1]);
+                                x_unit_up = corner_vect[3][0] / vectMag(corner_vect[3][0], corner_vect[3][1]);
+                                x_unit_lo = corner_vect[0][0] / vectMag(corner_vect[0][0], corner_vect[0][1]);
+                                y_unit_up = corner_vect[3][1] / vectMag(corner_vect[3][0], corner_vect[3][1]);
+                                y_unit_lo = corner_vect[0][1] / vectMag(corner_vect[0][0], corner_vect[0][1]);
                                 break;
             case MID_LEFT:      //use top and bottom right corners. only y component matters
                                 x_unit_up = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 x_unit_lo = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
-                                y_unit_up = (float) corner_vect[3][1] / vectMag(corner_vect[3][0], corner_vect[3][1]);
-                                y_unit_lo = (float) corner_vect[1][1] / vectMag(corner_vect[1][0], corner_vect[1][1]);
+                                y_unit_up = corner_vect[3][1] / vectMag(corner_vect[3][0], corner_vect[3][1]);
+                                y_unit_lo = corner_vect[1][1] / vectMag(corner_vect[1][0], corner_vect[1][1]);
                                 break;
             case MID_RIGHT:     //uses top and bottom left corners, only y component matters
                                 x_unit_up = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 x_unit_lo = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
-                                y_unit_up = (float) corner_vect[2][1] / vectMag(corner_vect[2][0], corner_vect[2][1]);
-                                y_unit_lo = (float) corner_vect[0][1] / vectMag(corner_vect[0][0], corner_vect[0][1]);
+                                y_unit_up = corner_vect[2][1] / vectMag(corner_vect[2][0], corner_vect[2][1]);
+                                y_unit_lo = corner_vect[0][1] / vectMag(corner_vect[0][0], corner_vect[0][1]);
                                 break;
             case BOTTOM_MID:    //uses top left and right corners. only x component matters
-                                x_unit_up = (float) corner_vect[1][0] / vectMag(corner_vect[1][0], corner_vect[1][1]);
-                                x_unit_lo = (float) corner_vect[0][0] / vectMag(corner_vect[0][0], corner_vect[0][1]);
+                                x_unit_up = corner_vect[1][0] / vectMag(corner_vect[1][0], corner_vect[1][1]);
+                                x_unit_lo = corner_vect[0][0] / vectMag(corner_vect[0][0], corner_vect[0][1]);
                                 y_unit_up = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 y_unit_lo = 0;//TODO del (float) corner_vect[][] / vectMag(corner_vect[][], corner_vect[][]);
                                 break;
@@ -186,7 +192,7 @@ public class Target extends FetchCollisionObject{
     // Determines wether this target would be hit
     // by a specified projectile. Returns true if it would.
     //--------------------------------------------------------
-    public boolean isHitByProjectile(Projectile projectile) {       //TODO include a pointer to an array so this can return at what point the projectile hits the target
+    public boolean isHitByProjectile(Projectile projectile) {
         boolean hit = false;
 
         switch(this.position){

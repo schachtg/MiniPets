@@ -26,6 +26,10 @@ public class Projectile extends FetchCollisionObject{
             this.x_unit_vector = (float) this.x_vector / magnitude;
             this.y_unit_vector = (float) this.y_vector / magnitude;
         }
+        else{
+            this.x_unit_vector = 0;
+            this.y_unit_vector = 0;
+        }
     }
 
     // returns this projectile's unit vector's
@@ -37,5 +41,11 @@ public class Projectile extends FetchCollisionObject{
 
     public float getUnitVectorY(){
         return this.y_unit_vector;
+    }
+
+    public void setVector(float x, float y){
+        this.x_vector = x;
+        this.y_vector = y;
+        this.calculateUnitVector();
     }
 }

@@ -1,8 +1,10 @@
 package com.example.minipets;
 
+import com.example.minipets.ui.fetch.FetchLogic;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,5 +15,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void fetchLogic_unitTest(){
+        FetchLogic my_logic = new FetchLogic
     }
 }
