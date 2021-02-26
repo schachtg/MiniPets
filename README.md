@@ -11,3 +11,4 @@ Our hope is to teach young children the work that is needed to take care of a pe
 
 Our app will be considered successful if the user returns to the app at least once a day for thirty minutes to keep their virtual pet happy by feeding and playing with them.
 
+[](https://code.cs.umanitoba.ca/3350-winter-2021-a03/minipets-comp3350-a03-group12/-/blob/master/Branching%20Strategy.md)
