@@ -11,11 +11,11 @@ public class TestShop {
 
         System.out.println("\nStarting testShop");
 
-        shop = new Shop(100);
+        shop = new Shop();
         assertNotNull(shop);
         assertNotNull(shop.getAvailableItems());
         assertNotNull(shop.getBoughtItems());
-        assertEquals(100, shop.remTokens());
+        assertEquals(1000, shop.remTokens());
 
         assertEquals("Chicken costs 3 and total price 3", shop.getAvailableItems()[0].toString());
         assertEquals("Fish costs 4 and total price 4", shop.getAvailableItems()[1].toString());
@@ -32,7 +32,7 @@ public class TestShop {
 
         System.out.println("\nStarting testItemList");
 
-        shop = new Shop(100);
+        shop = new Shop();
         String[] items = {"Chicken", "Fish", "Beef", "Frisbee", "Ball"};
         for(int i = 0; i < items.length; i++){
             assertEquals(items[i], shop.itemsList()[i]);
@@ -47,7 +47,7 @@ public class TestShop {
         ShopItem shopItem;
 
         System.out.println("\nStarting testAddBoughtItems");
-        shop = new Shop(100);
+        shop = new Shop();
         shopItem = shop.getAvailableItems()[1];
 
         //testing adding the first item
