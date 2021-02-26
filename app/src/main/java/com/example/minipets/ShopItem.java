@@ -9,7 +9,7 @@ public class ShopItem {
     public ShopItem(String newName, int newCost){
         name = newName;
         cost = newCost;
-
+        count = 1;
     }
 
     public String getName() {
@@ -20,11 +20,19 @@ public class ShopItem {
         return cost;
     }
 
-    public void setCount(int newCount) {
-        this.count = newCount;
+    //increment the item count by 1
+    public void addCount() {
+        this.count++;
     }
 
+    //calculates total cost of item purchase
     public int getTotalCost(){
         return cost * count;
+    }
+
+    //returns a string of the name, cost and total price of an item
+    @Override
+    public String toString(){
+        return name +" costs "+cost+" and total price "+this.getTotalCost();
     }
 }
