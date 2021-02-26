@@ -1,6 +1,5 @@
 package com.example.minipets.ui.fetch;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -13,8 +12,7 @@ import androidx.core.view.MotionEventCompat;
 import com.example.minipets.R;
 
 public class FetchActivity extends AppCompatActivity {
-//    private FetchLogic logic;   //stores the logic that the UI must respond to and inform
-//    private FetchPet pet;       //stores the needed info about our pet that is being used to play fetch
+
     protected DisplayMetrics display_metrics;    //stores the metrics for this display
     protected int center_x;       //the x coordinate of the center of this scree
     protected int center_y;       //the y coordinate of the senter of this screen
@@ -31,9 +29,11 @@ public class FetchActivity extends AppCompatActivity {
     protected int ball_offset_y;
 
     protected TextView text_test;      //TODO remove
-    protected TextView center_position;
-    protected TextView tap_position;
-    protected TextView ball_vector;
+
+    protected float ball_start_x;
+    protected float ball_start_y;
+    protected float ball_end_x;
+    protected float ball_end_y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +48,6 @@ public class FetchActivity extends AppCompatActivity {
         //get the display metrics of this activity
         this.display_metrics = this.getResources().getDisplayMetrics();
 
-        //TODO remove these
-        this.center_position = (TextView) findViewById(R.id.center_position);
-        this.tap_position = (TextView) findViewById(R.id.tap_position);
-        this.ball_vector = (TextView) findViewById(R.id.ball_vector);
-
         //find the center of this activity (screen's center)
         this.findViewCenter(this.display_metrics.widthPixels, this.display_metrics.heightPixels);
 
@@ -65,7 +60,7 @@ public class FetchActivity extends AppCompatActivity {
         //get an initial location for the pet image
         this.getPetLocation();
 
-        this.text_test = (TextView) findViewById(R.id.the_last_test_text);
+        this.text_test = (TextView) findViewById(R.id.the_last_test_text);  //TODO remove this
 
         this.ball_offset_x = this.ball_image.getWidth() / 2;
         this.ball_offset_y = this.ball_image.getHeight() / 2;
@@ -84,10 +79,10 @@ public class FetchActivity extends AppCompatActivity {
             directive = this.game_logic.ballReleased(event.getX(), event.getY());
 
             //TODO remove these
-            this.center_position.setText(String.format("center at x=%d, y=%d", this.center_x, this.center_y));
-            this.tap_position.setText(String.format("tap at x=%f, y=%f", event.getX(), event.getY()));
-            this.ball_vector.setText(String.format("ball vector x=%f, y=%f", directive.getVectorX(), directive.getVectorY()));
-            this.text_test.setText(String.format("the cat is at x=%f, y=%f", this.pet_image.getX(), this.pet_image.getY()));
+            if(directive != null && directive.isTheCatchMade())
+                this.text_test.setText("the cat caught the ball");
+            else
+                this.text_test.setText("the cat did not catch the ball");
 
             //handel errors
             if(directive != null) {
@@ -122,35 +117,58 @@ public class FetchActivity extends AppCompatActivity {
 
 
     protected void showBallAnimation(ThrowBallDirective directive){
-        this.ball_image.setVisibility(this.ball_image.VISIBLE);
+
 
         missAnimation(directive);
         //TODO add catch animation if they caught the ball
 
         //TODO use Grahm's timer to delay before becoming invisible again.
-        this.ball_image.setVisibility(this.ball_image.INVISIBLE);
+        //this.ball_image.setVisibility(this.ball_image.INVISIBLE);
     }
 
 
     protected void missAnimation(ThrowBallDirective directive){
-        //couldn't figure out how to doe the animations libraries. I just want to animate an image moving from one point to another.
-        //I'm not trying to plot a dance routine here
-        float x_pnt = this.center_x - this.ball_offset_x;   //current location of ball
-        float y_pnt = this.center_y - this.ball_offset_y;   //current location of ball
-        ObjectAnimator animation;
 
-        while(0 < x_pnt+this.ball_offset_x && x_pnt+this.ball_offset_x < this.display_metrics.widthPixels && 0 < y_pnt+this.ball_offset_y && y_pnt+this.ball_offset_y < this.display_metrics.heightPixels){
-            animation = ObjectAnimator.ofFloat(this.ball_image, "translationX", x_pnt);
-            animation.setDuration(500);//100ms;
-            animation.start();
 
-            animation = ObjectAnimator.ofFloat(this.ball_image, "translationY", y_pnt);
-            animation.setDuration(500);//100ms;
-            animation.start();
+        //set start and end points of ball trajectory
+        this.findStartAndEndOfTrajectory(directive.getVectorX(), directive.getVectorY());
 
-            x_pnt += directive.getVectorX();
-            y_pnt += directive.getVectorY();
+        //overset the end position so the ball goes off the screen
+        this.ball_end_x *= 5;
+        this.ball_end_y *= 5;
 
+        //set the motion difference for the ball. (a vector, but w/ magnitude)
+        float delta_x = this.ball_end_x - this.ball_start_x;
+        float delta_y = this.ball_end_y - this.ball_start_y;
+
+        this.ball_image.setTranslationX(this.ball_start_x); //ball starting position
+        this.ball_image.setTranslationY(this.ball_start_y);
+
+        //make the ball visible
+        this.ball_image.setVisibility(this.ball_image.VISIBLE);
+
+        //a feeble attempt
+        this.ball_image.animate().translationXBy(delta_x).translationYBy(delta_y).setDuration(2000); //2 seconds
+    }
+
+
+    protected void findStartAndEndOfTrajectory(float x_vect, float y_vect){
+
+        float temp_end_x;
+        float temp_end_y;
+        //start point is at x = screen_center - 1/2*ball_width
+        //end point is at y = screen_center - 1/2* ball width
+        this.ball_start_x = (float) this.center_x - (this.ball_image.getWidth() / 2);
+        this.ball_start_y = (float) this.center_y - (this.ball_image.getHeight() / 2);
+
+        temp_end_x = this.ball_start_x;
+        temp_end_y = this.ball_start_y;
+        //find end point by iterating //TODO there is a better way to do this. I could probably just math it out
+        while(0 < temp_end_x && temp_end_x < this.display_metrics.widthPixels && 0 < temp_end_y && temp_end_y < this.display_metrics.heightPixels){
+            temp_end_x += x_vect;
+            temp_end_y += y_vect;
         }
+        this.ball_end_x = temp_end_x;
+        this.ball_end_y = temp_end_y;
     }
 }
