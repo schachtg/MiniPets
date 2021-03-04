@@ -13,7 +13,7 @@ Below is a general architecture for MiniPets for iteration one (more to be added
 *NOTE* Open in Web IDE or "display source" to actually see the boxes (was having issues with this, sometimes it does not look normal)
 
 
-
+```
 +------------------------------------+            +------------------------------------+         +------------------------------------+
 |           UI (visual) layer        |            |          Logic Layer               |         |          Data Layer                |
 |                                    |            |                                    |         |                                    |
@@ -47,7 +47,7 @@ Below is a general architecture for MiniPets for iteration one (more to be added
 |                                    |            |                                    |         |                                    |
 +------------------------------------+            +------------------------------------+         +------------------------------------+
 
-
+```
 
 
 
