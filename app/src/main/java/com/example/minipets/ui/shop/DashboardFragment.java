@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
+import com.example.minipets.data_layer.SQLiteHelper;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
 import com.example.minipets.data_layer.ShopFakeDatabase;
@@ -27,6 +28,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private Shop newShop;
     int tokens;
     private ShopFakeDatabase DB;
+    private SQLiteHelper db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvShopItems.setAdapter(itemAdapter);
         lvShopItems.setOnItemClickListener(this);
+        db = new SQLiteHelper(this);
     }
 
     @Override

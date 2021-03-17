@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.minipets.R;
+import com.example.minipets.data_layer.SQLiteHelper;
 
 // Class which handles all information about the pet
 public class Pet
@@ -20,6 +21,8 @@ public class Pet
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
+
+    private SQLiteHelper db;
 
     // Constructor
     // Initialize the values for the pet
