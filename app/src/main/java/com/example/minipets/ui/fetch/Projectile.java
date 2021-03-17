@@ -6,7 +6,7 @@ public class Projectile extends FetchCollisionObject{
     protected float x_unit_vector;  //the unit vector's x component
     protected float y_unit_vector;  //the unit vector's y component
 
-    public Projectile(int width, int height, int x_origine, int y_origine, float x_vector, float y_vecotr){
+    public Projectile(/*int*/float width, /*int*/float height, /*int*/float x_origine, /*int*/float y_origine, float x_vector, float y_vecotr){
         super(width, height, x_origine, y_origine);
         this.x_vector = x_vector;
         this.y_vector = y_vecotr;

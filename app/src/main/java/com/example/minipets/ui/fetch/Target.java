@@ -3,8 +3,8 @@ package com.example.minipets.ui.fetch;
 import java.util.Random;
 
 public class Target extends FetchCollisionObject{
-    protected int x_pos;    //the target's official x position on the screen
-    protected int y_pos;    //The target's official y position on the screen
+    protected /*int*/float x_pos;    //the target's official x position on the screen
+    protected /*int*/float y_pos;    //The target's official y position on the screen
 
     protected float hitbox_factor;  //how much bigger the hitbox for this target is. accepts numbers between -1 and 1, but defaults to 0.05
 
@@ -14,9 +14,11 @@ public class Target extends FetchCollisionObject{
     protected float x_unit_lo;
     protected float y_unit_up;
     protected float y_unit_lo;
+    protected double lower_angle;   //the lowest acceptable angle that will hit this target (in radians (i think))
+    protected double upper_angle;   //the highest acceptable angle that will hit this target (in radians(i think))
 
 
-    public Target(int width, int height, int x_origine, int y_origine, float hitbox_factor) {
+    public Target(/*int*/float width, /*int*/float height, /*int*/float x_origine, /*int*/float y_origine, float hitbox_factor) {
         super(width, height, x_origine, y_origine);
         this.x_pos = 0;
         this.y_pos = 0;
@@ -31,11 +33,11 @@ public class Target extends FetchCollisionObject{
         this.generateRandomTargetPosition();
     }
 
-    public int getX_pos(){
+    public /*int*/float getX_pos(){
         return this.x_pos;
     }
 
-    public int getY_pos(){
+    public /*int*/float getY_pos(){
         return this.y_pos;
     }
     // generates a random position to put the target
@@ -44,14 +46,17 @@ public class Target extends FetchCollisionObject{
     //-------------------------------------------------
     public void generateRandomTargetPosition(){
         Random rand = new Random();
-        int max_x = this.x_origine * 2 - this.width;
-        int max_y = this.y_origine * 2 - this.height;
+        /*int*/float max_x = this.x_origine * 2 - this.width;
+        /*int*/float max_y = this.y_origine * 2 - this.height;
         do {
-            this.x_pos = rand.nextInt((max_x ) + 1);
-            this.y_pos = rand.nextInt((max_y ) + 1);
+            this.x_pos = rand.nextFloat() * (max_x );
+            this.y_pos = rand.nextFloat() * (max_y );
             this.findTargetPosition();
         }while(this.position == TargetPosition.MID_MID);
 
+        this.findAngleBounds();
+
+        //TODO don't use the below
         findUnitVectorConstraintsTarget();  //find the constraints a unit vector must satisfy here. This way we can't skip that step.
     }
 
@@ -97,6 +102,70 @@ public class Target extends FetchCollisionObject{
         }
     }
 
+    //TODO could combine this with thee above function
+    protected void findAngleBounds(){
+        double top = (this.y_pos - (this.height * this.hitbox_factor));         //highest point of the target's hitbox
+        double bottom = (this.y_pos + (this.height * (1 + this.hitbox_factor)));   //lowest point of the target's hitbox
+        double left = (this.x_pos - (this.width * this.hitbox_factor));          //leftmost point of the target's hitbox
+        double right = (this.x_pos + (this.width * (1 + this.hitbox_factor)));    //rightmost pont of the target's hitbox
+
+        switch(this.position){
+            case BOTTOM_RIGHT:
+                this.lower_angle = this.calculateAngleTo( right, top);
+                this.upper_angle = this.calculateAngleTo( left, bottom);
+                break;
+            case BOTTOM_MID:
+                this.lower_angle = this.calculateAngleTo( right, top);
+                this.upper_angle = this.calculateAngleTo( left, top);
+                break;
+            case BOTTOM_LEFT:
+                this.lower_angle = this.calculateAngleTo( right, bottom);
+                this.upper_angle = this.calculateAngleTo( left, top);
+                break;
+            case MID_LEFT:
+                this.lower_angle = this.calculateAngleTo( right, bottom);
+                this.upper_angle = this.calculateAngleTo( right, top);
+                break;
+            case TOP_LEFT:
+                this.lower_angle = this.calculateAngleTo( left, bottom);
+                this.upper_angle = this.calculateAngleTo( right, top);
+                break;
+            case TOP_MID:
+                this.lower_angle = this.calculateAngleTo( left, bottom);
+                this.upper_angle = this.calculateAngleTo( right, bottom);
+                break;
+            case TOP_RIGHT:
+                this.lower_angle = this.calculateAngleTo( left, top);
+                this.upper_angle = this.calculateAngleTo( right, bottom);
+                break;
+            case MID_RIGHT:
+                this.lower_angle = this.calculateAngleTo( left, top);
+                this.upper_angle = this.calculateAngleTo( left, bottom);
+                break;
+            default:
+                this.lower_angle = 0;
+                this.upper_angle = Math.PI;
+                break;
+        }
+    }
+
+
+    // calculates the angle between the center of the
+    // playfield and the specified x,y location
+    // since the +ive y direction is down for most
+    // graphical interfaces, It may be beneficial to
+    // imagine any layout to be mirrored allong
+    // the x axis.
+    // Otherwise you will want to measure angles counterclockwise
+    // as opposed to clockwise
+    //-------------------------------------------------------------
+    protected double calculateAngleTo(double x, double y){
+        double angle = Math.atan((double) ( (y - this.y_origine) / (x - this.x_origine) ));
+        if(angle < 0)
+            angle += 2 * Math.PI;
+
+        return angle;
+    }
 
     // determines the constraints a projectile's unit veector must
     // satisfy in order to hit this target.
@@ -195,6 +264,7 @@ public class Target extends FetchCollisionObject{
     public boolean isHitByProjectile(Projectile projectile) {
         boolean hit = false;
 
+        /* TODO restore this if below does not work
         switch(this.position){
             case TOP_LEFT:
             case TOP_RIGHT:
@@ -205,6 +275,7 @@ public class Target extends FetchCollisionObject{
                         (projectile.getUnitVectorY() >= this.y_unit_lo) &&
                         (projectile.getUnitVectorY() <= this.y_unit_up)){
                     hit = true;
+                    System.out.println("Cat is located in 1 of cardinal directions. part of projectile vector is unimportant");//TODO remove
                 }
                 break;
             case TOP_MID:
@@ -239,6 +310,38 @@ public class Target extends FetchCollisionObject{
                 hit = false;
                 break;
         }
+
+         */
+
+        //TODO ensure projectile is not null
+
+        //calculate angle of projectile
+        double projectileAngle = this.calculateProjectileAngle(projectile);
+
+        if(this.upper_angle < this.lower_angle) {
+            //then target is at MIDLE_LEFT position. and will have angles that are a little bit off
+            if (projectileAngle <= upper_angle || lower_angle <= projectileAngle) {  //projectile angle is somewhere between these angles
+                hit = true;
+            }
+        }
+        else{
+            if(this.lower_angle <= projectileAngle && projectileAngle <= this.upper_angle){
+                hit = true;
+            }
+        }
         return hit;
+    }
+
+
+
+    protected double calculateProjectileAngle(Projectile projectile){
+        //projectiles return vectors. vetors start an an origine 0,0
+
+        double angle = Math.atan( (double) (projectile.getUnitVectorY() / projectile.getUnitVectorX()));
+
+        if(angle < 0)
+            angle += 2 * Math.PI;
+
+        return angle;
     }
 }

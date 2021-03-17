@@ -13,5 +13,5 @@ public enum TargetPosition {
     MID_RIGHT,
     BOTTOM_LEFT,
     BOTTOM_MID,
-    BOTTOM_RIGHT;
+    BOTTOM_RIGHT
 }

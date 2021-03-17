@@ -1,13 +1,14 @@
 package com.example.minipets.ui.fetch;
 
 public abstract class FetchCollisionObject {
-    protected int width;        //the object's width
-    protected int height;       //the objects height
-    protected int x_origine;    //the x point of origine of any projectiles
-    protected int y_origine;    //the y point of origine of any projectiles
+    static final double perc = 0.05;  //just a bit of wiggle room allowed for calculations to check if centre is shared
+    protected /*int*/float width;        //the object's width
+    protected /*int*/float height;       //the objects height
+    protected /*int*/float x_origine;    //the x point of origine of any projectiles
+    protected /*int*/float y_origine;    //the y point of origine of any projectiles
 
 
-    public FetchCollisionObject(int width, int height, int x_origine, int y_origine) {
+    public FetchCollisionObject(/*int*/float width, /*int*/float height, /*int*/float x_origine, /*int*/float y_origine) {
         this.x_origine = x_origine;
         this.y_origine = y_origine;
 
@@ -22,9 +23,10 @@ public abstract class FetchCollisionObject {
     }
 
 
-    public boolean hasCenter(int x, int y){
+    public boolean hasCenter(/*int*/float x, /*int*/float y){
         boolean shared_center = false;
-        if(this.x_origine == x && this.y_origine == y){
+        if(this.x_origine <= ((1+perc) * x) && this.x_origine >= ((1-perc) * x) &&
+                this.y_origine <= ((1+perc) * y) && this.y_origine >= ((1-perc) * y)){
             shared_center = true;
         }
         return shared_center;

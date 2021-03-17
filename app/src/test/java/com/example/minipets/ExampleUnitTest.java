@@ -1,7 +1,5 @@
 package com.example.minipets;
 
-import com.example.minipets.ui.fetch.FetchLogic;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -17,8 +15,10 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void fetchLogic_unitTest(){
-        FetchLogic my_logic = new FetchLogic
-    }
+  //  @Test
+  //  public void fetchLogic_unitTest()
+  //  {
+  //      FetchLogic my_logic = new FetchLogic(5,5,5,5,0.5,5,5);
+//
+  //  }
 }

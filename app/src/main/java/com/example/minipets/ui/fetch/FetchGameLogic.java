@@ -2,7 +2,7 @@ package com.example.minipets.ui.fetch;
 
 public interface FetchGameLogic {
     ThrowBallDirective ballReleased(float release_x, float release_y);
-    int getPetX();
-    int getPetY();
+    /*int*/float getPetX();
+    /*int*/float getPetY();
     void generateNewPosition();
 }

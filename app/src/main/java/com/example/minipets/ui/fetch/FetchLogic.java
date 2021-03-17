@@ -4,10 +4,10 @@ public class FetchLogic implements FetchGameLogic{
 
     protected Projectile projectile;    //stores the height and width of the ball used to play fetch
     protected Target     target;     //stores the position, height, and width of the pet on the map
-    protected int x_origine;
-    protected int y_origine;
-    protected int screen_height;
-    protected int screen_width;
+    protected /*int*/float x_origine;
+    protected /*int*/float y_origine;
+    protected /*int*/float screen_height;
+    protected /*int*/float screen_width;
 
     protected boolean target_position_is_old;  //this is a flag used internally to determine if the position of the target
                                                //has changed since the creation of this object or since the last time a
@@ -16,19 +16,19 @@ public class FetchLogic implements FetchGameLogic{
     //protected FetchLogicState state;
 
     //
-    public FetchLogic(int screen_width, int screen_height, int pet_width, int pet_height, float target_hitbox, int ball_width, int ball_height){
+    public FetchLogic(/*int*/float screen_width, /*int*/float screen_height, /*int*/float pet_width, /*int*/float pet_height, float target_hitbox, /*int*/float ball_width, /*int*/float ball_height){
         //this.ball_image = (ImageView) findViewById(R.id.baseball); //TODO interface with file system to get ball image or recieve as arg
         //this.pet_image = (ImageView) findViewById(R.drawable.cat);      //TODO interface with file system to get pet image or recieve as arg
 
-        if(screen_height > 10)
+        if(screen_height > 1)
             this.screen_height = screen_height;
         else
-            this.screen_height = 10; //a default. for safety. If you passed a screen size of zero you're trying to mess this up.//TODO I ought to just crash the thing if they pass this
+            this.screen_height = 1; //a default. for safety. If you passed a screen size of zero you're trying to mess this up.//TODO I ought to just crash the thing if they pass this
 
-        if(screen_width > 10)
+        if(screen_width > 1)
             this.screen_width = screen_width;
         else
-            this.screen_width = 10;
+            this.screen_width = 1;
 
         this.x_origine = screen_width / 2;//x_origine;
         this.y_origine = screen_height / 2;//y_origine;
@@ -115,14 +115,14 @@ public class FetchLogic implements FetchGameLogic{
     }
 
 
-    public int getPetX(){
+    public /*int*/float getPetX(){
         if(this.target_position_is_old)
             this.generateNewPosition();
 
         return this.target.getX_pos();
     }
 
-    public int getPetY(){
+    public /*int*/float getPetY(){
         if(this.target_position_is_old)
             this.generateNewPosition();
 

@@ -1,9 +1,9 @@
 package com.example.minipets.ui.fetch;
 
 public class ThrowBallDirective {
-    protected boolean ball_caught = false;
-    protected float x_unit_vector = 0;
-    protected float y_unit_vector = 0;
+    protected boolean ball_caught;
+    protected float x_unit_vector;
+    protected float y_unit_vector;
 
     public ThrowBallDirective(boolean caught, float x_vect, float y_vect){
         this.ball_caught = caught;
