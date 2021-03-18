@@ -1,25 +1,29 @@
-package com.example.minipets;
+package com.example.minipets.objects;
 
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.minipets.R;
 
 // Class which handles all information about the pet
 public class Pet
 {
-    private final String name;    // The name of the pet
+    private String name;    // The name of the pet
     private int happiness;  // Represents how happy the pet is
-    private final String type;    // The type of pet (eg. cat or dog)
-    private final int outfit;     // Id representing the outfit the pet's wearing
-    private final boolean[] likedFoods;   // If the pet likes the food for some food id
-    private final ImageView reactionImg;  // ImageView which displays the pet's reaction
-    private final ImageView petImg;   // ImageView which displays the pet
+    private String type;    // The type of pet (eg. cat or dog)
+    private int outfit;     // Id representing the outfit the pet's wearing
+    private boolean[] likedFoods;   // If the pet likes the food for some food id
+    private ImageView reactionImg;  // ImageView which displays the pet's reaction
+    private ImageView petImg;   // ImageView which displays the pet
+    private CountDownTimer timer;
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
 
     // Constructor
     // Initialize the values for the pet
-    public Pet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg)
+    public Pet(String newName, String newType, ImageView newReactionImg, ImageView newPetImg, CountDownTimer newTimer)
     {
         name = newName;
         happiness = MAX_HAPPINESS/2;
@@ -32,6 +36,8 @@ public class Pet
         // Sets the image of the pet
         if(type.equals("Cat"))
             petImg.setImageResource(R.drawable.cat);
+
+        timer = newTimer;
     }
 
     // Pass a string through to have the corresponding reaction displayed
@@ -44,6 +50,7 @@ public class Pet
         }
 
         reactionImg.setVisibility(View.VISIBLE);
+        timer.start();
     }
 
     // Pass a foodItem id to have your pet eat the food
@@ -62,5 +69,9 @@ public class Pet
                 happiness += 5;
             }
         }
+    }
+
+    public String getName(){
+        return name;
     }
 }

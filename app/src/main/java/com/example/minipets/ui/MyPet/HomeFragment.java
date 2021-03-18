@@ -1,19 +1,20 @@
-package com.example.minipets.ui.home;
+package com.example.minipets.ui.MyPet;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.minipets.Pet;
+import com.example.minipets.custom_exceptions.InvalidNameException;
+import com.example.minipets.objects.Pet;
+import com.example.minipets.data_layer.PetFakeDatabase;
 import com.example.minipets.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -22,6 +23,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ImageView reactionImg;  // Shows the pet's reaction image
     private ImageView petImg;   // Shows the pet's image
     private Pet thePet; // Object containing details about the pet
+    private CountDownTimer countDownTimer;
+    private PetFakeDatabase DB = new PetFakeDatabase();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +43,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         reactionImg.setVisibility(View.GONE);
         petImg = (ImageView) getView().findViewById(R.id.petImage);
         petImg.setOnClickListener(this);    // Sets function for when the pet is clicked
-        thePet = new Pet("Chester", "Cat", reactionImg, petImg);
+
+        countDownTimer = new CountDownTimer(1000, 1000)
+        {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                reactionImg.setVisibility(View.GONE);
+            }
+        };
+        //yes this is hardcoded. Iteration one is just the start *100 emoji*
+        thePet = new Pet("Chester", "Cat", reactionImg, petImg, countDownTimer);
+        if (thePet.getName().equals("")){
+            try {
+                throw new InvalidNameException("You must have at least one character for your pets name");
+            } catch (InvalidNameException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            DB.newPet(reactionImg, petImg);
+        }
     }
 
     // Displays the pet's reaction when the user pets the pet

@@ -1,4 +1,4 @@
-package com.example.minipets.ui.notifications;
+package com.example.minipets.ui.games;
 
 import android.content.Intent;
 import android.os.Bundle;
