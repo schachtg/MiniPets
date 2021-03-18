@@ -69,8 +69,8 @@ public class FetchActivity extends AppCompatActivity {
 
         //get an initial location for the pet image
         this.directive = this.game_logic.getNewDirective();
-        this.pet_image.setTop(this.directive.getPetPositionY());
-        this.pet_image.setLeft(this.directive.getPetPositionX());
+        this.pet_image.setY(this.directive.getPetPositionY());
+        this.pet_image.setX(this.directive.getPetPositionX());
 
     }
 
@@ -90,13 +90,13 @@ public class FetchActivity extends AppCompatActivity {
                     this.pet_image.getY() <= y_pos && y_pos <= this.pet_image.getY() + this.pet_image.getHeight()) {
                 this.directive = this.game_logic.petWasClicked();
                 this.points.setText(String.format("Points: %d",this.directive.totalPoints));
-                this.pet_image.setLeft(this.directive.getPetPositionX());
-                this.pet_image.setTop(this.directive.getPetPositionY());
+                this.pet_image.setX(this.directive.getPetPositionX());
+                this.pet_image.setY(this.directive.getPetPositionY());
             }
             else{ //TODO get rid of this. this should only occur on times up
                 this.directive = this.game_logic.timesUp();
-                this.pet_image.setLeft(this.directive.getPetPositionX());
-                this.pet_image.setTop(this.directive.getPetPositionY());
+                this.pet_image.setX(this.directive.getPetPositionX());
+                this.pet_image.setY(this.directive.getPetPositionY());
             }
         }
         return true;

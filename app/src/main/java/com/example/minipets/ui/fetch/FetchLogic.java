@@ -11,7 +11,7 @@ public class FetchLogic implements FetchGameLogic{
     public FetchLogic(int mapWidth, int mapHeight, int petWidth, int petHeight){
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.nextDirective = new LogicFetchDirective(this.mapWidth, this.mapHeight, 0, 0, this.START_TIMER, 0);
+        this.nextDirective = new LogicFetchDirective(petWidth, petHeight, 0, 0, this.START_TIMER, 0);
     }
 
 

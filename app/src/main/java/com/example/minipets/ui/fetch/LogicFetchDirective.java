@@ -31,8 +31,8 @@ public class LogicFetchDirective extends FetchDirective{
 
     public void generateLocation(int maxX, int maxY){
         Random rand = new Random();
-        this.petPositionX = rand.nextInt(maxX);
-        this.petPositionY = rand.nextInt(maxY);
+        this.petPositionX = rand.nextInt(maxX - this.petWidth);
+        this.petPositionY = rand.nextInt(maxY - this.petHeight);
     }
 
     public LogicFetchDirective copy() {      //just for simplicity
