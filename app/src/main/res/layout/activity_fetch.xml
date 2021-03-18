@@ -11,10 +11,13 @@
         android:id="@+id/pet_target"
         android:layout_width="120dp"
         android:layout_height="155dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:visibility="visible"
-        app:srcCompat="@drawable/cat"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="273dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cat" />
 
     <ImageView
         android:id="@+id/ball_projectile"
@@ -25,17 +28,8 @@
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="466dp" />
 
-    <ImageView
-        android:id="@+id/pointer_A"
-        android:layout_width="9dp"
-        android:layout_height="7dp"
-        android:visibility="gone"
-        app:srcCompat="@drawable/tennisball"
-        tools:layout_editor_absoluteX="93dp"
-        tools:layout_editor_absoluteY="120dp" />
-
     <TextView
-        android:id="@+id/caught"
+        android:id="@+id/points"
         android:layout_width="210dp"
         android:layout_height="48dp"
         android:text="TextView"
