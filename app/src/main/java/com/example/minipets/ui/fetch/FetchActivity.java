@@ -1,5 +1,6 @@
 package com.example.minipets.ui.fetch;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -11,21 +12,19 @@ import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
 
-public class FetchActivity extends AppCompatActivity implements FetchUI {
+public class FetchActivity extends AppCompatActivity {
 
     protected DisplayMetrics display_metrics;    //stores the metrics for this display
 
     protected ImageView pet_image;
 
-    protected ImageView ball_image;
-
     protected FetchGameLogic game_logic;
 
     protected TextView points;
 
-    protected FetchDirective directive;
+    protected UiFetchDirective directive;
 
-   // protected  CountDownTimer timeLimit;
+    protected boolean game_started;
 
 
     @Override
@@ -38,27 +37,28 @@ public class FetchActivity extends AppCompatActivity implements FetchUI {
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
         this.pet_image.setPadding(0,0,0,0);
 
-        this.ball_image = (ImageView) findViewById(R.id.ball_projectile);
-        this.ball_image.setPadding(0,0,0,0);
-
         //get the display metrics of this activity
         this.display_metrics = this.getResources().getDisplayMetrics();
 
         this.points = (TextView) findViewById(R.id.points);
         this.points.setPadding(0,0,0,0);
+
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResume() {
         super.onResume();
 
-        this.points.setText("Points: 0");
+        this.points.setText("Tab out and back in to start. (I don't get it either)");
 
         //create a game logic controller for this game of fetch
-        this.game_logic = new FetchLogic(this, this.display_metrics.widthPixels,
+        this.game_logic = new FetchLogic( this.display_metrics.widthPixels,
                 this.display_metrics.heightPixels, this.pet_image.getWidth(),
                 this.pet_image.getHeight());
+
+        this.game_started = false;
 
         //get an initial location for the pet image
         updateGame();
@@ -75,22 +75,13 @@ public class FetchActivity extends AppCompatActivity implements FetchUI {
             //finger up means throw the ball
             int x_pos = (int) event.getX();
             int y_pos = (int) event.getY();
-
             petWasClicked = this.game_logic.clickDetected(x_pos, y_pos);
         }
-
-        //stop the thread that is running the
-        if(petWasClicked){
-            //update game
+        if(petWasClicked) {
             updateGame();
         }
-        //else do nothing
-        return true;
-    }
 
-    //called by logic to inform UI time is Up
-    public void timeIsUp(){
-        updateGame();
+        return true;
     }
 
     //used to update pet position and
@@ -101,50 +92,6 @@ public class FetchActivity extends AppCompatActivity implements FetchUI {
         this.pet_image.setY(this.directive.getPetPositionY());
         this.points.setText(String.format("Points: %d", this.directive.getPoints()));
     }
-
-/*
-
-    protected void missAnimation(ThrowBallDirective directive){
-
-
-        //set start and end points of ball trajectory
-        this.findStartAndEndOfTrajectory(directive.getVectorX(), directive.getVectorY());
-
-        //overset the end position so the ball goes off the screen
-        this.ball_end_x *= 5;
-        this.ball_end_y *= 5;
-
-        //TODO set ball's initial position
-        this.ball_image.setX(this.center_x - this.ball_offset_x);
-        this.ball_image.setY(this.center_y - this.ball_offset_y);
-
-        //TODO make ball visible
-        this.ball_image.setVisibility(View.VISIBLE);
-
-        //TODO register animatiomn for ball
-        AnimatorSet path = new AnimatorSet();
-        ObjectAnimator y_path = ObjectAnimator.ofFloat(this.ball_image, "translationY", this.ball_image.getY(), this.ball_end_y);//TODO using globals here is stinky (for end position)
-        ObjectAnimator x_path = ObjectAnimator.ofFloat(this.ball_image, "translationX", this.ball_image.getX(), this.ball_end_x);
-
-        //TODO register animations to play at the same time
-        path.playTogether(x_path, y_path);
-        path.setInterpolator(new LinearInterpolator());
-
-        //TODO register animation duration for ball
-        path.setDuration(2000); //TODO determine animation duration later if needed.
-
-        //TODO start animation
-        path.start();
-
-        //TODO wait a few seconds
-        //android.os.SystemClock.sleep(1000);
-
-        //TODO make the ball invisible
-        //this.ball_image.setVisibility(View.INVISIBLE);
-
-        //TODO remove the animation
-    }
-    */
 
 
     @Override

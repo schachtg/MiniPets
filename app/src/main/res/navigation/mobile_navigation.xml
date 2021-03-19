@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.minipets.ui.games.NotificationsFragment"
+        android:name="com.example.minipets.ui.games.GamesFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_games" />
 </navigation>

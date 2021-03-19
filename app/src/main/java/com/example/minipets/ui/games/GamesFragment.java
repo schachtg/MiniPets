@@ -14,19 +14,19 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.ui.fetch.FetchActivity;
 
-public class NotificationsFragment extends Fragment {
+public class GamesFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private GamesViewModel notificationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+                new ViewModelProvider(this).get(GamesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_games, container, false);
         return root;
     }
 
-    @Override       //TODO what the heck is this doing?
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
         //create the button you push to play fetch
@@ -38,7 +38,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View v){
                 Intent play_fetch = new Intent(getContext() /*replacing getAplicationContext()*/, FetchActivity.class);
-                //TODO make start intent pass the pet image and whatever ball/toy the player has equiped if this is relevant
+                //make start intent pass the pet image and whatever ball/toy the player has equiped if this is relevant
                 startActivity(play_fetch);
             }
         });
