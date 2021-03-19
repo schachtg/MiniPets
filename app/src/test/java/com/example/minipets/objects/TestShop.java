@@ -1,10 +1,12 @@
 package com.example.minipets.objects;
 
+import android.content.Context;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestShop {
-
+    Context context;
     @Test
     public void testShop(){
         Shop shop;
@@ -15,7 +17,6 @@ public class TestShop {
         assertNotNull(shop);
         assertNotNull(shop.getAvailableItems());
         assertNotNull(shop.getBoughtItems());
-        assertEquals(1000, shop.remTokens());
 
         assertEquals("Chicken costs 3 and total price 3", shop.getAvailableItems()[0].toString());
         assertEquals("Fish costs 4 and total price 4", shop.getAvailableItems()[1].toString());

@@ -8,108 +8,36 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.minipets.ui.shop.DashboardFragment;
+
 public class SQLiteHelper extends SQLiteOpenHelper {
+
+    private static final String PET_TABLE = "create Table PetInformation(name TEXT primary key, type TEXT )";
+    private static final String SHOP_TABLE = "create Table ShopInformation(id INTEGER primary key AUTOINCREMENT, tokens INTEGER )";
+    public static final String PET_TABLE_NAME = "PetInformation";
+    public static final String SHOP_TABLE_NAME = "ShopInformation";
+    public static final String SHOP_ID = "id";
+    public static final String TOKENS = "tokens";
+    public static final String PET_NAME = "name";
+    public static final String PET_TYPE = "type";
+
     public SQLiteHelper(Context context) {
-        super(context, "database", null, 1);
+        super(context, "database.db", null, 1);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create Table PetInformation(name TEXT primary key, type TEXT )");
-        db.execSQL("create Table ShopInformation(tokens INTEGER primary key )");
+        db.execSQL(PET_TABLE);
+        db.execSQL(SHOP_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists PetInformation");
         db.execSQL("drop table if exists ShopInformation");
+        onCreate(db);
     }
 
-    public Boolean insert_pet_data(String name, String type){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("name: ", name);
-        cv.put("type: ", type);
-        long result = db.insert("PetInformation", null, cv);
-        if (result == -1){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
 
-    public Boolean insert_shop_data(int tok){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("Tokens: ", tok);
-        long result = db.insert("PetInformation", null, cv);
-        if (result == -1){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    public Boolean update_shop_data(int tok){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        //cv.put("name: ", name);
-        cv.put("Tokens: ", tok);
-        Cursor cursor = db.rawQuery("Select * from PetInformation where name = ?", new String[] {"" + tok});
-        if (cursor.getCount()>0) {
-            long result = db.update("PetInformation", cv, "name=?", new String[]{"" + tok});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Boolean update_pet_data(String name, String type){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        //cv.put("name: ", name);
-        cv.put("type: ", type);
-        Cursor cursor = db.rawQuery("Select * from PetInformation where name = ?", new String[]{name});
-        if (cursor.getCount()>0) {
-            long result = db.update("PetInformation", cv, "name=?", new String[]{name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Boolean delete_pet_data(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * from PetInformation where name = ?", new String[]{name});
-        if (cursor.getCount()>0) {
-            long result = db.delete("PetInformation", "name=?", new String[]{name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Cursor view_pet_data(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * from PetInformation", new String[]{name});
-        return cursor;
-
-    }
 }

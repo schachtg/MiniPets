@@ -11,7 +11,6 @@ public class ShopFakeDatabase {
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
     private Shop shop;
-
     public final int MAX_ITEMS = 3; //maximum number of shop items
 
     //constructor

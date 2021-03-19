@@ -1,8 +1,13 @@
 package com.example.minipets.objects;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.widget.ImageView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.data_layer.ShopFakeDatabase;
 
 public class Shop {
@@ -13,13 +18,12 @@ public class Shop {
     private ShopFakeDatabase DB;
     public final int MAX_ITEMS = 5; //maximum number of shop items
 
+
     //constructor
     public Shop(){
         availableItems = new ShopItem[MAX_ITEMS];
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
-        tokens = DB.getCurrentTokens();
-
         //initializing list of available items
         availableItems[0] = new ShopItem("Chicken", 3);
         availableItems[1] =  new ShopItem("Fish", 4);
@@ -46,6 +50,14 @@ public class Shop {
         return items;
     }
 
+    public void itemsListBought(){
+
+        for(int i = 0; i < boughtItems.size(); i++){
+            System.out.println(boughtItems.get(i).getName());
+        }
+
+    }
+
     //adds a bought items into the purchases shop items list
     public void addBoughtItems(ShopItem newItem) {
         if(boughtItems.isEmpty()){
@@ -65,4 +77,9 @@ public class Shop {
     public int remTokens(){
         return this.tokens;
     }
+
+    public void set_tokens(int tok){
+        tokens = tok;
+    }
+
 }
