@@ -50,6 +50,42 @@ Below is a general architecture for MiniPets for iteration one (more to be added
 ```
 
 
+ITERATION TWO ADDITIONS TO ABOVE
+
+
+┌─────────────────────────────────┐                  ┌───────────────────────────────┐                ┌───────────────────────────────┐
+│                                 │                  │                               │                │                               │
+│         UI Layer                │                  │        Logic layer            │                │         Data layer            │
+│                                 │                  │                               │                │                               │
+│   More reactions from pet       │                  │  rules for the tag game       │                │   Save data when closed       │
+│                                 │                  │                               │                │                               │
+│   Show tokens and costs in shop │                  │  was the pet tagged           │                │   Tokens don't reset          │
+│                                 │                  │                               │                │                               │
+│   Fancy clothes                 │                  │  how many tokens did they gain│                │   Pet looks the same after    │
+│                                 │                  │                               │                │   leaving                     │
+│   Actual game to play visuals   │                  │   is the pet happy, sad, etc  │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+│                                 │                  │                               │                │                               │
+└─────────────────────────────────┘                  └───────────────────────────────┘                └───────────────────────────────┘
 
 
 
