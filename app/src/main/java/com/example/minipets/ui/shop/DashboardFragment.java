@@ -20,7 +20,13 @@ import com.example.minipets.data_layer.SQLiteHelper;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
 import com.example.minipets.data_layer.ShopFakeDatabase;
+import com.example.minipets.logic.StringObjectConvert;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -33,6 +39,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     int tokens;
     private ShopFakeDatabase DB;
     SQLdb db;
+    private StringObjectConvert sc = new StringObjectConvert();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 //        });
         return root;
     }
+
     
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
