@@ -1,7 +1,6 @@
 package com.example.minipets.ui.fetch;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -26,7 +25,8 @@ public class FetchActivity extends AppCompatActivity {
 
     protected FetchDirective directive;
 
-    protected  CountDownTimer timeLimit;
+   // protected  CountDownTimer timeLimit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +58,11 @@ public class FetchActivity extends AppCompatActivity {
     }
 
 
-    @Override//TODO b
-    public void onResume(){//TODO b
-        super.onResume();//TODO b
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        this.points.setText("Points: 0");
 
         //create a game logic controller for this game of fetch
         this.game_logic = new FetchLogic(this.display_metrics.widthPixels,
@@ -71,7 +73,6 @@ public class FetchActivity extends AppCompatActivity {
         this.directive = this.game_logic.getNewDirective();
         this.pet_image.setY(this.directive.getPetPositionY());
         this.pet_image.setX(this.directive.getPetPositionX());
-
     }
 
 
@@ -81,7 +82,7 @@ public class FetchActivity extends AppCompatActivity {
         int action = MotionEventCompat.getActionMasked(event);
 
         //read this as the ball being released
-        if (action == MotionEvent.ACTION_UP) {
+        if (action == MotionEvent.ACTION_UP) {//TODO this needs to move to logic
             //finger up means throw the ball
             float x_pos = event.getX();
             float y_pos = event.getY();
@@ -94,7 +95,7 @@ public class FetchActivity extends AppCompatActivity {
                 this.pet_image.setY(this.directive.getPetPositionY());
             }
             else{ //TODO get rid of this. this should only occur on times up
-                this.directive = this.game_logic.timesUp();
+                this.directive = this.game_logic.getNewDirective();
                 this.pet_image.setX(this.directive.getPetPositionX());
                 this.pet_image.setY(this.directive.getPetPositionY());
             }
