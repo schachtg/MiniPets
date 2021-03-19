@@ -12,9 +12,10 @@ public class LogicFetchDirective extends FetchDirective{
         this.totalPoints=startingPoints;
     }
 
-    public void increaseTime(int boost){
-        if(this.timer + boost > 0){
-            this.timer += boost;
+    // how long user has to click on the pet
+    public void setTimer(int timer){
+        if(timer > 0){
+            this.timer = timer;
         }
     }
 
