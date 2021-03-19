@@ -24,9 +24,6 @@ public class FetchActivity extends AppCompatActivity {
 
     protected UiFetchDirective directive;
 
-    protected boolean game_started;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,12 +53,8 @@ public class FetchActivity extends AppCompatActivity {
         //create a game logic controller for this game of fetch
         this.game_logic = new FetchLogic( this.display_metrics.widthPixels,
                 this.display_metrics.heightPixels, this.pet_image.getWidth(),
-                this.pet_image.getHeight());
+                this.pet_image.getHeight(), this.pet_image.getLeft(), this.pet_image.getTop());
 
-        this.game_started = false;
-
-        //get an initial location for the pet image
-        updateGame();
     }
 
 
@@ -76,9 +69,10 @@ public class FetchActivity extends AppCompatActivity {
             int x_pos = (int) event.getX();
             int y_pos = (int) event.getY();
             petWasClicked = this.game_logic.clickDetected(x_pos, y_pos);
-        }
-        if(petWasClicked) {
-            updateGame();
+
+            if(petWasClicked){
+                updateGame();
+            }
         }
 
         return true;

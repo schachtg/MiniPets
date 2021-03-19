@@ -9,10 +9,15 @@ public class FetchLogic implements FetchGameLogic{
     protected int mapWidth;
     protected int mapHeight;
 
-    public FetchLogic( int mapWidth, int mapHeight, int petWidth, int petHeight){
+    public FetchLogic( int mapWidth, int mapHeight, int petWidth, int petHeight, int x_pos, int y_pos){
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.nextDirective = new FetchDirective(petWidth, petHeight, 0, 0, 0);
+
+        //create the current state of the game
+        this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos, 0);
+
+        //create the next directive
+        this.nextDirective = this.prevDirective.copy();
         this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
     }
 
