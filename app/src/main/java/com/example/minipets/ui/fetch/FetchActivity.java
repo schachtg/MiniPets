@@ -11,7 +11,7 @@ import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
 
-public class FetchActivity extends AppCompatActivity {
+public class FetchActivity extends AppCompatActivity implements FetchUI {
 
     protected DisplayMetrics display_metrics;    //stores the metrics for this display
 
@@ -48,15 +48,6 @@ public class FetchActivity extends AppCompatActivity {
         this.points.setPadding(0,0,0,0);
     }
 
-    @Override
-    protected void onStart(){
-
-        super.onStart();
-
-        //find the center of this activity (screen's center)
-
-    }
-
 
     @Override
     public void onResume() {
@@ -65,14 +56,12 @@ public class FetchActivity extends AppCompatActivity {
         this.points.setText("Points: 0");
 
         //create a game logic controller for this game of fetch
-        this.game_logic = new FetchLogic(this.display_metrics.widthPixels,
+        this.game_logic = new FetchLogic(this, this.display_metrics.widthPixels,
                 this.display_metrics.heightPixels, this.pet_image.getWidth(),
                 this.pet_image.getHeight());
 
         //get an initial location for the pet image
-        this.directive = this.game_logic.getNewDirective();
-        this.pet_image.setY(this.directive.getPetPositionY());
-        this.pet_image.setX(this.directive.getPetPositionX());
+        updateGame();
     }
 
 
@@ -80,29 +69,38 @@ public class FetchActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = MotionEventCompat.getActionMasked(event);
-
+        boolean petWasClicked = false;
         //read this as the ball being released
-        if (action == MotionEvent.ACTION_UP) {//TODO this needs to move to logic
+        if (action == MotionEvent.ACTION_UP) {
             //finger up means throw the ball
-            float x_pos = event.getX();
-            float y_pos = event.getY();
+            int x_pos = (int) event.getX();
+            int y_pos = (int) event.getY();
 
-            if (this.pet_image.getX() <= x_pos && x_pos <= this.pet_image.getWidth() + this.pet_image.getX() &&
-                    this.pet_image.getY() <= y_pos && y_pos <= this.pet_image.getY() + this.pet_image.getHeight()) {
-                this.directive = this.game_logic.petWasClicked();
-                this.points.setText(String.format("Points: %d",this.directive.totalPoints));
-                this.pet_image.setX(this.directive.getPetPositionX());
-                this.pet_image.setY(this.directive.getPetPositionY());
-            }
-            else{ //TODO get rid of this. this should only occur on times up
-                this.directive = this.game_logic.getNewDirective();
-                this.pet_image.setX(this.directive.getPetPositionX());
-                this.pet_image.setY(this.directive.getPetPositionY());
-            }
+            petWasClicked = this.game_logic.clickDetected(x_pos, y_pos);
         }
+
+        //stop the thread that is running the
+        if(petWasClicked){
+            //update game
+            updateGame();
+        }
+        //else do nothing
         return true;
     }
 
+    //called by logic to inform UI time is Up
+    public void timeIsUp(){
+        updateGame();
+    }
+
+    //used to update pet position and
+    // player points when
+    protected void updateGame(){
+        this.directive = this.game_logic.getNewDirective();
+        this.pet_image.setX(this.directive.getPetPositionX());
+        this.pet_image.setY(this.directive.getPetPositionY());
+        this.points.setText(String.format("Points: %d", this.directive.getPoints()));
+    }
 
 /*
 
@@ -146,5 +144,12 @@ public class FetchActivity extends AppCompatActivity {
 
         //TODO remove the animation
     }
-*/
+    */
+
+
+    @Override
+    public void onPause() {
+        this.game_logic.gameIsClosing();
+        super.onPause();
+    }
 }
