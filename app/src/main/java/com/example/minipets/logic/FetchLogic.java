@@ -1,6 +1,9 @@
-package com.example.minipets.ui.fetch;
+package com.example.minipets.logic;
 
-public class FetchLogic implements FetchGameLogic{
+import com.example.minipets.ui.fetch.FetchDirective;
+import com.example.minipets.ui.fetch.UiFetchDirective;
+
+public class FetchLogic implements FetchGameLogic {
 
     //Logic knows everything about the FetchDirective Object because it calls literally every method in FetchDirective
 
@@ -67,14 +70,7 @@ public class FetchLogic implements FetchGameLogic{
 
     // update currency in DB when window is closing
     public void gameIsClosing(){
-        //TODO save player's points to DB
-
-        //TODO points are located in this.nextDirective.getPoints().
-        //TOdo take a portion of those points (like 1/5 or something) and add that many tokens to the player's wallet
-
-        for(int i = 0; i < 10; i++){    //TODO dummy code
-            i+=1;                       //TODO dummy code
-        }                               //TODO dummy code
+        int tokensGained = this.nextDirective.getPoints()/5;
         //cleanup
             //just kidding, Java is chill like that
     }

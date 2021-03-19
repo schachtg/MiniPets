@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
+import com.example.minipets.logic.FetchGameLogic;
+import com.example.minipets.logic.FetchLogic;
 
 public class FetchActivity extends AppCompatActivity {
 

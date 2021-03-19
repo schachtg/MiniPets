@@ -1,4 +1,6 @@
-package com.example.minipets.ui.fetch;
+package com.example.minipets.logic;
+
+import com.example.minipets.ui.fetch.UiFetchDirective;
 
 public interface FetchGameLogic {
     public UiFetchDirective getNewDirective();
