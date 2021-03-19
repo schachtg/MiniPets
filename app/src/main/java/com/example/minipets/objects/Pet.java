@@ -142,7 +142,25 @@ public class Pet
         else if(foodItem.equals("Beef"))
             foodId = 2;
 
-        likedFoods[foodId] = likes;
+        if(foodId >= 0 && foodId < likedFoods.length)
+            likedFoods[foodId] = likes;
+    }
+
+    public boolean getLikedFood(String foodItem)
+    {
+        int foodId = -1;
+        boolean result = false;
+        if(foodItem.equals("Chicken"))
+            foodId = 0;
+        else if(foodItem.equals("Fish"))
+            foodId = 1;
+        else if(foodItem.equals("Beef"))
+            foodId = 2;
+
+        if(foodId >= 0 && foodId < likedFoods.length)
+            result = likedFoods[foodId];
+
+        return result;
     }
 
     public String getOutfit() {return outfit;}

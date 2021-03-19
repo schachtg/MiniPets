@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //yes this is hardcoded. Iteration one is just the start *100 emoji*
-        //TODO if pet already exists
+
         // Create new pet if one doesn't exist in database
         db = new SQLdb(getActivity());
         try {
@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
             long insert_bg = db.insert_misc(thePet.getDiff(), bg_tracker);
         }
 
-        //TODO if pet doesn't exist
         // Get attributes of current pet in the database
         // thePet = new Pet(newName, newType, newHappiness, newOutfit)
         inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
@@ -120,6 +119,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
 
         thePet.setViews(reactionImg, petImg, outfitImg, countDownTimer);
         thePet.setOutfit(thePet.getOutfit());   // Re displays the outfit
+
+        // Updates background
+        if (bg_tracker == 0)
+            this.getView().setBackgroundColor(Color.WHITE);
+        else if (bg_tracker == 1)
+            this.getView().setBackgroundColor(Color.rgb(47, 60, 79));
+        else if (bg_tracker == 2)
+            this.getView().setBackgroundColor(Color.rgb(102, 34, 212));
+
         if (thePet.getName().equals("")){
             try {
                 throw new InvalidNameException("You must have at least one character for your pets name");

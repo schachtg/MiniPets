@@ -15,7 +15,8 @@ import com.example.minipets.objects.TestShopItem;
 @Suite.SuiteClasses({
         //add all of the above test files here
         TestShop.class,
-        TestShopItem.class
+        TestShopItem.class,
+        TestPet.class
 })
 
 
