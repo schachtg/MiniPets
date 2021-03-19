@@ -70,7 +70,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
             cursor.moveToFirst();
             tokens = cursor.getInt(1);
             newShop.set_tokens(tokens);
-            Toast.makeText(getActivity(), "We already have this!", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getActivity(), "We already have this!", Toast.LENGTH_SHORT).show();
         }
         else {
             long tester = db.insert_shop(tokens);
