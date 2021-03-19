@@ -23,6 +23,7 @@ public class Pet
     private ImageView outfitImg;
     private CountDownTimer timer;// timer for reaction img
     private Date lastLogin;//checks last time user logged in
+    private double diff;
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
@@ -149,7 +150,7 @@ public class Pet
     public void calcLastLogin()// gets last login and checks if over cap for happiness drop
     {
         Date curr= Calendar.getInstance().getTime();
-        long diff = lastLogin.getTime() - curr.getTime();
+        diff = lastLogin.getTime() - curr.getTime();
         if(diff>172800)//if last login is over 48 hours
             happiness -= 10;
         else if (diff>86400)//if last login is over 24 hours
@@ -183,7 +184,7 @@ public class Pet
 
     public String getType(){return type;}
 
-
+    public double getDiff(){return diff;}
 
     public void setLastLogin()
     {

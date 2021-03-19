@@ -83,4 +83,39 @@ public class SQLdb implements SQLdbInterface{
         return cursor;
     }
 
+    public int update_pet(long id, String name, String type, String outfit, int happy) {
+        this.db = this.dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelper.PET_NAME, name);
+        cv.put(SQLiteHelper.PET_TYPE, type);
+        cv.put(SQLiteHelper.PET_OUTFIT, outfit);
+        cv.put(SQLiteHelper.PET_HAPPY, happy);
+        return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
+    }
+
+    public long insert_misc(double timeAway, int bg) {
+        this.db = this.dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelper.MISC_TIME, timeAway);
+        cv.put(SQLiteHelper.MISC_BG, bg);
+        return this.db.insert(SQLiteHelper.OTHER_TABLE_NAME, null, cv);
+    }
+
+    public Cursor get_misc() {
+        this.db = this.dbHelper.getWritableDatabase();
+        Cursor cursor = this.db.query(SQLiteHelper.OTHER_TABLE_NAME, new String[]{SQLiteHelper.OTHER_ID, SQLiteHelper.MISC_TIME, SQLiteHelper.MISC_BG}, null, null, null, null, null);
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    public int update_misc(long id, double timeAway, int bg) {
+        this.db = this.dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelper.MISC_TIME, timeAway);
+        cv.put(SQLiteHelper.MISC_BG, bg);
+        return this.db.update(SQLiteHelper.OTHER_TABLE_NAME, cv, "id_=" + id, null);
+    }
+
 }
