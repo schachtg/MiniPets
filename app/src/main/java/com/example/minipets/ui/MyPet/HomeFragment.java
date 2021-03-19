@@ -102,10 +102,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     // Displays the pet's reaction when the user pets the pet
     @Override
     public void onClick(View v) {
+        thePet.setLastLogin();
+
         switch(v.getId())
         {
             case R.id.petImage:
-                thePet.react("Happy");
+                thePet.react(thePet.getMood());
                 break;
         }
     }

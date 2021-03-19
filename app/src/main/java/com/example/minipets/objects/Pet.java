@@ -1,8 +1,11 @@
 package com.example.minipets.objects;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLiteHelper;
@@ -18,7 +21,8 @@ public class Pet
     private ImageView reactionImg;  // ImageView which displays the pet's reaction
     private ImageView petImg;   // ImageView which displays the pet
     private ImageView outfitImg;
-    private CountDownTimer timer;
+    private CountDownTimer timer;// timer for reaction img
+    private Date lastLogin;//checks last time user logged in
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
@@ -64,10 +68,19 @@ public class Pet
     // Pass a string through to have the corresponding reaction displayed
     public void react(String reaction)
     {
+
         // Retrieves the appropriate image
         if(reaction.equals("Happy"))
         {
-            reactionImg.setImageResource(R.drawable.heart);
+            reactionImg.setImageResource(R.drawable.smile_emote);
+        }
+        else if (reaction.equals("Average"))
+        {
+            reactionImg.setImageResource(R.drawable.average);//need to get average image
+        }
+        else
+        {
+            reactionImg.setImageResource(R.drawable.sad);//need to get sad image
         }
 
         reactionImg.setVisibility(View.VISIBLE);
@@ -97,6 +110,8 @@ public class Pet
                 react("Gross");
                 happiness += 5;
             }
+            if (happiness>MAX_HAPPINESS)
+                happiness=MAX_HAPPINESS;
         }
     }
 
@@ -131,7 +146,43 @@ public class Pet
 
     public String getOutfit() {return outfit;}
 
+    public void calcLastLogin()// gets last login and checks if over cap for happiness drop
+    {
+        Date curr= Calendar.getInstance().getTime();
+        long diff = lastLogin.getTime() - curr.getTime();
+        if(diff>172800)//if last login is over 48 hours
+            happiness -= 10;
+        else if (diff>86400)//if last login is over 24 hours
+            happiness -= 20;
+
+        if (happiness<0)//sets happiness to 0
+            happiness = 0;
+        //no penalty if less than 24 hours
+    }
+
+    public String getMood()
+    {
+        String reaction;
+        if (getHappiness()>75)
+            reaction="Happy";
+        else if (getHappiness()>40)
+            reaction="Average";
+        else
+            reaction="Sad";
+        return reaction;
+    }
+
     public String getName(){
         return name;
+    }
+
+    public int getHappiness()
+    {
+        return happiness;
+    }
+
+    public void setLastLogin()
+    {
+        lastLogin = Calendar.getInstance().getTime();
     }
 }
