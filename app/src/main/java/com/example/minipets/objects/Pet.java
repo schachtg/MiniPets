@@ -89,7 +89,7 @@ public class Pet
     }
 
     // Pass a foodItem id to have your pet eat the food
-    public void feed(String foodItem)
+    public void feed(String foodItem, boolean giveReaction)
     {
         int foodId = -1;
         if(foodItem.equals("Chicken"))
@@ -103,18 +103,22 @@ public class Pet
         {
             if(likedFoods[foodId])
             {
-                react("Happy");
+                if(giveReaction)
+                    react("Happy");
                 happiness += 10;
             }
             else
             {
-                react("Gross");
+                if(giveReaction)
+                    react("Gross");
                 happiness += 5;
             }
             if (happiness>MAX_HAPPINESS)
                 happiness=MAX_HAPPINESS;
         }
     }
+
+
 
     public void setOutfit(String newOutfit)
     {
@@ -142,7 +146,25 @@ public class Pet
         else if(foodItem.equals("Beef"))
             foodId = 2;
 
-        likedFoods[foodId] = likes;
+        if(foodId >= 0 && foodId < likedFoods.length)
+            likedFoods[foodId] = likes;
+    }
+
+    public boolean getLikedFood(String foodItem)
+    {
+        int foodId = -1;
+        boolean result = false;
+        if(foodItem.equals("Chicken"))
+            foodId = 0;
+        else if(foodItem.equals("Fish"))
+            foodId = 1;
+        else if(foodItem.equals("Beef"))
+            foodId = 2;
+
+        if(foodId >= 0 && foodId < likedFoods.length)
+            result = likedFoods[foodId];
+
+        return result;
     }
 
     public String getOutfit() {return outfit;}
