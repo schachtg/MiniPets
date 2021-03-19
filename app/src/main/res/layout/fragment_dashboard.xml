@@ -3,23 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.shop.DashboardFragment"
-    android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.shop.DashboardFragment">
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:text="Shop"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="32sp"
-        android:layout_marginBottom="5dp"/>
+        android:textSize="32sp" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/tokens"
+        android:text="Tokens"/>
 
     <ListView
         android:id="@+id/lvShopItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
