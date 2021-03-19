@@ -1,5 +1,6 @@
 package com.example.minipets.ui.shop;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,21 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLdb;
-import com.example.minipets.data_layer.SQLiteHelper;
-import com.example.minipets.objects.Shop;
-import com.example.minipets.objects.ShopItem;
 import com.example.minipets.data_layer.ShopFakeDatabase;
 import com.example.minipets.logic.StringObjectConvert;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.SQLException;
-import com.example.minipets.data_layer.ShopFakeDatabase;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
+
+import java.sql.SQLException;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -88,6 +80,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         }
         currTokens.setText("Tokens: "+newShop.remTokens());
     }
+
+    public Activity get(){return getActivity();}
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

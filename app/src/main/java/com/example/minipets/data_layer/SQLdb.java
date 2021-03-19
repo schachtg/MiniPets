@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 
-public class SQLdb implements SQLdbInterface{
+public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
 
     private Context context;
     private SQLiteDatabase db;
@@ -18,7 +18,7 @@ public class SQLdb implements SQLdbInterface{
     }
 
     @Override
-    public SQLdbInterface open() throws SQLException {
+    public SQLdbShopInterface open() throws SQLException {
         this.dbHelper = new SQLiteHelper(this.context);
         this.db = this.dbHelper.getWritableDatabase();
         return this;
@@ -63,7 +63,7 @@ public class SQLdb implements SQLdbInterface{
         this.db = this.dbHelper.getWritableDatabase();
         this.db.delete(SQLiteHelper.SHOP_TABLE_NAME, null, null);
     }
-
+    @Override
     public long insert_pet(String name, String type, String outfit, int happy) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -73,7 +73,7 @@ public class SQLdb implements SQLdbInterface{
         cv.put(SQLiteHelper.PET_HAPPY, happy);
         return this.db.insert(SQLiteHelper.PET_TABLE_NAME, null, cv);
     }
-
+    @Override
     public Cursor get_pet() {
         this.db = this.dbHelper.getWritableDatabase();
         Cursor cursor = this.db.query(SQLiteHelper.PET_TABLE_NAME, new String[]{SQLiteHelper.PET_NAME, SQLiteHelper.PET_TYPE, SQLiteHelper.PET_OUTFIT, SQLiteHelper.PET_HAPPY}, null, null, null, null, null);
@@ -82,7 +82,7 @@ public class SQLdb implements SQLdbInterface{
         }
         return cursor;
     }
-
+    @Override
     public int update_pet(long id, String name, String type, String outfit, int happy) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -91,6 +91,11 @@ public class SQLdb implements SQLdbInterface{
         cv.put(SQLiteHelper.PET_OUTFIT, outfit);
         cv.put(SQLiteHelper.PET_HAPPY, happy);
         return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
+    }
+    @Override
+    public void delete_pet() {
+        this.db = this.dbHelper.getWritableDatabase();
+        this.db.delete(SQLiteHelper.PET_TABLE_NAME, null, null);
     }
 
     public long insert_misc(double timeAway, int bg) {

@@ -4,9 +4,9 @@ import android.database.Cursor;
 
 import java.sql.SQLException;
 
-public interface SQLdbInterface {
+public interface SQLdbShopInterface {
 
-    public SQLdbInterface open() throws SQLException;
+    public SQLdbShopInterface open() throws SQLException;
     public void close();
     public long insert_shop(int tok);
     public Cursor get();
