@@ -181,6 +181,10 @@ public class Pet
         return happiness;
     }
 
+    public String getType(){return type;}
+
+
+
     public void setLastLogin()
     {
         lastLogin = Calendar.getInstance().getTime();

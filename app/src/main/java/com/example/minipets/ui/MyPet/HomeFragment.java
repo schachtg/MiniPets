@@ -18,9 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.custom_exceptions.InvalidNameException;
+import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.objects.Pet;
 import com.example.minipets.data_layer.PetFakeDatabase;
 import com.example.minipets.R;
+
+import java.sql.SQLException;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     private CountDownTimer countDownTimer;
     private PetFakeDatabase DB = new PetFakeDatabase();
     private String[] inventory;
+    private SQLdb db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +56,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         //TODO if pet already exists
         // Create new pet if one doesn't exist in database
         thePet = new Pet("Chester", "Cat");
+        db = new SQLdb(getActivity());
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        long insert = db.insert_pet(thePet.getName(), thePet.getType(), thePet.getOutfit(), thePet.getHappiness());
+        System.out.println(db.get_pet());
         //TODO if pet doesn't exist
         // Get attributes of current pet in the database
         // thePet = new Pet(newName, newType, newHappiness, newOutfit)

@@ -12,7 +12,7 @@ import com.example.minipets.ui.shop.DashboardFragment;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String PET_TABLE = "create Table PetInformation(name TEXT primary key, type TEXT )";
+    private static final String PET_TABLE = "create Table PetInformation(name TEXT primary key, type TEXT, outfit TEXT, happy INTEGER )";
     private static final String SHOP_TABLE = "create Table ShopInformation(id INTEGER primary key AUTOINCREMENT, tokens INTEGER )";
     public static final String PET_TABLE_NAME = "PetInformation";
     public static final String SHOP_TABLE_NAME = "ShopInformation";
@@ -20,6 +20,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String TOKENS = "tokens";
     public static final String PET_NAME = "name";
     public static final String PET_TYPE = "type";
+    public static final String PET_OUTFIT = "outfit";
+    public static final String PET_HAPPY = "happy";
 
     public SQLiteHelper(Context context) {
         super(context, "database.db", null, 1);
