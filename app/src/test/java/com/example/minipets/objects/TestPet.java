@@ -1,6 +1,7 @@
 package com.example.minipets.objects;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import org.junit.Test;
 
@@ -62,23 +63,23 @@ public class TestPet {
         pet.setLikedFoods("Chicken", true);
 
         //testing feeding pet a liked food
-        pet.feed("Chicken");
+        pet.feed("Chicken", false);
         assertEquals(initialHappiness + 10, pet.getHappiness());
         initialHappiness = pet.getHappiness();
 
         //testing feeding pet a disliked food
-        pet.feed("Fish");
+        pet.feed("Fish", false);
         assertEquals(initialHappiness + 5, pet.getHappiness());
         initialHappiness = pet.getHappiness();
 
         //testing feeding pet a nonexistent food
-        pet.feed("Rocks");
+        pet.feed("Rocks", false);
         assertEquals(initialHappiness, pet.getHappiness());
         initialHappiness = pet.getHappiness();
 
         //testing maxing out happiness
         for(int i = 0; i < 100; i++)
-            pet.feed("Chicken");
+            pet.feed("Chicken", false);
         assertEquals(pet.MAX_HAPPINESS, pet.getHappiness());
 
         System.out.println("Finished testFeed");

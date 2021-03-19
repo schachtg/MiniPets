@@ -89,7 +89,7 @@ public class Pet
     }
 
     // Pass a foodItem id to have your pet eat the food
-    public void feed(String foodItem)
+    public void feed(String foodItem, boolean giveReaction)
     {
         int foodId = -1;
         if(foodItem.equals("Chicken"))
@@ -103,18 +103,22 @@ public class Pet
         {
             if(likedFoods[foodId])
             {
-                react("Happy");
+                if(giveReaction)
+                    react("Happy");
                 happiness += 10;
             }
             else
             {
-                react("Gross");
+                if(giveReaction)
+                    react("Gross");
                 happiness += 5;
             }
             if (happiness>MAX_HAPPINESS)
                 happiness=MAX_HAPPINESS;
         }
     }
+
+
 
     public void setOutfit(String newOutfit)
     {

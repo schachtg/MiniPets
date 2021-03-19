@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
             if (splitText[0].equals("Outfit")) {
                 thePet.setOutfit(splitText[1]);
             } else if (splitText[0].equals("Feed")) {
-                thePet.feed(splitText[1]);
+                thePet.feed(splitText[1], true);
             } else if (splitText[0].equals("Background")) {
                 if(splitText[1].equals("Light")) {
                     bg_tracker = 0;
