@@ -1,6 +1,7 @@
 package com.example.minipets.objects;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ public class Pet
 
     public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
+
 
     // Constructor
     // Initialize the values for the pet
@@ -118,5 +120,10 @@ public class Pet
     public int getHappiness()
     {
         return happiness;
+    }
+
+    public void setLastLogin()
+    {
+        lastLogin = Calendar.getInstance().getTime();
     }
 }
