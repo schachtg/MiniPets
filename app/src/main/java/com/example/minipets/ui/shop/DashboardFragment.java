@@ -1,6 +1,5 @@
 package com.example.minipets.ui.shop;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +69,4 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         toast.show();
         currTokens.setText("Tokens: "+newShop.remTokens());
     }
-
-    public Activity getDash(){return getActivity();}
 }

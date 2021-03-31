@@ -23,7 +23,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String MISC_BG = "bg";
 
     public SQLiteHelper(Context context) {
-        super(context, "database.db", null, 9);
+        super(context, "database.db", null, 11);
     }
 
 
