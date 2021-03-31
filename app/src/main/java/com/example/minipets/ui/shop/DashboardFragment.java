@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLdb;
-import com.example.minipets.logic.StringObjectConvert;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
 
@@ -33,7 +32,6 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private Shop newShop;
     int tokens;
     SQLdb db;
-    private StringObjectConvert sc = new StringObjectConvert();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
