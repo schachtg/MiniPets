@@ -1,7 +1,6 @@
 package com.example.minipets.ui.shop;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
-import com.example.minipets.data_layer.SQLdb;
+import com.example.minipets.logic.ShopDBLogic;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
-
-import java.sql.SQLException;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -31,7 +28,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private ShopItem[] shopItems;
     private Shop newShop;
     int tokens;
-    SQLdb db;
+    ShopDBLogic dbLogic;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,42 +45,22 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         currTokens = (TextView) getView().findViewById(R.id.tokens);
         newShop = new Shop();
         shopItems = newShop.getAvailableItems();
-
-
+        dbLogic = new ShopDBLogic(getActivity());
+        dbLogic.init_shop(newShop, tokens);
         ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, shopItems);
         lvShopItems.setAdapter(itemAdapter);
         lvShopItems.setOnItemClickListener(this);
-        db = new SQLdb(getActivity());
-        try {
-            db.open();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        if(db.get().getCount()>0){
-            Cursor cursor = db.get();
-            cursor.moveToFirst();
-            tokens = cursor.getInt(1);
-            newShop.set_tokens(tokens);
-         //   Toast.makeText(getActivity(), "We already have this!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            long tester = db.insert_shop(tokens);
-            System.out.println(tester);
-            newShop.set_tokens(1000);
-            Toast.makeText(getActivity(), "Inserted new token value!", Toast.LENGTH_SHORT).show();
-        }
+
+
         currTokens.setText("Tokens: "+newShop.remTokens());
     }
-
-    public Activity get(){return getActivity();}
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         shopItems = newShop.getAvailableItems();
         newShop.addBoughtItems(shopItems[position]);
         newShop.itemsListBought();
-        int test = db.update(1, newShop.remTokens());
-        System.out.println(test);
+        dbLogic.update_shop(newShop.remTokens());
         Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
         Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
         Toast toast = new Toast(getActivity());
@@ -93,4 +70,6 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         toast.show();
         currTokens.setText("Tokens: "+newShop.remTokens());
     }
+
+    public Activity getDash(){return getActivity();}
 }

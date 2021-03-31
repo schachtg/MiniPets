@@ -65,7 +65,7 @@ public class TestSQLdbPet implements SQLdbPetInterface {
     }
 
     @Override
-    public void delete_pet() {
+    public void delete_pet_all() {
         this.db = this.dbHelper.getWritableDatabase();
         this.db.delete(SQLiteHelper.PET_TABLE_NAME, null, null);
     }

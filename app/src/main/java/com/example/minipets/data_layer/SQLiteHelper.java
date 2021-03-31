@@ -1,14 +1,8 @@
 package com.example.minipets.data_layer;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
-
-import com.example.minipets.ui.shop.DashboardFragment;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
@@ -29,7 +23,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String MISC_BG = "bg";
 
     public SQLiteHelper(Context context) {
-        super(context, "database.db", null, 8);
+        super(context, "database.db", null, 9);
     }
 
 

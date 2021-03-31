@@ -126,16 +126,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         else if (bg_tracker == 2)
             this.getView().setBackgroundColor(Color.rgb(102, 34, 212));
 
-        if (thePet.getName().equals("")){
-            try {
-                throw new InvalidNameException("You must have at least one character for your pets name");
-            } catch (InvalidNameException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            DB.newPet(reactionImg, petImg);
-        }
+        DB.newPet(reactionImg, petImg);
+
 
     }
 
