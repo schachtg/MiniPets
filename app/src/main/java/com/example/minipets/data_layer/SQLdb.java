@@ -59,7 +59,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
     }
 
     @Override
-    public void delete() {
+    public void delete_all_shop() {
         this.db = this.dbHelper.getWritableDatabase();
         this.db.delete(SQLiteHelper.SHOP_TABLE_NAME, null, null);
     }
@@ -93,7 +93,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
     }
     @Override
-    public void delete_pet() {
+    public void delete_pet_all() {
         this.db = this.dbHelper.getWritableDatabase();
         this.db.delete(SQLiteHelper.PET_TABLE_NAME, null, null);
     }

@@ -1,7 +1,8 @@
-package com.example.minipets.objects;
+package com.example.minipets.objects.IndividualTests;
 
 import android.content.Context;
-import android.widget.ImageView;
+
+import com.example.minipets.objects.Pet;
 
 import org.junit.Test;
 

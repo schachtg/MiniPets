@@ -1,4 +1,6 @@
-package com.example.minipets.objects;
+package com.example.minipets.objects.IndividualTests;
+
+import com.example.minipets.objects.ShopItem;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

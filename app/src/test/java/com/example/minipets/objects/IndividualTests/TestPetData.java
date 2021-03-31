@@ -1,7 +1,8 @@
-package com.example.minipets.objects;
+package com.example.minipets.objects.IndividualTests;
 
 import android.content.Context;
 
+import com.example.minipets.objects.Pet;
 import com.example.minipets.ui.shop.DashboardFragment;
 
 import com.example.minipets.data_layer.TestSQLdbPet;

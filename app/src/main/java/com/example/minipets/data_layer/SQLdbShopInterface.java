@@ -11,5 +11,5 @@ public interface SQLdbShopInterface {
     public long insert_shop(int tok);
     public Cursor get();
     public int update(long id, int tok);
-    public void delete();
+    public void delete_all_shop();
 }
