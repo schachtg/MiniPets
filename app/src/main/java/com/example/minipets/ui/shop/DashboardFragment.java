@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLdb;
-import com.example.minipets.data_layer.ShopFakeDatabase;
 import com.example.minipets.logic.StringObjectConvert;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
@@ -33,7 +32,6 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private ShopItem[] shopItems;
     private Shop newShop;
     int tokens;
-    private ShopFakeDatabase DB;
     SQLdb db;
     private StringObjectConvert sc = new StringObjectConvert();
 
@@ -51,8 +49,6 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         lvShopItems = (ListView) getView().findViewById(R.id.lvShopItems);
         currTokens = (TextView) getView().findViewById(R.id.tokens);
         newShop = new Shop();
-        DB = new ShopFakeDatabase(newShop);
-        tokens = DB.getCurrentTokens();
         shopItems = newShop.getAvailableItems();
 
 
@@ -88,11 +84,10 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         shopItems = newShop.getAvailableItems();
         newShop.addBoughtItems(shopItems[position]);
         newShop.itemsListBought();
-        DB.updateTokens();
-        int test = db.update(1, DB.getCurrentTokens());
+        int test = db.update(1, newShop.remTokens());
         System.out.println(test);
         Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
-        Toast.makeText(getActivity(), "Tokens left "+DB.getCurrentTokens(), Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
         Toast toast = new Toast(getActivity());
         //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
         toast.setText("Bought: "+shopItems[position].getName());
