@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +19,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.minipets.custom_exceptions.InvalidNameException;
 import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.objects.Pet;
 import com.example.minipets.data_layer.PetFakeDatabase;
