@@ -76,20 +76,20 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
     @Override
     public Cursor get_pet() {
         this.db = this.dbHelper.getWritableDatabase();
-        Cursor cursor = this.db.query(SQLiteHelper.PET_TABLE_NAME, new String[]{SQLiteHelper.PET_NAME, SQLiteHelper.PET_TYPE, SQLiteHelper.PET_OUTFIT, SQLiteHelper.PET_HAPPY}, null, null, null, null, null);
+        Cursor cursor = this.db.query(SQLiteHelper.PET_TABLE_NAME, new String[]{SQLiteHelper.PET_NAME, SQLiteHelper.PET_TYPE,  SQLiteHelper.PET_HAPPY, SQLiteHelper.PET_OUTFIT}, null, null, null, null, null);
         if (cursor != null){
             cursor.moveToFirst();
         }
         return cursor;
     }
     @Override
-    public int update_pet(long id, String name, String type, String outfit, int happy) {
+    public int update_pet(long id, String name, String type, int happy, String outfit) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SQLiteHelper.PET_NAME, name);
         cv.put(SQLiteHelper.PET_TYPE, type);
-        cv.put(SQLiteHelper.PET_OUTFIT, outfit);
         cv.put(SQLiteHelper.PET_HAPPY, happy);
+        cv.put(SQLiteHelper.PET_OUTFIT, outfit);
         return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
     }
     @Override

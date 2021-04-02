@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String PET_TABLE = "create Table PetInformation(_id INTEGER primary key AUTOINCREMENT, name TEXT, type TEXT, outfit TEXT, happy INTEGER )";
+    private static final String PET_TABLE = "create Table PetInformation(_id INTEGER primary key AUTOINCREMENT, name TEXT, type TEXT, happy INTEGER, outfit TEXT )";
     private static final String SHOP_TABLE = "create Table ShopInformation(id INTEGER primary key AUTOINCREMENT, tokens INTEGER )";
     private static final String OTHER_TABLE = "create Table MiscInfo(id_ INTEGER primary key AUTOINCREMENT, timeAway DOUBLE, bg INTEGER )";
     public static final String PET_TABLE_NAME = "PetInformation";
@@ -23,7 +23,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String MISC_BG = "bg";
 
     public SQLiteHelper(Context context) {
-        super(context, "database.db", null, 11);
+        super(context, "database.db", null, 15);
     }
 
 

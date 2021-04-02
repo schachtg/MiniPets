@@ -46,6 +46,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         shopItems = newShop.getAvailableItems();
         dbLogic = new ShopDBLogic(getActivity());
         dbLogic.init_shop(newShop, tokens);
+        dbLogic.update_shop(newShop.remTokens());
         ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, shopItems);
         lvShopItems.setAdapter(itemAdapter);
         lvShopItems.setOnItemClickListener(this);

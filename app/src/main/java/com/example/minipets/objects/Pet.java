@@ -1,14 +1,14 @@
 package com.example.minipets.objects;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
-import java.util.Calendar;
-import java.util.Date;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLiteHelper;
+
+import java.util.Calendar;
+import java.util.Date;
 
 // Class which handles all information about the pet
 public class Pet
@@ -207,6 +207,12 @@ public class Pet
     public String getType(){return type;}
 
     public double getDiff(){return diff;}
+
+    public void setName(String name){this.name = name;}
+
+    public void setHappiness(int happiness){this.happiness = happiness;}
+
+    public void setType(String type){this.type = type;}
 
     public void setLastLogin()
     {

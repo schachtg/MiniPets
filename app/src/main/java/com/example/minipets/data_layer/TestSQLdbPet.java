@@ -54,7 +54,7 @@ public class TestSQLdbPet implements SQLdbPetInterface {
     }
 
     @Override
-    public int update_pet(long id, String name, String type, String outfit, int happy) {
+    public int update_pet(long id, String name, String type, int happy, String outfit) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SQLiteHelper.PET_NAME, name);

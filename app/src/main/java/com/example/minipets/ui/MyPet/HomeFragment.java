@@ -59,10 +59,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
 
         // Create new pet if one doesn't exist in database
         //db is only still here to make sure nothing else breaks. will be gone since we won't need it anymore.
-        thePet = new Pet("Chester", "Cat");
+        //System.out.println("This is the outfit before: " + thePet.getOutfit());
+        thePet = new Pet("Chester", "Cat", 50, "none");
+        System.out.println("This is the name after creation: " + thePet.getOutfit());
         petDBLogic = new PetDBLogic(getActivity());
-        petDBLogic.init_pet(thePet);
-
+        thePet = petDBLogic.init_pet(thePet);
+        System.out.println("This is the outfit after init: " + thePet.getOutfit());
         //THIS CODE WILL BE GONE DW, LATER DAYS LATER DAYS
 
         // Get attributes of current pet in the database
@@ -128,12 +130,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
         // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
         listen.setValue(thePet.getOutfit());
         listen.observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                petDBLogic.update_pet(thePet);
+                petDBLogic.update_pet(thePet.getName(), thePet.getType(), thePet.getHappiness(), thePet.getOutfit());
                 thePet.setLastLogin();
             }
         });

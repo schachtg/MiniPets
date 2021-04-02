@@ -17,7 +17,7 @@ public class PetDBLogic {
         db = new SQLdb(con);
     }
 
-    public void init_pet(Pet thePet){
+    public Pet init_pet(Pet thePet){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -26,17 +26,18 @@ public class PetDBLogic {
         if (db.get_pet().getCount()>0){ //pet already exists
             Cursor cursor = db.get_pet();
             cursor.moveToFirst();
-            thePet = new Pet(cursor.getString(0), cursor.getString(1), cursor.getInt(3), cursor.getString(2));
-            System.out.println(thePet.getOutfit());
+            System.out.println("This is the value before the init: " + cursor.getString(3));
+            thePet = new Pet(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
         }
         else {
-            thePet = new Pet("Chester", "Cat");
+            thePet = new Pet("Chester", "Cat", 50, "none");
             long insert = db.insert_pet(thePet.getName(), thePet.getType(), thePet.getOutfit(), thePet.getHappiness());
+            System.out.println("are we actually hitting here?");
         }
+        return thePet;
     }
 
-    public void update_pet(Pet thePet){
-        db.update_pet(1,thePet.getName(), thePet.getType(), thePet.getOutfit(), thePet.getHappiness());
-        System.out.println(thePet.getOutfit());
+    public void update_pet(String name, String type, int happy, String outfit){
+        db.update_pet(1,name, type, happy, outfit);
     }
 }
