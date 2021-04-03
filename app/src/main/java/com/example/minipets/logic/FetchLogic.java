@@ -14,39 +14,64 @@ public class FetchLogic implements FetchGameLogic {
     protected int mapWidth;
     protected int mapHeight;
 
-    public FetchLogic( int mapWidth, int mapHeight, int petWidth, int petHeight, int x_pos, int y_pos){
+    protected boolean petStateInitialised = false;  //checks wether declairPetStats has been declaired at all
+    protected boolean startFetchGame = false;       //
+
+    public FetchLogic( int mapWidth, int mapHeight){
 
         Log.d("FetchLogic", "fetch logic created");
         Log.d("FetchLogic", String.format("Constructer recieved screen dimensions width = %d, height = %d", mapWidth, mapHeight));
-        Log.d("FetchLogic", String.format("Constructer recieved pet dimensions width = %d, height = %d", petWidth, petHeight));
-        Log.d("FetchLogic", String.format("Constructer recieved pet position x = %d, y = %d", x_pos, y_pos));
+
 
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
 
-        //create the current state of the game
-        this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos, 0);
-
-        //create the next directive
+        //create blank directives for prevDirective and nextDirective
+        this.prevDirective = new FetchDirective(0,0,0,0,0);
         this.nextDirective = this.prevDirective.copy();
-        this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+
+        //make sure game logic knows that it has not had petState initialised yet (we don't have size or dimensions of the pet image)
+        this.petStateInitialised = false;
+    }
+
+    // this only needs to be called once, but could easily be modified to allow the
+    // resizing of the pet image by the UI layer
+    //------------------------------------------------------------------------------------------------------
+    public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos){
+        Log.d("FetchLogic", String.format("Constructer recieved pet dimensions width = %d, height = %d", petWidth, petHeight));
+        Log.d("FetchLogic", String.format("Constructer recieved pet position x = %d, y = %d", x_pos, y_pos));
+        if(petWidth > 0 && petHeight > 0 && 0 <= x_pos && x_pos <= this.mapHeight && 0 <= y_pos && y_pos <= this.mapHeight){
+            if(!petStateInitialised && petWidth != prevDirective.getPetWidth() && petHeight != prevDirective.getPetHeight() && x_pos != prevDirective.getPetPositionX() && y_pos != prevDirective.getPetPositionY()) {
+                this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos, this.prevDirective.getPoints());
+                this.nextDirective = this.prevDirective.copy();
+                this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+                this.petStateInitialised = true;
+            }
+        }
     }
 
 
     //used incase the player just needs a new directive for some reason
     public UiFetchDirective getNewDirective(){
 
-        Log.d("FetchLogic", "new directive requested");
+        UiFetchDirective toUI = null;  //the directive to send to the UI
 
-        //the next directive becomes the directive we will send
-        this.prevDirective = this.nextDirective;
+        if(petStateInitialised) {
+            Log.d("FetchLogic", "new directive requested");
 
-        //create a new directive for the next time this runs
-        this.nextDirective = this.nextDirective.copy();
-        this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+            //the next directive becomes the directive we will send
+            this.prevDirective = this.nextDirective;
 
-        //pass the UI a coppy of the directive we wish to send
-        return this.prevDirective.copy();
+            //create a new directive for the next time this runs
+            this.nextDirective = this.nextDirective.copy();
+            this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+
+            //pass the UI a copy of the directive we wish to send
+            toUI = this.prevDirective.copy();
+        }
+        //Silent else
+            //toUI = null;
+        return toUI;
     }
 
 
@@ -69,7 +94,7 @@ public class FetchLogic implements FetchGameLogic {
         Log.d("FetchLogic", String.format("pet is at x=[%d, %d], y=[%d, %d]", minX, maxX, minY, maxY));
 
         //check if click location is on the pets area
-        if(minX <= x_pos && x_pos <= maxX && minY <= y_pos && y_pos <= maxY){
+        if(petStateInitialised && minX <= x_pos && x_pos <= maxX && minY <= y_pos && y_pos <= maxY){
             //click occurred on the pet
 
             Log.d("FetchLogic", "click occurred on the pet");
@@ -81,7 +106,7 @@ public class FetchLogic implements FetchGameLogic {
             petWasClicked = true;
         }
 
-        //indicate to UI wether pet was clicked
+        //indicate to UI wether pet was clicked, note that if pet has not been initialised it cannot have been clicked
         return petWasClicked;
     }
 
