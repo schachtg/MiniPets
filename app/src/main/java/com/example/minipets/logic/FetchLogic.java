@@ -1,5 +1,7 @@
 package com.example.minipets.logic;
 
+import android.util.Log;
+
 import com.example.minipets.ui.fetch.FetchDirective;
 import com.example.minipets.ui.fetch.UiFetchDirective;
 
@@ -13,6 +15,12 @@ public class FetchLogic implements FetchGameLogic {
     protected int mapHeight;
 
     public FetchLogic( int mapWidth, int mapHeight, int petWidth, int petHeight, int x_pos, int y_pos){
+
+        Log.d("FetchLogic", "fetch logic created");
+        Log.d("FetchLogic", String.format("Constructer recieved screen dimensions width = %d, height = %d", mapWidth, mapHeight));
+        Log.d("FetchLogic", String.format("Constructer recieved pet dimensions width = %d, height = %d", petWidth, petHeight));
+        Log.d("FetchLogic", String.format("Constructer recieved pet position x = %d, y = %d", x_pos, y_pos));
+
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
 
@@ -27,6 +35,9 @@ public class FetchLogic implements FetchGameLogic {
 
     //used incase the player just needs a new directive for some reason
     public UiFetchDirective getNewDirective(){
+
+        Log.d("FetchLogic", "new directive requested");
+
         //the next directive becomes the directive we will send
         this.prevDirective = this.nextDirective;
 
@@ -46,15 +57,22 @@ public class FetchLogic implements FetchGameLogic {
     public boolean clickDetected(int x_pos, int y_pos){
         boolean petWasClicked = false;
 
+        Log.d("FetchLogic", "click detected called");
+
         //determine if this click happened where the pet was
         int minX = this.prevDirective.getPetPositionX();
         int maxX = minX + this.prevDirective.getPetWidth();
         int minY = this.prevDirective.getPetPositionY();
         int maxY = minY + this.prevDirective.getPetHeight();
 
+        Log.d("FetchLogic", String.format("Click occurred at x=%d, y=%d", x_pos, y_pos));
+        Log.d("FetchLogic", String.format("pet is at x=[%d, %d], y=[%d, %d]", minX, maxX, minY, maxY));
+
         //check if click location is on the pets area
         if(minX <= x_pos && x_pos <= maxX && minY <= y_pos && y_pos <= maxY){
             //click occurred on the pet
+
+            Log.d("FetchLogic", "click occurred on the pet");
 
             // increase total number of points
             this.nextDirective.addPoints(5);
