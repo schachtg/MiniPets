@@ -15,7 +15,6 @@ public class FetchLogic implements FetchGameLogic {
     protected int mapHeight;
 
     protected boolean petStateInitialised = false;  //checks wether declairPetStats has been declaired at all
-    protected boolean startFetchGame = false;       //
 
     public FetchLogic( int mapWidth, int mapHeight){
 
