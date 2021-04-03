@@ -85,6 +85,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         inventoryList.setAdapter(adapter);
         inventoryList.setOnItemSelectedListener(this);
 
+        // Checks if user hasn't logged in recently, and penalizes if necessary
+        thePet.calcLastLogin();
+
         countDownTimer = new CountDownTimer(1000, 1000)
         {
             @Override
