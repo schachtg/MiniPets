@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.minipets.ui.fetch.FetchDirective;
 import com.example.minipets.ui.fetch.UiFetchDirective;
 
-public class FetchLogic implements FetchGameLogic {
+public class FetchLogic implements IFetchGameLogic {
 
     //Logic knows everything about the FetchDirective Object because it calls literally every method in FetchDirective
 
@@ -35,6 +35,8 @@ public class FetchLogic implements FetchGameLogic {
 
     // this only needs to be called once, but could easily be modified to allow the
     // resizing of the pet image by the UI layer
+    //TODO throw some exception if the pet's initial state is invalid
+    //TODO throw an exception if the pet's width is invalid
     //------------------------------------------------------------------------------------------------------
     public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos){
         Log.d("FetchLogic", String.format("Constructer recieved pet dimensions width = %d, height = %d", petWidth, petHeight));

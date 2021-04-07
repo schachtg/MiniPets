@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
-import com.example.minipets.logic.FetchGameLogic;
+import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.FetchLogic;
 
 public class FetchActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class FetchActivity extends AppCompatActivity {
 
     protected ImageView pet_image;
 
-    protected FetchGameLogic game_logic;
+    protected IFetchGameLogic game_logic;
 
     protected TextView points;
 
