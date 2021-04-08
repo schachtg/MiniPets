@@ -46,27 +46,26 @@ public class TestFetchLogic {
     private static int max_y;
 
 
-    //TODO commented out tests require exceptions that i have not implimented in the Fetch Logic
-
     @Before
     public void setUp(){
-        myLogic = new FetchLogicUnitTestVersion(SCREEN_WIDTH, SCREEN_HEIGHT);
+        myLogic = new FetchLogic(SCREEN_WIDTH, SCREEN_HEIGHT);
         old_directive = null;
         cur_directive = null;
     }
 
-    //TODO make sure initialising the pet properly works
+
+    //make sure initialising the pet properly works
     @Test
     public void properInitializePetTest(){
         //set valid pet state
         setValidPetState();
 
         //verify pet state is valid
-        assertTrue("", myLogic.isPetInitialized)
+        assertTrue("pet initialization with valid state failed", myLogic.isPetInitialized());
     }
 
 
-    //TODO asking for a directive returns a directive if the pet has a valid state
+    // asking for a directive returns a directive if the pet has a valid state
     @Test
     public void getDirectiveTest(){
         //set valid pet state
@@ -79,7 +78,8 @@ public class TestFetchLogic {
         assertNotNull("Pet in valid state has received no directive from logic.", cur_directive);
     }
 
-    //TODO directives do not generate invalid positions for the pet
+
+    // directives do not generate invalid positions for the pet
     @Test
     public void directivePositionsTest(){
         boolean validPos;
@@ -103,7 +103,8 @@ public class TestFetchLogic {
         }
     }
 
-    //TODO clicking on the space the pet occupies is read as clicking on the pet
+
+    // clicking on the space the pet occupies is read as clicking on the pet
     @Test
     public void clickPetTest(){
         //set valid pet state
@@ -118,7 +119,8 @@ public class TestFetchLogic {
 
     }
 
-    //TODO clicking on the space the pet does not occupy is not read as clicking on the pet
+
+    //clicking on the space the pet does not occupy is not read as clicking on the pet
     @Test
     public void missPetTest(){
         //set valid pet state
@@ -129,10 +131,12 @@ public class TestFetchLogic {
         assertFalse("clicking on space not occupied by pet was detected as clicking on pet", myLogic.clickDetected(miss_x,miss_y));
     }
 
-    //TODO clicking the pet in it's inital position is valid
+
+    //clicking the pet in it's inital position is valid
     //this would just be a duplicate of clickPetTest
 
-    //TODO clicking on the pet results in a point boost
+
+    // clicking on the pet results in a point boost
     @Test
     public void clickPetPointTest(){
         int prevPoints;
@@ -155,7 +159,8 @@ public class TestFetchLogic {
         assertTrue("clicking on the pet successfully does not increase points total",myLogic.getPoints() > prevPoints);
     }
 
-    //TODO not clicking on a space that is not the pet does not result in a point boost
+
+    // not clicking on a space that is not the pet does not result in a point boost
     @Test
     public void missPetPointTest(){
         int prevPoints;
@@ -180,7 +185,7 @@ public class TestFetchLogic {
 
 
 
-    //TODO clicking on the pet, getting a new location, then clicking on the pet again will be detected propperly [position updates propperly]
+    // clicking on the pet, getting a new location, then clicking on the pet again will be detected propperly [position updates propperly]
     @Test
     public void updateLocationTest(){
         //set valid pet state
@@ -201,7 +206,8 @@ public class TestFetchLogic {
         assertTrue("second click on the pet was not detected", myLogic.clickDetected(pet_center_x, pet_center_y));
     }
 
-    //TODO clicking on the pet, not getting a new location, then clicking on the pet again will be detected as clicking the pet
+
+    // clicking on the pet, not getting a new location, then clicking on the pet again will be detected as clicking the pet
     //this is to allow for flexibility in newer code (modifications may require pet not to move)
     @Test
     public void ignorePetClickTest(){
@@ -216,74 +222,114 @@ public class TestFetchLogic {
         assertTrue("clicking on pet a second time without getting a new directive was not counted as clicking on the pet (and this is bad)", myLogic.clickDetected(pet_center_x, pet_center_y));
     }
 
-    //TODO invalid pet dimensions will not initialise the pet (x2)
+
+    // invalid pet dimensions will not initialise the pet (x2)
     @Test
     public void invalidDimensionsTest(){
-        //initialise pet with negative size
 
-        //verify that pet state is not initialized
+        myLogic.definePetState(INVALID_PET_WIDTH_ONE, VALID_PET_HEIGHT, VALID_PET_XPOS, VALID_PET_YPOS);
+        assertFalse("Negative pet width should not be valid", myLogic.isPetInitialized());
 
-        //initialise pet with size larger than screen
+        myLogic.definePetState(VALID_PET_WIDTH, INVALID_PET_HEIGHT_ONE, VALID_PET_XPOS, VALID_PET_YPOS);
+        assertFalse("Negative Pet height should not be valid", myLogic.isPetInitialized());
 
-        //verify pet state is not initialized
+        myLogic.definePetState(INVALID_PET_WIDTH_TWO, VALID_PET_HEIGHT, VALID_PET_XPOS, VALID_PET_YPOS);
+        assertFalse("Pet width larger than screen should not be valid", myLogic.isPetInitialized());
+
+        myLogic.definePetState(VALID_PET_WIDTH, INVALID_PET_HEIGHT_TWO, VALID_PET_XPOS, VALID_PET_YPOS);
+        assertFalse("Pet Height larger than screen should not be valid", myLogic.isPetInitialized());
     }
 
 
-    //TODO invalid pet dimensions (too large) will not detect an click to be a click on the pet
+    //invalid pet dimensions (too large) will not detect an click to be a click on the pet
     //NOTE: the pet takes up more than the entire screen
     @Test
     public void invalidSizeClickTest(){
         //initialise pet with too-large size
+        myLogic.definePetState(INVALID_PET_WIDTH_TWO, INVALID_PET_HEIGHT_TWO, VALID_PET_XPOS, VALID_PET_YPOS);
+        pet_x_pos = VALID_PET_XPOS;
+        pet_y_pos = VALID_PET_YPOS;
+        getClickOnPetLocation();
 
         //verify that clicking on the pet returns false
+        assertFalse("invalid pet size should never result in a click being detected as clicking a pet", myLogic.clickDetected(pet_center_x, pet_center_y));
     }
 
-    //TODO invalid initial pet positions will not initialise pet
+
+    // invalid initial pet positions will not initialise pet
     @Test
     public void invalidInitialPositionTest(){
         //initialise pet to negative coordinates (off the screen)
+        myLogic.definePetState(VALID_PET_WIDTH, VALID_PET_HEIGHT, INVALID_PET_XPOS_ONE, INVALID_PET_YPOS_ONE);
 
         //verify that the pet state is not initialised
+        assertFalse("pet positioned at negative coordinate should not be valid",myLogic.isPetInitialized());
 
         //initialise the pet to coordinates that result in it being partially off the screen
+        myLogic.definePetState(VALID_PET_WIDTH, VALID_PET_HEIGHT, INVALID_PET_XPOS_TWO, INVALID_PET_YPOS_TWO);
 
         //verify that the pet state is not initialized
+        assertFalse("pet position that results in pet partially off screen should not be valid", myLogic.isPetInitialized());
     }
 
-    //TODO if the pet is not initialised, clicking anywhere will not count as clicking on the pet
+
+    // if the pet is not initialised, clicking anywhere will not count as clicking on the pet
     @Test
     public void uninitialisedPetClickTest(){
         //verify that clicking on the pet (on screen) does not count as clicking on the pet (logic)
+        for(pet_x_pos = 0; pet_x_pos < SCREEN_WIDTH; pet_x_pos += 10){
+            for(pet_y_pos = 0; pet_y_pos < SCREEN_HEIGHT; pet_y_pos += 10){
+                assertFalse("uninitialized pet should never be clicked", myLogic.clickDetected(pet_x_pos, pet_y_pos));
+            }
+        }
     }
 
-    //TODO if the initialization is done improperly, clicking anywhere will not count as clicking on the pet
+
+    // if the initialization is done improperly, clicking anywhere will not count as clicking on the pet
     @Test
     public void improperlyInitializedClick(){
         //initialise the pet to an invalid position
+        myLogic.definePetState(VALID_PET_WIDTH, VALID_PET_HEIGHT, INVALID_PET_XPOS_TWO, INVALID_PET_YPOS_TWO);
 
-        //make sure pet state is nt valid
+        //make sure pet state is not valid
+        assertFalse("pet state should not be valid at this point", myLogic.isPetInitialized());
 
         //try clicking all over the screen, verify that none of the clicks are read as clicking on the pet
+        for(pet_x_pos = 0; pet_x_pos < SCREEN_WIDTH; pet_x_pos += 10){
+            for(pet_y_pos = 0; pet_y_pos < SCREEN_HEIGHT; pet_y_pos += 10){
+                assertFalse("uninitialized pet should never be clicked", myLogic.clickDetected(pet_x_pos, pet_y_pos));
+            }
+        }
     }
 
-    //TODO asking for a directive without initialising the pet returns null
+
+    //asking for a directive without initialising the pet returns null
     @Test
     public void uninitializedDirectiveTest(){
+        //make sure pet state is not initialized
+        assertFalse("Pet state should not be initialized at this point", myLogic.isPetInitialized());
+
         //verify asking for a directive returns null
+        assertNull("directives should not be returned if pet state has not been initialized", myLogic.getNewDirective());
     }
 
-    //TODO asking for a directive after initializing the pet improperly returns null
+
+    // asking for a directive after initializing the pet improperly returns null
     @Test
     public void improperlyInitializedDirectiveTest(){
         //initialize the pet to an invalid position
+        myLogic.definePetState(VALID_PET_WIDTH, VALID_PET_HEIGHT, INVALID_PET_XPOS_TWO, INVALID_PET_YPOS_TWO);
 
         //make sure the pet state is not valid
+        assertFalse("Pet state should not be valid for this test", myLogic.isPetInitialized());
 
         //verify asking for a directive returns null
+        assertNull("directives should not be returned if pet state has not been properly initialized", myLogic.getNewDirective());
     }
 
-    //TODO 5 randomly generated pet positions will result in at-least one location that isn't a duplicate (random test)
-    //TODO getting new directives will get new pet locations (unless the random number generation has somehow generated the same pair of numbers)
+
+    //5 randomly generated pet positions will result in at-least one location that isn't a duplicate (random test)
+    // getting new directives will get new pet locations (unless the random number generation has somehow generated the same pair of numbers)
     @Test
     public void randomPositionTest(){
         UiFetchDirective[] dir_list = new UiFetchDirective[5];
@@ -321,7 +367,6 @@ public class TestFetchLogic {
     }
 
     private void setValidPetState(){
-        //TODO need to include try catch here once we have error handling
         myLogic.definePetState(VALID_PET_WIDTH, VALID_PET_HEIGHT, VALID_PET_XPOS, VALID_PET_YPOS);
         min_x = 0;
         max_x = SCREEN_WIDTH - VALID_PET_WIDTH;
@@ -366,18 +411,5 @@ public class TestFetchLogic {
         else if((pet_y_pos + pet_height) < SCREEN_HEIGHT){
             miss_y = (SCREEN_HEIGHT + pet_y_pos + pet_height)/2;
         }
-    }
-
-
-
-    //A modified version of the FetchLogic that allows us to moniter wether the state of the pet
-    //has been initialized
-    private class FetchLogicUnitTestVersion extends FetchLogic {
-
-        public FetchLogicUnitTestVersion(int mapWidth, int mapHeight) {
-            super(mapWidth, mapHeight);
-        }
-
-        public boolean isPetInitialized(){return petStateInitialised;}
     }
 }
