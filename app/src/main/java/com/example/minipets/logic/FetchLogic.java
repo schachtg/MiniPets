@@ -32,11 +32,17 @@ public class FetchLogic implements IFetchGameLogic {
 
     // this only needs to be called once, but could easily be modified to allow the
     // resizing of the pet image by the UI layer
-    //TODO throw some exception if the pet's initial state is invalid
-    //TODO throw an exception if the pet's width is invalid
     //------------------------------------------------------------------------------------------------------
     public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos){
-        if(petWidth > 0 && petHeight > 0 && 0 <= x_pos && x_pos <= this.mapHeight && 0 <= y_pos && y_pos <= this.mapHeight){
+        if(petWidth < this.mapWidth &&
+                0 < petWidth &&
+                petHeight < this.mapHeight &&
+                0 < petHeight &&
+                0 <= x_pos &&
+                (x_pos + petWidth) <= this.mapWidth &&
+                0 <= y_pos &&
+                (y_pos + petHeight) <= this.mapHeight){
+
             if(petWidth != prevDirective.getPetWidth() && petHeight != prevDirective.getPetHeight() && x_pos != prevDirective.getPetPositionX() && y_pos != prevDirective.getPetPositionY()) {
                 this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos);
                 this.nextDirective = this.prevDirective.copy();
