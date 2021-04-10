@@ -1,7 +1,7 @@
 package com.example.minipets.objects.IndividualTests;
 
 import com.example.minipets.logic.FetchLogic;
-import com.example.minipets.ui.fetch.UiFetchDirective;
+import com.example.minipets.ui.fetch.IFetchDirective;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,8 +31,8 @@ public class TestFetchLogic {
     private static int pet_x_pos;
     private static int pet_y_pos;
     private static FetchLogic myLogic;
-    private static UiFetchDirective old_directive;
-    private static UiFetchDirective cur_directive;
+    private static IFetchDirective old_directive;
+    private static IFetchDirective cur_directive;
 
     private static int pet_center_x;    //click here will...
     private static int pet_center_y;    //...be click on pet
@@ -332,7 +332,7 @@ public class TestFetchLogic {
     // getting new directives will get new pet locations (unless the random number generation has somehow generated the same pair of numbers)
     @Test
     public void randomPositionTest(){
-        UiFetchDirective[] dir_list = new UiFetchDirective[5];
+        IFetchDirective[] dir_list = new IFetchDirective[5];
         boolean different_detected = false; //did the position portion of directives change when we asked for a new directive
 
         //initialise the pet in a valid state

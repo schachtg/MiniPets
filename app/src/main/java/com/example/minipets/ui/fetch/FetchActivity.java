@@ -3,7 +3,6 @@ package com.example.minipets.ui.fetch;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +26,7 @@ public class FetchActivity extends AppCompatActivity {
 
     protected TextView points;
 
-    protected UiFetchDirective directive;
+    protected IFetchDirective directive;
 
     protected Button start_fetch;
 

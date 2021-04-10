@@ -1,6 +1,6 @@
 package com.example.minipets.logic;
 
-import com.example.minipets.ui.fetch.UiFetchDirective;
+import com.example.minipets.ui.fetch.IFetchDirective;
 
 public class FetchLogic implements IFetchGameLogic {
 
@@ -53,9 +53,9 @@ public class FetchLogic implements IFetchGameLogic {
 
 
     //used incase the player just needs a new directive for some reason
-    public UiFetchDirective getNewDirective(){
+    public IFetchDirective getNewDirective(){
 
-        UiFetchDirective toUI = null;  //the directive to send to the UI
+        IFetchDirective toUI = null;  //the directive to send to the UI
 
         if(petStateInitialised) {
 

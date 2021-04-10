@@ -1,6 +1,6 @@
 package com.example.minipets.ui.fetch;
 
-public interface UiFetchDirective {
+public interface IFetchDirective {
     int getPetPositionX();
     int getPetPositionY();
 }
