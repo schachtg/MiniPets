@@ -3,7 +3,7 @@ package com.example.minipets.objects.IndividualTests;
 import android.content.Context;
 
 import com.example.minipets.objects.Shop;
-import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Stock;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -48,19 +48,19 @@ public class TestShop {
     @Test
     public void testAddBoughtItems(){
         Shop shop;
-        ShopItem shopItem;
+        Stock stock;
 
         System.out.println("\nStarting testAddBoughtItems");
         shop = new Shop();
-        shopItem = shop.getAvailableItems()[1];
+        stock = shop.getAvailableItems()[1];
 
         //testing adding the first item
-        shop.addBoughtItems(shopItem);
+        shop.addBoughtItems(stock);
         assertEquals("Fish", shop.getBoughtItems().get(0).getName());
 
         //testing adding multiple items
-        shop.addBoughtItems(shopItem);
-        shop.addBoughtItems(shopItem);
+        shop.addBoughtItems(stock);
+        shop.addBoughtItems(stock);
         assertEquals(3, shop.getBoughtItems().get(0).getCount());
 
         System.out.println("Finished testAddBoughtItems");

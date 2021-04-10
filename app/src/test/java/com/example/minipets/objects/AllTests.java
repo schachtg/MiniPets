@@ -7,13 +7,13 @@ import org.junit.runners.Suite;
 
 import com.example.minipets.objects.IndividualTests.TestPet;
 import com.example.minipets.objects.IndividualTests.TestShop;
-import com.example.minipets.objects.IndividualTests.TestShopItem;
+import com.example.minipets.objects.IndividualTests.TestStock;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         //add all of the above test files here
         TestShop.class,
-        TestShopItem.class,
+        TestStock.class,
         TestPet.class
 })
 

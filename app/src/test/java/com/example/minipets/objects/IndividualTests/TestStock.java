@@ -1,59 +1,59 @@
 package com.example.minipets.objects.IndividualTests;
 
-import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Stock;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TestShopItem {
+public class TestStock {
 
     @Test
     public void testShopItem(){
-        ShopItem shopItem;
+        Stock stock;
 
         System.out.println("\nStarting testShopItem");
 
-        shopItem = new ShopItem("Food", 7);
-        assertNotNull(shopItem);
-        assertEquals("Food", shopItem.getName());
-        assertEquals(7, shopItem.getCost());
-        assertEquals(1, shopItem.getCount());
+        stock = new Stock("Food", 7);
+        assertNotNull(stock);
+        assertEquals("Food", stock.getName());
+        assertEquals(7, stock.getCost());
+        assertEquals(1, stock.getCount());
 
         System.out.println("Finished testShopItem");
     }
 
     @Test
     public void testAddCount(){
-        ShopItem shopItem;
+        Stock stock;
 
         System.out.println("\nStarting testAddCount");
 
-        shopItem = new ShopItem("Food", 7);
-        shopItem.addCount();
-        assertEquals(2, shopItem.getCount());
+        stock = new Stock("Food", 7);
+        stock.addCount();
+        assertEquals(2, stock.getCount());
 
         System.out.println("Finished testAddCount");
     }
 
     @Test
     public void testGetTotalCost(){
-        ShopItem shopItem;
+        Stock stock;
 
         System.out.println("\nStarting testGetTotalCost");
-        shopItem = new ShopItem("Food", 7);
-        shopItem.addCount();
-        assertEquals(14, shopItem.getTotalCost());
+        stock = new Stock("Food", 7);
+        stock.addCount();
+        assertEquals(14, stock.getTotalCost());
 
         System.out.println("Finished testGetTotalCost");
     }
 
     @Test
     public void testToString(){
-        ShopItem shopItem;
+        Stock stock;
 
         System.out.println("\nStarting testToString");
-        shopItem = new ShopItem("Food", 7);
-        assertEquals("Food costs 7 and total price 7", shopItem.toString());
+        stock = new Stock("Food", 7);
+        assertEquals("Food costs 7 and total price 7", stock.toString());
 
         System.out.println("Finished testToString");
     }

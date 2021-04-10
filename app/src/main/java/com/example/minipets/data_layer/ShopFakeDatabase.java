@@ -2,12 +2,12 @@ package com.example.minipets.data_layer;
 
 import android.widget.ImageView;
 
-import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Stock;
 import com.example.minipets.objects.Shop;
 
 public class ShopFakeDatabase {
-    private ShopItem[] availableItems; //list of available shop items
-    private ShopItem[] boughtItems; //list of purchased shop items
+    private Stock[] availableItems; //list of available shop items
+    private Stock[] boughtItems; //list of purchased shop items
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
     private Shop shop;
@@ -15,8 +15,8 @@ public class ShopFakeDatabase {
 
     //constructor
     public ShopFakeDatabase(Shop newShop){
-        availableItems = new ShopItem[MAX_ITEMS];
-        boughtItems = new ShopItem[MAX_ITEMS];
+        availableItems = new Stock[MAX_ITEMS];
+        boughtItems = new Stock[MAX_ITEMS];
         tokens = 1000;
         shop = newShop;
     }
@@ -32,13 +32,13 @@ public class ShopFakeDatabase {
     }
 
     //setter for list of bought items
-    public void setBoughtItems(ShopItem[] boughtItems) {
+    public void setBoughtItems(Stock[] boughtItems) {
         this.boughtItems = boughtItems;
     }
 
     public void addItem(String itemName, int itemCost, int itemSpot, int available )//replace an item with a new one
     {
-        ShopItem newItem = new ShopItem(itemName, itemCost);
+        Stock newItem = new Stock(itemName, itemCost);
         availableItems[itemSpot]=null;
         availableItems[itemSpot]=newItem;
     }

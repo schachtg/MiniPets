@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.logic.ShopDBLogic;
 import com.example.minipets.objects.Shop;
-import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Stock;
 
 public class DashboardFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -24,7 +24,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private  ListView lvShopItems;
     private TextView currTokens;
     private String[] items;
-    private ShopItem[] shopItems;
+    private Stock[] stocks;
     private Shop newShop;
     int tokens;
     ShopDBLogic dbLogic;
@@ -43,11 +43,11 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         lvShopItems = (ListView) getView().findViewById(R.id.lvShopItems);
         currTokens = (TextView) getView().findViewById(R.id.tokens);
         newShop = new Shop();
-        shopItems = newShop.getAvailableItems();
+        stocks = newShop.getAvailableItems();
         dbLogic = new ShopDBLogic(getActivity());
         dbLogic.init_shop(newShop, tokens);
         dbLogic.update_shop(newShop.remTokens());
-        ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, shopItems);
+        ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, stocks);
         lvShopItems.setAdapter(itemAdapter);
         lvShopItems.setOnItemClickListener(this);
 
@@ -57,15 +57,15 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        shopItems = newShop.getAvailableItems();
-        newShop.addBoughtItems(shopItems[position]);
+        stocks = newShop.getAvailableItems();
+        newShop.addBoughtItems(stocks[position]);
         newShop.itemsListBought();
         dbLogic.update_shop(newShop.remTokens());
-        Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity(), "Selected: "+ stocks[position].toString(), Toast.LENGTH_SHORT ).show();
         Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
         Toast toast = new Toast(getActivity());
         //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
-        toast.setText("Bought: "+shopItems[position].getName());
+        toast.setText("Bought: "+ stocks[position].getName());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.show();
         currTokens.setText("Tokens: "+newShop.remTokens());

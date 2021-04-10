@@ -1,12 +1,12 @@
 package com.example.minipets.objects;
 
-public class ShopItem {
+public class Stock {
     private String name; //name of shop item
     private int cost; //cost of item in tokens
     private int count; //count of items available
 
     //constructor
-    public ShopItem(String newName, int newCost){
+    public Stock(String newName, int newCost){
         name = newName;
         cost = newCost;
         count = 1;

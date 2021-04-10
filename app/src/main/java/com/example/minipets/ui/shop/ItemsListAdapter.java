@@ -10,14 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.minipets.R;
-import com.example.minipets.objects.ShopItem;
+import com.example.minipets.objects.Stock;
 
-public class ItemsListAdapter extends ArrayAdapter<ShopItem> {
+public class ItemsListAdapter extends ArrayAdapter<Stock> {
 
     private Context newContext;
     int newResource;
 
-    public ItemsListAdapter(Context context, int resource, ShopItem[] items){
+    public ItemsListAdapter(Context context, int resource, Stock[] items){
         super(context, resource, items);
         newContext = context;
         newResource = resource;
@@ -32,7 +32,7 @@ public class ItemsListAdapter extends ArrayAdapter<ShopItem> {
         int happiness = 5;
 
         //creating a new shop item for the text view
-        ShopItem newItem = new ShopItem(name, cost);
+        Stock newItem = new Stock(name, cost);
 
         LayoutInflater inflater = LayoutInflater.from(newContext);
         convertView = inflater.inflate(newResource, parent, false);

@@ -1,18 +1,14 @@
 package com.example.minipets.objects;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.widget.ImageView;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.data_layer.ShopFakeDatabase;
 
+import java.util.ArrayList;
+
 public class Shop {
-    private ShopItem[] availableItems; //list of available shop items
-    private ArrayList<ShopItem>  boughtItems; //list of purchased shop items
+    private Stock[] availableItems; //list of available shop items
+    private ArrayList<Stock>  boughtItems; //list of purchased shop items
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
     private ShopFakeDatabase DB;
@@ -21,24 +17,24 @@ public class Shop {
 
     //constructor
     public Shop(){
-        availableItems = new ShopItem[MAX_ITEMS];
+        availableItems = new Stock[MAX_ITEMS];
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 3);
-        availableItems[1] =  new ShopItem("Fish", 4);
-        availableItems[2] = new ShopItem("Beef", 3);
-        availableItems[3] = new ShopItem("Frisbee", 5);
-        availableItems[4] = new ShopItem("Ball", 3);
+        availableItems[0] = new Stock("Chicken", 3);
+        availableItems[1] =  new Stock("Fish", 4);
+        availableItems[2] = new Stock("Beef", 3);
+        availableItems[3] = new Stock("Frisbee", 5);
+        availableItems[4] = new Stock("Ball", 3);
     }
 
     //returns an array of the current available shop items
-    public ShopItem[] getAvailableItems() {
+    public Stock[] getAvailableItems() {
         return availableItems;
     }
 
     //return the Array list of bought items
-    public ArrayList<ShopItem> getBoughtItems(){ return boughtItems;}
+    public ArrayList<Stock> getBoughtItems(){ return boughtItems;}
 
     //returns a string array of the current available shop items
     public String[] itemsList(){
@@ -59,7 +55,7 @@ public class Shop {
     }
 
     //adds a bought items into the purchases shop items list
-    public void addBoughtItems(ShopItem newItem) {
+    public void addBoughtItems(Stock newItem) {
         if(boughtItems.isEmpty()){
             boughtItems.add(newItem);
         }else{
