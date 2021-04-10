@@ -1,8 +1,10 @@
-package com.example.minipets.ui.fetch;
+package com.example.minipets.logic;
+
+import com.example.minipets.ui.fetch.UiFetchDirective;
 
 import java.util.Random;
 
-public class FetchDirective implements UiFetchDirective{
+public class FetchDirective implements UiFetchDirective {
     protected int petWidth;
     protected int petHeight;
     protected int petPositionX;

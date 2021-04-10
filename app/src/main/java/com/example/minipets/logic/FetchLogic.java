@@ -1,6 +1,5 @@
 package com.example.minipets.logic;
 
-import com.example.minipets.ui.fetch.FetchDirective;
 import com.example.minipets.ui.fetch.UiFetchDirective;
 
 public class FetchLogic implements IFetchGameLogic {
