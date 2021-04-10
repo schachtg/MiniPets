@@ -1,5 +1,6 @@
 package com.example.minipets.objects;
 
+import com.example.minipets.objects.IndividualTests.TestFetchLogic;
 import com.example.minipets.objects.IndividualTests.TestPet;
 import com.example.minipets.objects.IndividualTests.TestShop;
 import com.example.minipets.objects.IndividualTests.TestShopItem;
@@ -14,7 +15,8 @@ import org.junit.runners.Suite;
         //add all of the above test files here
         TestShop.class,
         TestShopItem.class,
-        TestPet.class
+        TestPet.class,
+        TestFetchLogic.class
 })
 
 
