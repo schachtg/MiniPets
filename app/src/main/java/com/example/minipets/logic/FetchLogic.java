@@ -109,8 +109,9 @@ public class FetchLogic implements IFetchGameLogic {
 
 
     // update currency in DB when window is closing
-    public void gameIsClosing(){
+    public int gameIsClosing(){
         int tokensGained = this.points / 5;
+        return tokensGained;
         //cleanup
             //just kidding, Java is chill like that
     }

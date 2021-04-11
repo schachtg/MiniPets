@@ -58,7 +58,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         shopItems = newShop.getAvailableItems();
-        newShop.addBoughtItems(shopItems[position]);
+        newShop.addBoughtItems(shopItems[position], getActivity());
         newShop.itemsListBought();
         dbLogic.update_shop(newShop.remTokens());
         Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();

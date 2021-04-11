@@ -15,6 +15,7 @@ import androidx.core.view.MotionEventCompat;
 import com.example.minipets.R;
 import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.FetchLogic;
+import com.example.minipets.logic.ShopDBLogic;
 
 public class FetchActivity extends AppCompatActivity {
 
@@ -30,12 +31,15 @@ public class FetchActivity extends AppCompatActivity {
 
     protected Button start_fetch;
 
+    protected ShopDBLogic dbLogic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch);
 
+        dbLogic = new ShopDBLogic(this);
         //get our images
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
         this.pet_image.setPadding(0,0,0,0);
@@ -146,8 +150,8 @@ public class FetchActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-
-        this.game_logic.gameIsClosing();
+        int tokens_gained = this.game_logic.gameIsClosing();
+        dbLogic.gain_tokens(tokens_gained);
         super.onPause();
     }
 }

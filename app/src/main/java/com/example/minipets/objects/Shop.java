@@ -1,14 +1,12 @@
 package com.example.minipets.objects;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.data_layer.ShopFakeDatabase;
+
+import java.util.ArrayList;
 
 public class Shop {
     private ShopItem[] availableItems; //list of available shop items
@@ -25,7 +23,7 @@ public class Shop {
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 3);
+        availableItems[0] = new ShopItem("Chicken", 20000);
         availableItems[1] =  new ShopItem("Fish", 4);
         availableItems[2] = new ShopItem("Beef", 3);
         availableItems[3] = new ShopItem("Frisbee", 5);
@@ -59,18 +57,22 @@ public class Shop {
     }
 
     //adds a bought items into the purchases shop items list
-    public void addBoughtItems(ShopItem newItem) {
-        if(boughtItems.isEmpty()){
-            boughtItems.add(newItem);
-        }else{
-            if(boughtItems.contains(newItem))
-                boughtItems.get(boughtItems.indexOf(newItem)).addCount();
-            else
+    public void addBoughtItems(ShopItem newItem, Context context) {
+        if (tokens - newItem.getCost() >= 0) {
+            if (boughtItems.isEmpty()) {
                 boughtItems.add(newItem);
+            } else {
+                if (boughtItems.contains(newItem))
+                    boughtItems.get(boughtItems.indexOf(newItem)).addCount();
+                else
+                    boughtItems.add(newItem);
+            }
+            //updates tokens after purchase
+            tokens = tokens - newItem.getCost();
         }
-
-        //updates tokens after purchase
-        tokens = tokens - newItem.getCost();
+        else{
+            Toast.makeText(context, "You don't have enough Tokens!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //returns tokens left

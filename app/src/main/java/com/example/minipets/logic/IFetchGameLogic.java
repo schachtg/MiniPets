@@ -7,5 +7,5 @@ public interface IFetchGameLogic {
     public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos);
     public boolean clickDetected(int x_pos, int y_pos);
     public int getPoints();
-    public void gameIsClosing();
+    public int gameIsClosing();
 }
