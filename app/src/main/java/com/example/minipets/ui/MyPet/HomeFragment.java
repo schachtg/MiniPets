@@ -1,5 +1,6 @@
 package com.example.minipets.ui.MyPet;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,25 +22,29 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.data_layer.PetFakeDatabase;
 import com.example.minipets.data_layer.SQLdb;
+import com.example.minipets.enums.Outfits;
+import com.example.minipets.enums.PetType;
+import com.example.minipets.logic.HomeInterface;
+import com.example.minipets.logic.HomeLogic;
 import com.example.minipets.logic.PetDBLogic;
 import com.example.minipets.objects.Pet;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private HomeViewModel homeViewModel;
-    private ImageView reactionImg;  // Shows the pet's reaction image
-    private ImageView petImg;   // Shows the pet's image
-    private ImageView outfitImg;    // Shows the pet's outfit
-    private Pet thePet; // Object containing details about the pet
-    Spinner inventoryList;  // Displays the user's inventory
-    private CountDownTimer countDownTimer;
-    private PetFakeDatabase DB = new PetFakeDatabase();
-    private String[] inventory;
-    private SQLdb db;
+    protected HomeViewModel homeViewModel;
+    //protected ImageView reactionImg;  // Shows the pet's reaction image
+    //protected ImageView petImg;   // Shows the pet's image
+    //protected ImageView outfitImg;    // Shows the pet's outfit
+    protected Pet thePet; // Object containing details about the pet
+    //Spinner inventoryList;  // Displays the user's inventory
+    //protected CountDownTimer countDownTimer;
+    protected String[] inventory;
+    //protected SQLdb db;
     MutableLiveData<String> listen = new MutableLiveData<>(); //listens for a change in outfit
     MutableLiveData<Integer> listen_background = new MutableLiveData<>(); //listens for a change in background
-    private int bg_tracker = 0;
+    protected int bg_tracker = 0;
     PetDBLogic petDBLogic;
+    protected HomeInterface homeLogic;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,60 +62,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //yes this is hardcoded. Iteration one is just the start *100 emoji*
 
-        // Create new pet if one doesn't exist in database
-        //db is only still here to make sure nothing else breaks. will be gone since we won't need it anymore.
-        //System.out.println("This is the outfit before: " + thePet.getOutfit());
-        thePet = new Pet("Chester", "Cat", 50, "none");
-        System.out.println("This is the name after creation: " + thePet.getOutfit());
+        homeLogic = new HomeLogic();
+
+        thePet = new Pet("Chester", PetType.CAT, 50, Outfits.NONE);
         petDBLogic = new PetDBLogic(getActivity());
         thePet = petDBLogic.init_pet(thePet);
-        System.out.println("This is the outfit after init: " + thePet.getOutfit());
-        //THIS CODE WILL BE GONE DW, LATER DAYS LATER DAYS
-
-        // Get attributes of current pet in the database
-        // thePet = new Pet(newName, newType, newHappiness, newOutfit)
-        inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
-
-        // Creates the pet images
-        reactionImg = (ImageView) getView().findViewById(R.id.reactionImage);
-        reactionImg.setVisibility(View.GONE);
-        petImg = (ImageView) getView().findViewById(R.id.petImage);
-        petImg.setOnClickListener(this);    // Sets function for when the pet is clicked
-        outfitImg = (ImageView) getView().findViewById(R.id.outfitImage);
 
         // Sets up the inventory
-        inventoryList = getView().findViewById(R.id.inv_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, inventory);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        inventoryList.setAdapter(adapter);
-        inventoryList.setOnItemSelectedListener(this);
+        //TODO Make this pull from database
+        inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
+        homeLogic.refreshInventory(getView(), getActivity(), this);
 
-        countDownTimer = new CountDownTimer(1000, 1000)
-        {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                reactionImg.setVisibility(View.GONE);
-            }
-        };
-
-        thePet.setViews(reactionImg, petImg, outfitImg, countDownTimer);
-        thePet.setOutfit(thePet.getOutfit());   // Re displays the outfit
-
-        // Updates background
-        if (bg_tracker == 0)
-            this.getView().setBackgroundColor(Color.WHITE);
-        else if (bg_tracker == 1)
-            this.getView().setBackgroundColor(Color.rgb(47, 60, 79));
-        else if (bg_tracker == 2)
-            this.getView().setBackgroundColor(Color.rgb(102, 34, 212));
-
-        DB.newPet(reactionImg, petImg);
-
+        // Creates the pet images
+        homeLogic.refreshPet(thePet, getView(), getActivity(), this);
+        homeLogic.updateBackground(bg_tracker, getView());
 
     }
 
@@ -129,7 +94,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
         listen.setValue(thePet.getOutfit());
         listen.observe(getActivity(), new Observer<String>() {
             @Override
@@ -138,33 +103,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
                 thePet.setLastLogin();
             }
         });
-        if(!text.equals("Inventory"))
-        {
-            String[] splitText = text.split(": ", 2);
 
-            if (splitText[0].equals("Outfit")) {
-                thePet.setOutfit(splitText[1]);
-            } else if (splitText[0].equals("Feed")) {
-                thePet.feed(splitText[1], true);
-            } else if (splitText[0].equals("Background")) {
-                if(splitText[1].equals("Light")) {
-                    bg_tracker = 0;
-                }
-                else if(splitText[1].equals("Dark")) {
-                    bg_tracker = 1;
-                }
-                else if(splitText[1].equals("Purple")) {
-                    bg_tracker = 2;
-                }
-            }
-        }
-        if (bg_tracker == 0)
-            this.getView().setBackgroundColor(Color.WHITE);
-        else if (bg_tracker == 1)
-            this.getView().setBackgroundColor(Color.rgb(47, 60, 79));
-        else if (bg_tracker == 2)
-            this.getView().setBackgroundColor(Color.rgb(102, 34, 212));
-        inventoryList.setSelection(0);  // Resets list to display the word "Inventory"
+        bg_tracker = homeLogic.selectItem(text, thePet, bg_tracker);
+        homeLogic.updateBackground(bg_tracker, getView());
+        homeLogic.resetInventorySelection();
     }
 
     @Override

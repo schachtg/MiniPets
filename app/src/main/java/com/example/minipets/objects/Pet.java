@@ -6,6 +6,10 @@ import android.widget.ImageView;
 
 import com.example.minipets.R;
 import com.example.minipets.data_layer.SQLiteHelper;
+import com.example.minipets.enums.FoodItems;
+import com.example.minipets.enums.Outfits;
+import com.example.minipets.enums.PetType;
+import com.example.minipets.enums.Reactions;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,8 +19,8 @@ public class Pet
 {
     private String name;    // The name of the pet
     private int happiness;  // Represents how happy the pet is
-    private String type;    // The type of pet (eg. cat or dog)
-    private String outfit;     // Id representing the outfit the pet's wearing
+    private PetType type;    // The type of pet (eg. cat or dog)
+    private Outfits outfit;     // Id representing the outfit the pet's wearing
     private boolean[] likedFoods;   // If the pet likes the food for some food id
     private ImageView reactionImg;  // ImageView which displays the pet's reaction
     private ImageView petImg;   // ImageView which displays the pet
@@ -32,18 +36,18 @@ public class Pet
 
     // Constructor
     // Initialize the values for the pet (Used when no pet has been made)
-    public Pet(String newName, String newType)
+    public Pet(String newName, PetType newType)
     {
         name = newName;
         happiness = MAX_HAPPINESS/2;
         type = newType;
-        outfit = "None";
+        outfit = Outfits.NONE;
         likedFoods = new boolean[MAX_FOODS];
     }
 
     // Constructor
     // Initialize the values for the pet (Used when creating a copy of a previous pet)
-    public Pet(String newName, String newType, int newHappiness, String newOutfit)
+    public Pet(String newName, PetType newType, int newHappiness, Outfits newOutfit)
     {
         name = newName;
         happiness = newHappiness;
@@ -53,35 +57,44 @@ public class Pet
     }
 
     // Initializes the elements in the fragment
-    public void setViews(ImageView newReactionImg, ImageView newPetImg, ImageView newOutfitImg, CountDownTimer newTimer)
+    public void setViews(ImageView newReactionImg, ImageView newPetImg, ImageView newOutfitImg)
     {
 
         reactionImg = newReactionImg;
         petImg = newPetImg;
         outfitImg = newOutfitImg;
-        timer = newTimer;
 
         // Sets the image of the pet
-        if(type.equals("Cat"))
+        if(type == PetType.CAT)
             petImg.setImageResource(R.drawable.cat);
+        else if(type == PetType.DOG)
+            petImg.setImageResource(R.drawable.dog);
     }
 
     // Pass a string through to have the corresponding reaction displayed
-    public void react(String reaction)
+    public void react(Reactions reaction)
     {
 
         // Retrieves the appropriate image
-        if(reaction.equals("Happy"))
+        if(reaction == Reactions.HAPPY)
         {
             reactionImg.setImageResource(R.drawable.smile_emote);
         }
-        else if (reaction.equals("Average"))
+        else if (reaction == Reactions.AVERAGE)
         {
-            reactionImg.setImageResource(R.drawable.average);//need to get average image
+            reactionImg.setImageResource(R.drawable.average);
         }
-        else
+        else if (reaction == Reactions.SAD)
         {
-            reactionImg.setImageResource(R.drawable.sad);//need to get sad image
+            reactionImg.setImageResource(R.drawable.sad);
+        }
+        else if (reaction == Reactions.GROSS)
+        {
+            reactionImg.setImageResource(R.drawable.sad);
+        }
+        else if (reaction == Reactions.LIKE)
+        {
+            reactionImg.setImageResource(R.drawable.heart);
         }
 
         reactionImg.setVisibility(View.VISIBLE);
@@ -89,14 +102,14 @@ public class Pet
     }
 
     // Pass a foodItem id to have your pet eat the food
-    public void feed(String foodItem, boolean giveReaction)
+    public void feed(FoodItems foodItem, boolean giveReaction)
     {
         int foodId = -1;
-        if(foodItem.equals("Chicken"))
+        if(foodItem == FoodItems.CHICKEN)
             foodId = 0;
-        else if(foodItem.equals("Fish"))
+        else if(foodItem == FoodItems.FISH)
             foodId = 1;
-        else if(foodItem.equals("Beef"))
+        else if(foodItem == FoodItems.BEEF)
             foodId = 2;
 
         if(foodId >= 0 && foodId <= MAX_FOODS)
@@ -104,13 +117,13 @@ public class Pet
             if(likedFoods[foodId])
             {
                 if(giveReaction)
-                    react("Happy");
+                    react(Reactions.LIKE);
                 happiness += 10;
             }
             else
             {
                 if(giveReaction)
-                    react("Gross");
+                    react(Reactions.GROSS);
                 happiness += 5;
             }
             if (happiness>MAX_HAPPINESS)
@@ -120,45 +133,45 @@ public class Pet
 
 
 
-    public void setOutfit(String newOutfit)
+    public void setOutfit(Outfits newOutfit)
     {
         outfit = newOutfit;
 
-        if(newOutfit.equals("None"))
+        if(newOutfit == Outfits.NONE)
         {
             outfitImg.setImageResource(R.drawable.empty);
-        } else if (newOutfit.equals("Cowboy Hat"))
+        } else if (newOutfit == Outfits.COWBOY_HAT)
         {
             outfitImg.setImageResource(R.drawable.cowboy_hat);
-        } else if (newOutfit.equals("Pirate Hat"))
+        } else if (newOutfit == Outfits.PIRATE_HAT)
         {
             outfitImg.setImageResource(R.drawable.pirate_hat);
         }
     }
 
-    public void setLikedFoods(String foodItem, boolean likes)
+    public void setLikedFoods(FoodItems foodItem, boolean likes)
     {
         int foodId = -1;
-        if(foodItem.equals("Chicken"))
+        if(foodItem == FoodItems.CHICKEN)
             foodId = 0;
-        else if(foodItem.equals("Fish"))
+        else if(foodItem == FoodItems.FISH)
             foodId = 1;
-        else if(foodItem.equals("Beef"))
+        else if(foodItem == FoodItems.BEEF)
             foodId = 2;
 
         if(foodId >= 0 && foodId < likedFoods.length)
             likedFoods[foodId] = likes;
     }
 
-    public boolean getLikedFood(String foodItem)
+    public boolean getLikedFood(FoodItems foodItem)
     {
         int foodId = -1;
         boolean result = false;
-        if(foodItem.equals("Chicken"))
+        if(foodItem == FoodItems.CHICKEN)
             foodId = 0;
-        else if(foodItem.equals("Fish"))
+        else if(foodItem == FoodItems.FISH)
             foodId = 1;
-        else if(foodItem.equals("Beef"))
+        else if(foodItem == FoodItems.BEEF)
             foodId = 2;
 
         if(foodId >= 0 && foodId < likedFoods.length)
@@ -167,7 +180,7 @@ public class Pet
         return result;
     }
 
-    public String getOutfit() {return outfit;}
+    public Outfits getOutfit() {return outfit;}
 
     public void calcLastLogin()// gets last login and checks if over cap for happiness drop
     {
@@ -183,15 +196,16 @@ public class Pet
         //no penalty if less than 24 hours
     }
 
-    public String getMood()
+    public Reactions getMood()
     {
-        String reaction;
+        Reactions reaction;
         if (getHappiness()>75)
-            reaction="Happy";
+            reaction = Reactions.HAPPY;
         else if (getHappiness()>40)
-            reaction="Average";
+            reaction = Reactions.AVERAGE;
         else
-            reaction="Sad";
+            reaction = Reactions.SAD;
+
         return reaction;
     }
 
@@ -204,7 +218,7 @@ public class Pet
         return happiness;
     }
 
-    public String getType(){return type;}
+    public PetType getType(){return type;}
 
     public double getDiff(){return diff;}
 
@@ -212,7 +226,9 @@ public class Pet
 
     public void setHappiness(int happiness){this.happiness = happiness;}
 
-    public void setType(String type){this.type = type;}
+    public void setType(PetType type){this.type = type;}
+
+    public void setCountDownTimer(CountDownTimer newTimer) {timer = newTimer;}
 
     public void setLastLogin()
     {
