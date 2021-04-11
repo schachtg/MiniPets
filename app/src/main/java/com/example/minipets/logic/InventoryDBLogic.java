@@ -28,17 +28,23 @@ public class InventoryDBLogic {
         Cursor cursor = db.get_items();
         cursor.moveToFirst();
         while(cursor.moveToNext()){
-            System.out.println(cursor.getString(0));
-            if (cursor.getString(0).equals(type+name)){
+            if (cursor.getString(1).equals(type+name)){
                 found = true;
                 break;
             }
         }
         if (!found) {
-            System.out.println("we do");
-            db.insert_item(type + name, cost, count);
+            db.insert_item(type + name , cost, count);
+        }
+        else {
+            int increase_count = cursor.getInt(3) + 1;
+            System.out.println("Value before updating!: " + cursor.getInt(3));
+            int test =db.update_item(cursor.getInt(0), type+name, cost, increase_count);
+            System.out.println("Value after updating!: " + cursor.getInt(3));
         }
     }
+
+    
 
     public ArrayList<String> init_inventory(){
         ArrayList<String> temp = new ArrayList<String>();
@@ -50,9 +56,10 @@ public class InventoryDBLogic {
         if (db.get_items().getCount()>0){
             Cursor cursor = db.get_items();
             cursor.moveToFirst();
-            temp.add(cursor.getString(0));
+            temp.add(cursor.getString(1));
             while (cursor.moveToNext()){
-                temp.add(cursor.getString(0));
+                temp.add(cursor.getString(1));
+                System.out.println(cursor.getInt(3));
             }
         }
         else{

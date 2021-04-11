@@ -134,7 +134,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
 
     public Cursor get_items(){
         this.db = this.dbHelper.getWritableDatabase();
-        Cursor cursor = this.db.query(SQLiteHelper.INVENTORY_TABLE_NAME, new String[]{SQLiteHelper.ITEM_NAME, SQLiteHelper.ITEM_COST, SQLiteHelper.ITEM_COUNT}, null, null, null, null, null);
+        Cursor cursor = this.db.query(SQLiteHelper.INVENTORY_TABLE_NAME, new String[]{SQLiteHelper.SHOP_ID, SQLiteHelper.ITEM_NAME, SQLiteHelper.ITEM_COST, SQLiteHelper.ITEM_COUNT}, null, null, null, null, null);
         if (cursor != null){
             cursor.moveToFirst();
         }
