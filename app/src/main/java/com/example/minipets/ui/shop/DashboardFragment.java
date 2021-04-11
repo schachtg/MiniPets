@@ -61,7 +61,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         shopItems = newShop.getAvailableItems();
-        newShop.addBoughtItems(shopItems[position], getActivity());
+        newShop.addBoughtItems(shopItems[position]);
         newShop.itemsListBought();
         inventoryDBLogic.insert_new_item(shopItems[position].getName(), shopItems[position].getCost(), shopItems[position].getCount(), shopItems[position].getType());
         dbLogic.update_shop(newShop.remTokens());

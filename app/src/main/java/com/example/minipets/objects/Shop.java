@@ -1,8 +1,6 @@
 package com.example.minipets.objects;
 
-import android.content.Context;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.minipets.data_layer.ShopFakeDatabase;
 
@@ -57,7 +55,7 @@ public class Shop {
     }
 
     //adds a bought items into the purchases shop items list
-    public void addBoughtItems(ShopItem newItem, Context context) {
+    public void addBoughtItems(ShopItem newItem) {
         if (tokens - newItem.getCost() >= 0) {
             if (boughtItems.isEmpty()) {
                 boughtItems.add(newItem);
@@ -71,7 +69,7 @@ public class Shop {
             tokens = tokens - newItem.getCost();
         }
         else{
-            Toast.makeText(context, "You don't have enough Tokens!", Toast.LENGTH_SHORT).show();
+
         }
     }
 

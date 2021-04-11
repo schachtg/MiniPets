@@ -13,7 +13,7 @@ public class TestShopItem {
 
         System.out.println("\nStarting testShopItem");
 
-        shopItem = new ShopItem("Food", 7);
+        shopItem = new ShopItem("Food", 7, "feed: ");
         assertNotNull(shopItem);
         assertEquals("Food", shopItem.getName());
         assertEquals(7, shopItem.getCost());
@@ -28,7 +28,7 @@ public class TestShopItem {
 
         System.out.println("\nStarting testAddCount");
 
-        shopItem = new ShopItem("Food", 7);
+        shopItem = new ShopItem("Food", 7, "feed: ");
         shopItem.addCount();
         assertEquals(2, shopItem.getCount());
 
@@ -40,7 +40,7 @@ public class TestShopItem {
         ShopItem shopItem;
 
         System.out.println("\nStarting testGetTotalCost");
-        shopItem = new ShopItem("Food", 7);
+        shopItem = new ShopItem("Food", 7, "feed: ");
         shopItem.addCount();
         assertEquals(14, shopItem.getTotalCost());
 
@@ -52,7 +52,7 @@ public class TestShopItem {
         ShopItem shopItem;
 
         System.out.println("\nStarting testToString");
-        shopItem = new ShopItem("Food", 7);
+        shopItem = new ShopItem("Food", 7, "feed: ");
         assertEquals("Food costs 7 and total price 7", shopItem.toString());
 
         System.out.println("Finished testToString");
