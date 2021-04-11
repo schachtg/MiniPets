@@ -43,7 +43,7 @@ public class TestPetData{
 
     @After
     public void tearDown(){
-        db.delete_pet();
+        db.delete_pet_all();
         db.close();
     }
 }
