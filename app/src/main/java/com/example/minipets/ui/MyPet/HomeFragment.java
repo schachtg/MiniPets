@@ -24,6 +24,8 @@ import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.logic.PetDBLogic;
 import com.example.minipets.objects.Pet;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private HomeViewModel homeViewModel;
@@ -34,7 +36,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     Spinner inventoryList;  // Displays the user's inventory
     private CountDownTimer countDownTimer;
     private PetFakeDatabase DB = new PetFakeDatabase();
-    private String[] inventory;
+    private ArrayList<String> inventory;
     private SQLdb db;
     MutableLiveData<String> listen = new MutableLiveData<>(); //listens for a change in outfit
     MutableLiveData<Integer> listen_background = new MutableLiveData<>(); //listens for a change in background
@@ -69,7 +71,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
 
         // Get attributes of current pet in the database
         // thePet = new Pet(newName, newType, newHappiness, newOutfit)
-        inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
+        //inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
+        inventory = new ArrayList<String>();
+        inventory.add("Inventory");
+        inventory.add("Feed: Chicken");
 
         // Creates the pet images
         reactionImg = (ImageView) getView().findViewById(R.id.reactionImage);
