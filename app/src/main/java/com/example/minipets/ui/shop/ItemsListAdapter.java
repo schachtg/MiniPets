@@ -29,10 +29,11 @@ public class ItemsListAdapter extends ArrayAdapter<ShopItem> {
         //populating the shop items info
         String name = getItem(pos).getName();
         int cost = getItem(pos).getCost();
+        String type = getItem(pos).getType();
         int happiness = 5;
 
         //creating a new shop item for the text view
-        ShopItem newItem = new ShopItem(name, cost);
+        ShopItem newItem = new ShopItem(name, cost, type);
 
         LayoutInflater inflater = LayoutInflater.from(newContext);
         convertView = inflater.inflate(newResource, parent, false);

@@ -23,11 +23,11 @@ public class Shop {
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 20000);
-        availableItems[1] =  new ShopItem("Fish", 4);
-        availableItems[2] = new ShopItem("Beef", 3);
-        availableItems[3] = new ShopItem("Frisbee", 5);
-        availableItems[4] = new ShopItem("Ball", 3);
+        availableItems[0] = new ShopItem("Chicken", 5, "Feed: ");
+        availableItems[1] =  new ShopItem("Fish", 4, "Feed: ");
+        availableItems[2] = new ShopItem("Beef", 3, "Feed: ");
+        availableItems[3] = new ShopItem("Cowboy Hat", 500, "Outfit: ");
+        availableItems[4] = new ShopItem("Pirate Hat", 500, "Outfit: ");
     }
 
     //returns an array of the current available shop items

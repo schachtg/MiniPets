@@ -29,7 +29,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String ITEM_COUNT = "item_count";
 
     public SQLiteHelper(Context context) {
-        super(context, "database.db", null, 16);
+        super(context, "database.db", null, 20);
     }
 
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
+import com.example.minipets.logic.InventoryDBLogic;
 import com.example.minipets.logic.ShopDBLogic;
 import com.example.minipets.objects.Shop;
 import com.example.minipets.objects.ShopItem;
@@ -28,6 +29,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
     private Shop newShop;
     int tokens;
     ShopDBLogic dbLogic;
+    InventoryDBLogic inventoryDBLogic;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         newShop = new Shop();
         shopItems = newShop.getAvailableItems();
         dbLogic = new ShopDBLogic(getActivity());
+        inventoryDBLogic = new InventoryDBLogic(getActivity());
         dbLogic.init_shop(newShop, tokens);
         dbLogic.update_shop(newShop.remTokens());
         ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, shopItems);
@@ -60,6 +63,7 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         shopItems = newShop.getAvailableItems();
         newShop.addBoughtItems(shopItems[position], getActivity());
         newShop.itemsListBought();
+        inventoryDBLogic.insert_new_item(shopItems[position].getName(), shopItems[position].getCost(), shopItems[position].getCount(), shopItems[position].getType());
         dbLogic.update_shop(newShop.remTokens());
         Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
         Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();

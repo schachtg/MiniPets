@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.data_layer.PetFakeDatabase;
 import com.example.minipets.data_layer.SQLdb;
+import com.example.minipets.logic.InventoryDBLogic;
 import com.example.minipets.logic.PetDBLogic;
 import com.example.minipets.objects.Pet;
 
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     MutableLiveData<Integer> listen_background = new MutableLiveData<>(); //listens for a change in background
     private int bg_tracker = 0;
     PetDBLogic petDBLogic;
+    InventoryDBLogic inventoryDBLogic;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         thePet = new Pet("Chester", "Cat", 50, "none");
         System.out.println("This is the name after creation: " + thePet.getOutfit());
         petDBLogic = new PetDBLogic(getActivity());
+        inventoryDBLogic = new InventoryDBLogic(getActivity());
         thePet = petDBLogic.init_pet(thePet);
         System.out.println("This is the outfit after init: " + thePet.getOutfit());
         //THIS CODE WILL BE GONE DW, LATER DAYS LATER DAYS
@@ -73,8 +76,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         // thePet = new Pet(newName, newType, newHappiness, newOutfit)
         //inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
         inventory = new ArrayList<String>();
-        inventory.add("Inventory");
-        inventory.add("Feed: Chicken");
+        inventory = inventoryDBLogic.init_inventory();
 
         // Creates the pet images
         reactionImg = (ImageView) getView().findViewById(R.id.reactionImage);
