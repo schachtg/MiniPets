@@ -19,13 +19,25 @@ public class InventoryDBLogic {
     }
 
     public void insert_new_item(String name, int cost, int count, String type){
-        System.out.println("hello: " + count);
+        Boolean found = false;
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        db.insert_item(type + name, cost, count);
+        Cursor cursor = db.get_items();
+        cursor.moveToFirst();
+        while(cursor.moveToNext()){
+            System.out.println(cursor.getString(0));
+            if (cursor.getString(0).equals(type+name)){
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("we do");
+            db.insert_item(type + name, cost, count);
+        }
     }
 
     public ArrayList<String> init_inventory(){
