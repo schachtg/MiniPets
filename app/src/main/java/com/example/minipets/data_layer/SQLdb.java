@@ -150,4 +150,9 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         return this.db.update(SQLiteHelper.INVENTORY_TABLE_NAME, cv, "id=" + id, null);
     }
 
+    public int delete_item(int id){
+        this.db = this.dbHelper.getWritableDatabase();
+        return db.delete(SQLiteHelper.INVENTORY_TABLE_NAME, "id=" + id, null);
+    }
+
 }

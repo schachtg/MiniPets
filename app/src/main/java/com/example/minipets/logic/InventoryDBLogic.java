@@ -18,6 +18,31 @@ public class InventoryDBLogic {
         db = new SQLdb(con);
     }
 
+    public ArrayList<String> init_inventory(){
+        ArrayList<String> temp = new ArrayList<String>();
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (db.get_items().getCount()>0){
+            Cursor cursor = db.get_items();
+            cursor.moveToFirst();
+            temp.add(cursor.getString(1));
+            while (cursor.moveToNext()){
+                temp.add(cursor.getString(1));
+                System.out.println(cursor.getInt(3));
+            }
+        }
+        else{
+            temp.add("Inventory");
+            temp.add("None");
+            insert_new_item(temp.get(0), 0, 0, "");
+            insert_new_item(temp.get(1), 0, 0, "Outfit: ");
+        }
+        return temp;
+    }
+
     public void insert_new_item(String name, int cost, int count, String type){
         Boolean found = false;
         try {
@@ -44,30 +69,30 @@ public class InventoryDBLogic {
         }
     }
 
-    
-
-    public ArrayList<String> init_inventory(){
-        ArrayList<String> temp = new ArrayList<String>();
+    public void decrease_count(String item){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if (db.get_items().getCount()>0){
-            Cursor cursor = db.get_items();
-            cursor.moveToFirst();
-            temp.add(cursor.getString(1));
-            while (cursor.moveToNext()){
-                temp.add(cursor.getString(1));
-                System.out.println(cursor.getInt(3));
+        Cursor cursor = db.get_items();
+        cursor.moveToFirst();
+        while(cursor.moveToNext()){
+            System.out.println("This is the item: " + item + " this is what we are at: " + cursor.getString(1));
+            if (cursor.getString(1).equals(item)){
+                System.out.println("FOUND IT");
+                break;
             }
         }
-        else{
-            temp.add("Inventory");
-            temp.add("None");
-            insert_new_item(temp.get(0), 0, 0, "");
-            insert_new_item(temp.get(1), 0, 0, "Outfit: ");
+        int new_count = cursor.getInt(3) - 1;
+        if (new_count > 0){
+            System.out.println("this is the new count: " + new_count);
+            db.update_item(cursor.getInt(0), item, cursor.getInt(2), new_count);
         }
-        return temp;
+        else{
+            db.delete_item(cursor.getInt(0));
+        }
     }
+
+
 }

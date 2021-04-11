@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inventoryList.setAdapter(adapter);
         inventoryList.setOnItemSelectedListener(this);
-
+        System.out.println("SIZE OF ADAPTER: " + adapter.getCount());
         // Checks if user hasn't logged in recently, and penalizes if necessary
         thePet.calcLastLogin();
 
@@ -156,6 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
                 thePet.setOutfit(splitText[1]);
             } else if (splitText[0].equals("Feed")) {
                 thePet.feed(splitText[1], true);
+                inventoryDBLogic.decrease_count(text);
             } else if (splitText[0].equals("Background")) {
                 if(splitText[1].equals("Light")) {
                     bg_tracker = 0;
