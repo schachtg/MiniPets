@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 public class TestSQLdbHelper extends SQLiteOpenHelper {
 
     private static final String PET_TABLE = "create Table TestPet(_id INTEGER primary key AUTOINCREMENT, name TEXT, type TEXT, outfit TEXT, happy INTEGER )";
+    private static final String SHOP_TABLE = "create Table ShopInformation(id INTEGER primary key AUTOINCREMENT, tokens INTEGER )";
+    public static final String SHOP_TABLE_NAME = "ShopInformation";
+    public static final String SHOP_ID = "id";
+    public static final String TOKENS = "tokens";
+
     public static final String PET_TABLE_NAME = "TestPet";
     public static final String PET_ID = "_id";
     public static final String PET_NAME = "name";
@@ -21,18 +26,20 @@ public class TestSQLdbHelper extends SQLiteOpenHelper {
 
 
     public TestSQLdbHelper(@Nullable Context context) {
-        super(context, "test.db", null, 1);
+        super(context, "test.db", null, 9);
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(PET_TABLE);
+        db.execSQL(SHOP_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists TestPet");
+        db.execSQL("drop table if exists ShopInformation");
         onCreate(db);
     }
 }
