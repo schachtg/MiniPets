@@ -182,18 +182,20 @@ public class Pet
 
     public Outfits getOutfit() {return outfit;}
 
-    public void calcLastLogin()// gets last login and checks if over cap for happiness drop
+    public void calcLastLogin()// gets last login and checks if over cap for happiness drop *ISN'T USED YET*
     {
         Date curr= Calendar.getInstance().getTime();
-        diff = lastLogin.getTime() - curr.getTime();
-        if(diff>172800)//if last login is over 48 hours
-            happiness -= 10;
-        else if (diff>86400)//if last login is over 24 hours
-            happiness -= 20;
+        if(lastLogin != null) {
+            diff = lastLogin.getTime() - curr.getTime();
+            if (diff > 172800)//if last login is over 48 hours
+                happiness -= 20;
+            else if (diff > 86400)//if last login is over 24 hours
+                happiness -= 10;
 
-        if (happiness<0)//sets happiness to 0
-            happiness = 0;
-        //no penalty if less than 24 hours
+            if (happiness < 0)//sets happiness to 0
+                happiness = 0;
+            //no penalty if less than 24 hours
+        }
     }
 
     public Reactions getMood()

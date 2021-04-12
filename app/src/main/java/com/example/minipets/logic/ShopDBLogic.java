@@ -39,4 +39,17 @@ public class ShopDBLogic {
         db.update(1, tokens);
         System.out.println(tokens);
     }
+
+    public void gain_tokens(int amount){
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Cursor cursor = db.get();
+        cursor.moveToFirst();
+        int temp = cursor.getInt(1);
+        temp += amount;
+        update_shop(temp);
+    }
 }

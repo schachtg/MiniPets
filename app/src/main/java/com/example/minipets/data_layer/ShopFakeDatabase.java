@@ -38,7 +38,7 @@ public class ShopFakeDatabase {
 
     public void addItem(String itemName, int itemCost, int itemSpot, int available )//replace an item with a new one
     {
-        ShopItem newItem = new ShopItem(itemName, itemCost);
+        ShopItem newItem = new ShopItem(itemName, itemCost, "");
         availableItems[itemSpot]=null;
         availableItems[itemSpot]=newItem;
     }

@@ -1,9 +1,8 @@
 package com.example.minipets.logic;
 
-import com.example.minipets.ui.fetch.FetchDirective;
-import com.example.minipets.ui.fetch.UiFetchDirective;
+import com.example.minipets.ui.fetch.IFetchDirective;
 
-public class FetchLogic implements FetchGameLogic {
+public class FetchLogic implements IFetchGameLogic {
 
     //Logic knows everything about the FetchDirective Object because it calls literally every method in FetchDirective
 
@@ -11,31 +10,68 @@ public class FetchLogic implements FetchGameLogic {
     protected FetchDirective nextDirective;    //stores the next directive to pass to the UI
     protected int mapWidth;
     protected int mapHeight;
+    protected int points;
 
-    public FetchLogic( int mapWidth, int mapHeight, int petWidth, int petHeight, int x_pos, int y_pos){
+    protected boolean petStateInitialised = false;  //checks wether declairPetStats has been declaired at all
+
+    public FetchLogic( int mapWidth, int mapHeight){
+
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
 
-        //create the current state of the game
-        this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos, 0);
-
-        //create the next directive
+        //create blank directives for prevDirective and nextDirective
+        this.prevDirective = new FetchDirective(0,0,0,0);
         this.nextDirective = this.prevDirective.copy();
-        this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+
+        //make sure game logic knows that it has not had petState initialised yet (we don't have size or dimensions of the pet image)
+        this.petStateInitialised = false;
+
+        this.points = 0;
+    }
+
+    // this only needs to be called once, but could easily be modified to allow the
+    // resizing of the pet image by the UI layer
+    //------------------------------------------------------------------------------------------------------
+    public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos){
+        if(petWidth < this.mapWidth &&
+                0 < petWidth &&
+                petHeight < this.mapHeight &&
+                0 < petHeight &&
+                0 <= x_pos &&
+                (x_pos + petWidth) <= this.mapWidth &&
+                0 <= y_pos &&
+                (y_pos + petHeight) <= this.mapHeight){
+
+            if(petWidth != prevDirective.getPetWidth() && petHeight != prevDirective.getPetHeight() && x_pos != prevDirective.getPetPositionX() && y_pos != prevDirective.getPetPositionY()) {
+                this.prevDirective = new FetchDirective(petWidth, petHeight, x_pos, y_pos);
+                this.nextDirective = this.prevDirective.copy();
+                this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+                this.petStateInitialised = true;
+            }
+        }
     }
 
 
     //used incase the player just needs a new directive for some reason
-    public UiFetchDirective getNewDirective(){
-        //the next directive becomes the directive we will send
-        this.prevDirective = this.nextDirective;
+    public IFetchDirective getNewDirective(){
 
-        //create a new directive for the next time this runs
-        this.nextDirective = this.nextDirective.copy();
-        this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+        IFetchDirective toUI = null;  //the directive to send to the UI
 
-        //pass the UI a coppy of the directive we wish to send
-        return this.prevDirective.copy();
+        if(petStateInitialised) {
+
+            //the next directive becomes the directive we will send
+            this.prevDirective = this.nextDirective;
+
+            //create a new directive for the next time this runs
+            this.nextDirective = this.nextDirective.copy();
+            this.nextDirective.generateLocation(this.mapWidth, this.mapHeight);
+
+            //pass the UI a copy of the directive we wish to send
+            toUI = this.prevDirective.copy();
+        }
+        //Silent else
+            //toUI = null;
+        return toUI;
     }
 
 
@@ -53,25 +89,36 @@ public class FetchLogic implements FetchGameLogic {
         int maxY = minY + this.prevDirective.getPetHeight();
 
         //check if click location is on the pets area
-        if(minX <= x_pos && x_pos <= maxX && minY <= y_pos && y_pos <= maxY){
+        if(petStateInitialised && minX <= x_pos && x_pos <= maxX && minY <= y_pos && y_pos <= maxY){
             //click occurred on the pet
 
             // increase total number of points
-            this.nextDirective.addPoints(5);
+            this.points += 5;
 
             //Inform UI cat was tapped
             petWasClicked = true;
         }
 
-        //indicate to UI wether pet was clicked
+        //indicate to UI wether pet was clicked, note that if pet has not been initialised it cannot have been clicked
         return petWasClicked;
+    }
+
+    public int getPoints(){
+        return this.points;
     }
 
 
     // update currency in DB when window is closing
-    public void gameIsClosing(){
-        int tokensGained = this.nextDirective.getPoints()/5;
+    public int gameIsClosing(){
+        int tokensGained = this.points / 5;
+        return tokensGained;
         //cleanup
             //just kidding, Java is chill like that
+    }
+
+    // not in interface because interface doesn't needed it, but my tests do, and i don't doubt that
+    // future modifications to this project could use it
+    public boolean isPetInitialized(){
+        return this.petStateInitialised;
     }
 }

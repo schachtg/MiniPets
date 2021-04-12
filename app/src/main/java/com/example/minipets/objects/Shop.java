@@ -1,14 +1,10 @@
 package com.example.minipets.objects;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.widget.ImageView;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.data_layer.ShopFakeDatabase;
+
+import java.util.ArrayList;
 
 public class Shop {
     private ShopItem[] availableItems; //list of available shop items
@@ -25,11 +21,11 @@ public class Shop {
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 3);
-        availableItems[1] =  new ShopItem("Fish", 4);
-        availableItems[2] = new ShopItem("Beef", 3);
-        availableItems[3] = new ShopItem("Frisbee", 5);
-        availableItems[4] = new ShopItem("Ball", 3);
+        availableItems[0] = new ShopItem("Chicken", 5, "Feed: ");
+        availableItems[1] =  new ShopItem("Fish", 4, "Feed: ");
+        availableItems[2] = new ShopItem("Beef", 3, "Feed: ");
+        availableItems[3] = new ShopItem("Cowboy Hat", 500, "Outfit: ");
+        availableItems[4] = new ShopItem("Pirate Hat", 500, "Outfit: ");
     }
 
     //returns an array of the current available shop items
@@ -60,17 +56,21 @@ public class Shop {
 
     //adds a bought items into the purchases shop items list
     public void addBoughtItems(ShopItem newItem) {
-        if(boughtItems.isEmpty()){
-            boughtItems.add(newItem);
-        }else{
-            if(boughtItems.contains(newItem))
-                boughtItems.get(boughtItems.indexOf(newItem)).addCount();
-            else
+        if (tokens - newItem.getCost() >= 0) {
+            if (boughtItems.isEmpty()) {
                 boughtItems.add(newItem);
+            } else {
+                if (boughtItems.contains(newItem))
+                    boughtItems.get(boughtItems.indexOf(newItem)).addCount();
+                else
+                    boughtItems.add(newItem);
+            }
+            //updates tokens after purchase
+            tokens = tokens - newItem.getCost();
         }
+        else{
 
-        //updates tokens after purchase
-        tokens = tokens - newItem.getCost();
+        }
     }
 
     //returns tokens left

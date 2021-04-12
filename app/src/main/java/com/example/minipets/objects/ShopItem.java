@@ -2,14 +2,16 @@ package com.example.minipets.objects;
 
 public class ShopItem {
     private String name; //name of shop item
+    private String type;
     private int cost; //cost of item in tokens
     private int count; //count of items available
 
     //constructor
-    public ShopItem(String newName, int newCost){
+    public ShopItem(String newName, int newCost, String type){
         name = newName;
         cost = newCost;
         count = 1;
+        this.type = type;
     }
 
     public String getName() {
@@ -23,6 +25,8 @@ public class ShopItem {
     public int getCount() {
         return count;
     }
+
+    public String getType(){return type;}
 
     //increment the item count by 1
     public void addCount() {

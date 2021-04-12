@@ -123,4 +123,36 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         return this.db.update(SQLiteHelper.OTHER_TABLE_NAME, cv, "id_=" + id, null);
     }
 
+    public long insert_item(String name, int cost, int count){
+        this.db = this.dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelper.ITEM_NAME, name);
+        cv.put(SQLiteHelper.ITEM_COST, cost);
+        cv.put(SQLiteHelper.ITEM_COUNT, count);
+        return this.db.insert(SQLiteHelper.INVENTORY_TABLE_NAME, null, cv);
+    }
+
+    public Cursor get_items(){
+        this.db = this.dbHelper.getWritableDatabase();
+        Cursor cursor = this.db.query(SQLiteHelper.INVENTORY_TABLE_NAME, new String[]{SQLiteHelper.SHOP_ID, SQLiteHelper.ITEM_NAME, SQLiteHelper.ITEM_COST, SQLiteHelper.ITEM_COUNT}, null, null, null, null, null);
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    public int update_item(long id, String name, int cost, int count){
+        this.db = this.dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SQLiteHelper.ITEM_NAME, name);
+        cv.put(SQLiteHelper.ITEM_COST, cost);
+        cv.put(SQLiteHelper.ITEM_COUNT, count);
+        return this.db.update(SQLiteHelper.INVENTORY_TABLE_NAME, cv, "id=" + id, null);
+    }
+
+    public int delete_item(int id){
+        this.db = this.dbHelper.getWritableDatabase();
+        return db.delete(SQLiteHelper.INVENTORY_TABLE_NAME, "id=" + id, null);
+    }
+
 }
