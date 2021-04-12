@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.minipets.data_layer.SQLdb;
+import com.example.minipets.enums.Outfits;
+import com.example.minipets.enums.PetType;
 import com.example.minipets.objects.Pet;
 
 import java.sql.SQLException;
@@ -27,11 +29,11 @@ public class PetDBLogic {
             Cursor cursor = db.get_pet();
             cursor.moveToFirst();
             System.out.println("This is the value before the init: " + cursor.getString(3));
-            thePet = new Pet(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+            thePet = new Pet(cursor.getString(0), PetType.valueOf(cursor.getString(1)), cursor.getInt(2), Outfits.valueOf(cursor.getString(3)));
         }
         else {
-            thePet = new Pet("Chester", "Cat", 50, "none");
-            long insert = db.insert_pet(thePet.getName(), thePet.getType(), thePet.getOutfit(), thePet.getHappiness());
+            thePet = new Pet("Chester", PetType.CAT, 50, Outfits.NONE);
+            long insert = db.insert_pet(thePet.getName(), thePet.getType().toString(), thePet.getOutfit().toString(), thePet.getHappiness());
             System.out.println("are we actually hitting here?");
         }
         return thePet;

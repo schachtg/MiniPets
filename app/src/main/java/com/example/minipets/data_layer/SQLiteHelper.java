@@ -23,7 +23,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String MISC_BG = "bg";
 
     public SQLiteHelper(Context context) {
-        super(context, "database.db", null, 15);
+        super(context, "database.db", null, 33);
     }
 
 
@@ -41,6 +41,4 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists MiscInfo");
         onCreate(db);
     }
-
-
 }

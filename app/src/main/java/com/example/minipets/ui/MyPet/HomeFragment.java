@@ -1,16 +1,10 @@
 package com.example.minipets.ui.MyPet;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +14,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.minipets.R;
-import com.example.minipets.data_layer.PetFakeDatabase;
-import com.example.minipets.data_layer.SQLdb;
 import com.example.minipets.enums.Outfits;
 import com.example.minipets.enums.PetType;
 import com.example.minipets.logic.HomeInterface;
@@ -95,11 +87,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
 
-        listen.setValue(thePet.getOutfit());
+        listen.setValue(thePet.getOutfit().toString());
         listen.observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                petDBLogic.update_pet(thePet.getName(), thePet.getType(), thePet.getHappiness(), thePet.getOutfit());
+                petDBLogic.update_pet(thePet.getName(), thePet.getType().toString(), thePet.getHappiness(), thePet.getOutfit().toString());
                 thePet.setLastLogin();
             }
         });
