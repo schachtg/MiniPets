@@ -31,7 +31,6 @@ public class InventoryDBLogic {
             temp.add(cursor.getString(1));
             while (cursor.moveToNext()){
                 temp.add(cursor.getString(1));
-                System.out.println(cursor.getInt(3));
             }
         }
         else{

@@ -20,6 +20,6 @@ import org.junit.runners.Suite;
 })
 
 
-public class AllTests {
+public class AllUnitTests {
     //add nothing here
 }
