@@ -2,6 +2,7 @@ package com.example.minipets.logic;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,15 +68,13 @@ public class HomeLogic implements HomeInterface {
         inventoryList.setSelection(0);
     }
 
-    public void updateBackground(int bg, View newView)
+    public void updateBackground(int bg, View newView, Activity newActivity)
     {
         // Updates background
         if (bg == 0)
-            newView.setBackgroundColor(Color.WHITE);
+            newView.setBackground(newActivity.getResources().getDrawable(R.drawable.field_bg));
         else if (bg == 1)
-            newView.setBackgroundColor(Color.rgb(47, 60, 79));
-        else if (bg == 2)
-            newView.setBackgroundColor(Color.rgb(102, 34, 212));
+            newView.setBackground(newActivity.getResources().getDrawable(R.drawable.beach_bg));
     }
 
     public int selectItem(String item, Pet thePet, int bg)
@@ -108,14 +107,11 @@ public class HomeLogic implements HomeInterface {
                         break;
                 }
             } else if (splitText[0].equals("Background")) {
-                if(splitText[1].equals("Light")) {
+                if(splitText[1].equals("Field")) {
                     bg = 0;
                 }
-                else if(splitText[1].equals("Dark")) {
+                else if(splitText[1].equals("Beach")) {
                     bg = 1;
-                }
-                else if(splitText[1].equals("Purple")) {
-                    bg = 2;
                 }
             }
         }

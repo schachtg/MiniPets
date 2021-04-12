@@ -29,13 +29,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     protected HomeViewModel homeViewModel;
-    //protected ImageView reactionImg;  // Shows the pet's reaction image
-    //protected ImageView petImg;   // Shows the pet's image
-    //protected ImageView outfitImg;    // Shows the pet's outfit
     protected Pet thePet; // Object containing details about the pet
-    //Spinner inventoryList;  // Displays the user's inventory
-    //protected CountDownTimer countDownTimer;
-    //protected SQLdb db;
     private PetFakeDatabase DB = new PetFakeDatabase();
     private ArrayList<String> inventory;
     private SQLdb db;
@@ -77,22 +71,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
 
         // Creates the pet images
         homeLogic.refreshPet(thePet, getView(), getActivity(), this);
-        homeLogic.updateBackground(bg_tracker, getView());
-        // Get attributes of current pet in the database
-        // thePet = new Pet(newName, newType, newHappiness, newOutfit)
-        //inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
-
-
-        // Creates the pet images
-
-        // Sets up the inventory
+        homeLogic.updateBackground(bg_tracker, getView(), getActivity());
 
         // Checks if user hasn't logged in recently, and penalizes if necessary
         thePet.calcLastLogin();
 
         thePet.setOutfit(thePet.getOutfit());   // Re displays the outfit
-
-        // Updates background
     }
 
     // Displays the pet's reaction when the user pets the pet
@@ -121,7 +105,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         });
 
         bg_tracker = homeLogic.selectItem(text, thePet, bg_tracker);
-        homeLogic.updateBackground(bg_tracker, getView());
+        homeLogic.updateBackground(bg_tracker, getView(), getActivity());
         homeLogic.resetInventorySelection();
 
     }

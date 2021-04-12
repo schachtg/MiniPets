@@ -12,7 +12,7 @@ import com.example.minipets.objects.Pet;
 public interface HomeInterface {
     public void refreshPet(Pet thePet, View newView, Activity newActivity, View.OnClickListener newListener);
     public void refreshInventory(View newView, Activity newActivity, View.OnClickListener newListener);
-    public void updateBackground(int bg, View newView);
+    public void updateBackground(int bg, View newView, Activity newActivity);
     public int selectItem(String item, Pet thePet, int bg);
     public void resetInventorySelection();
 }
