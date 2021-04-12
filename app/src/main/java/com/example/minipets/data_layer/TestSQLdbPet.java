@@ -40,13 +40,13 @@ public class TestSQLdbPet implements SQLdbPetInterface {
         cv.put(SQLiteHelper.PET_TYPE, type);
         cv.put(SQLiteHelper.PET_OUTFIT, outfit);
         cv.put(SQLiteHelper.PET_HAPPY, happy);
-        return this.db.insert(SQLiteHelper.PET_TABLE_NAME, null, cv);
+        return this.db.insert(TestSQLdbHelper.PET_TABLE_NAME, null, cv);
     }
 
     @Override
     public Cursor get_pet() {
         this.db = this.dbHelper.getWritableDatabase();
-        Cursor cursor = this.db.query(SQLiteHelper.PET_TABLE_NAME, new String[]{SQLiteHelper.PET_NAME, SQLiteHelper.PET_TYPE, SQLiteHelper.PET_OUTFIT, SQLiteHelper.PET_HAPPY}, null, null, null, null, null);
+        Cursor cursor = this.db.query(TestSQLdbHelper.PET_TABLE_NAME, new String[]{TestSQLdbHelper.PET_ID, TestSQLdbHelper.PET_NAME, TestSQLdbHelper.PET_TYPE, TestSQLdbHelper.PET_OUTFIT, TestSQLdbHelper.PET_HAPPY}, null, null, null, null, null);
         if (cursor != null){
             cursor.moveToFirst();
         }
@@ -61,12 +61,12 @@ public class TestSQLdbPet implements SQLdbPetInterface {
         cv.put(SQLiteHelper.PET_TYPE, type);
         cv.put(SQLiteHelper.PET_OUTFIT, outfit);
         cv.put(SQLiteHelper.PET_HAPPY, happy);
-        return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
+        return this.db.update(TestSQLdbHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
     }
 
     @Override
-    public void delete_pet_all() {
+    public void delete_pet(int id) {
         this.db = this.dbHelper.getWritableDatabase();
-        this.db.delete(SQLiteHelper.PET_TABLE_NAME, null, null);
+        this.db.delete(TestSQLdbHelper.PET_TABLE_NAME, "_id=" + id, null);
     }
 }

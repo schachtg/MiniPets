@@ -59,9 +59,9 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
     }
 
     @Override
-    public void delete_all_shop() {
+    public void delete_shop(int id) {
         this.db = this.dbHelper.getWritableDatabase();
-        this.db.delete(SQLiteHelper.SHOP_TABLE_NAME, null, null);
+        this.db.delete(SQLiteHelper.SHOP_TABLE_NAME, "id=" +id, null);
     }
     @Override
     public long insert_pet(String name, String type, String outfit, int happy) {
@@ -93,9 +93,9 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         return this.db.update(SQLiteHelper.PET_TABLE_NAME, cv, "_id=" + id, null);
     }
     @Override
-    public void delete_pet_all() {
+    public void delete_pet(int id) {
         this.db = this.dbHelper.getWritableDatabase();
-        this.db.delete(SQLiteHelper.PET_TABLE_NAME, null, null);
+        this.db.delete(SQLiteHelper.PET_TABLE_NAME, "id=" + id, null);
     }
 
     public long insert_misc(double timeAway, int bg) {
