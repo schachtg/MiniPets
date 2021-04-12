@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 
-public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
+public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface, SQLdbMiscInterface, SQLdbItemInterface{
 
     private Context context;
     private SQLiteDatabase db;
@@ -97,7 +97,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         this.db = this.dbHelper.getWritableDatabase();
         this.db.delete(SQLiteHelper.PET_TABLE_NAME, "id=" + id, null);
     }
-
+    @Override
     public long insert_misc(double timeAway, int bg) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -105,7 +105,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         cv.put(SQLiteHelper.MISC_BG, bg);
         return this.db.insert(SQLiteHelper.OTHER_TABLE_NAME, null, cv);
     }
-
+    @Override
     public Cursor get_misc() {
         this.db = this.dbHelper.getWritableDatabase();
         Cursor cursor = this.db.query(SQLiteHelper.OTHER_TABLE_NAME, new String[]{SQLiteHelper.OTHER_ID, SQLiteHelper.MISC_TIME, SQLiteHelper.MISC_BG}, null, null, null, null, null);
@@ -114,7 +114,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         }
         return cursor;
     }
-
+    @Override
     public int update_misc(long id, double timeAway, int bg) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -122,7 +122,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         cv.put(SQLiteHelper.MISC_BG, bg);
         return this.db.update(SQLiteHelper.OTHER_TABLE_NAME, cv, "id_=" + id, null);
     }
-
+    @Override
     public long insert_item(String name, int cost, int count){
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -131,7 +131,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         cv.put(SQLiteHelper.ITEM_COUNT, count);
         return this.db.insert(SQLiteHelper.INVENTORY_TABLE_NAME, null, cv);
     }
-
+    @Override
     public Cursor get_items(){
         this.db = this.dbHelper.getWritableDatabase();
         Cursor cursor = this.db.query(SQLiteHelper.INVENTORY_TABLE_NAME, new String[]{SQLiteHelper.SHOP_ID, SQLiteHelper.ITEM_NAME, SQLiteHelper.ITEM_COST, SQLiteHelper.ITEM_COUNT}, null, null, null, null, null);
@@ -140,7 +140,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         }
         return cursor;
     }
-
+    @Override
     public int update_item(long id, String name, int cost, int count){
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -149,7 +149,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface{
         cv.put(SQLiteHelper.ITEM_COUNT, count);
         return this.db.update(SQLiteHelper.INVENTORY_TABLE_NAME, cv, "id=" + id, null);
     }
-
+    @Override
     public int delete_item(int id){
         this.db = this.dbHelper.getWritableDatabase();
         return db.delete(SQLiteHelper.INVENTORY_TABLE_NAME, "id=" + id, null);

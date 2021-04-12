@@ -70,6 +70,9 @@ public class InventoryDBLogic {
         }
     }
 
+
+    public int get_refresh_count(int refresh_count){return refresh_count;}
+
     public void decrease_count(String item){
         try {
             db.open();
@@ -94,6 +97,5 @@ public class InventoryDBLogic {
             db.delete_item(cursor.getInt(0));
         }
     }
-
 
 }

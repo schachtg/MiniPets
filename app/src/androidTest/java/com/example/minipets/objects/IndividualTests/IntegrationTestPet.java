@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -39,18 +38,6 @@ public class IntegrationTestPet {
     }
 
     @Test
-    public void test_delete(){
-        try {
-            db.open();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Cursor cursor = db.get_pet();
-        cursor.moveToFirst();
-        db.delete_pet(cursor.getInt(0));
-    }
-
-    @Test
     public void insert_pet() {
         // Context of the app under test.
         try {
@@ -62,8 +49,9 @@ public class IntegrationTestPet {
         assertNotEquals(-1, test);
     }
 
+
     @Test
-    public void get_pet(){
+    public void test_delete(){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -71,7 +59,6 @@ public class IntegrationTestPet {
         }
         Cursor cursor = db.get_pet();
         cursor.moveToFirst();
-        assertEquals("test", cursor.getString(1));
+        db.delete_pet(cursor.getInt(0));
     }
-    
 }

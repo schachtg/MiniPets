@@ -6,7 +6,7 @@ import android.database.Cursor;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.minipets.data_layer.TestSQLdbShop;
+import com.example.minipets.data_layer.TestSQLdbItem;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,58 +23,40 @@ import static org.junit.Assert.assertNotEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class IntegrationTestShop {
+public class IntegrationTestItem {
 
-    private TestSQLdbShop db;
+    private TestSQLdbItem db;
 
     private Context app_context;
 
     @Before
     public void setUp(){
         app_context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new TestSQLdbShop(app_context);
+        db = new TestSQLdbItem(app_context);
     }
 
     @Test
-    public void insert_shop() {
+    public void insert_item() {
         // Context of the app under test.
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_shop(100);
+        long test = db.insert_item("bobby", 0, 10);
         assertNotEquals(-1, test);
     }
 
-
-
     @Test
-    public void test_update(){
+    public void get_item(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.get_items();
         cursor.moveToFirst();
-        int test = db.update(cursor.getInt(0), 50);
-        assertEquals(1, test);
-        assertEquals(100, cursor.getInt(1));
-    }
-
-
-
-    @Test
-    public void get_shop(){
-        try {
-            db.open();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Cursor cursor = db.get();
-        cursor.moveToFirst();
-        assertEquals(50, cursor.getInt(1));
+        assertEquals("bobby", cursor.getString(1));
     }
 
     @Test
@@ -84,8 +66,8 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.get_items();
         cursor.moveToFirst();
-        db.delete_shop(cursor.getInt(0));
+        db.delete_item(cursor.getInt(0));
     }
 }

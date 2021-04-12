@@ -12,6 +12,9 @@ public class TestSQLdbHelper extends SQLiteOpenHelper {
 
     private static final String PET_TABLE = "create Table TestPet(_id INTEGER primary key AUTOINCREMENT, name TEXT, type TEXT, outfit TEXT, happy INTEGER )";
     private static final String SHOP_TABLE = "create Table ShopInformation(id INTEGER primary key AUTOINCREMENT, tokens INTEGER )";
+    private static final String OTHER_TABLE = "create Table MiscInfo(id_ INTEGER primary key AUTOINCREMENT, timeAway DOUBLE, bg INTEGER )";
+    private static final String INVENTORY_TABLE = "create Table InventoryInfo(id INTEGER primary key AUTOINCREMENT, item_name TEXT, item_cost INTEGER, item_count INTEGER )";
+
     public static final String SHOP_TABLE_NAME = "ShopInformation";
     public static final String SHOP_ID = "id";
     public static final String TOKENS = "tokens";
@@ -23,10 +26,19 @@ public class TestSQLdbHelper extends SQLiteOpenHelper {
     public static final String PET_OUTFIT = "outfit";
     public static final String PET_HAPPY = "happy";
 
+    public static final String OTHER_TABLE_NAME = "MiscInfo";
+    public static final String OTHER_ID = "id_";
+    public static final String MISC_TIME = "timeAway";
+    public static final String MISC_BG = "bg";
+
+    public static final String INVENTORY_TABLE_NAME = "InventoryInfo";
+    public static final String ITEM_NAME = "item_name";
+    public static final String ITEM_COST = "item_cost";
+    public static final String ITEM_COUNT = "item_count";
 
 
     public TestSQLdbHelper(@Nullable Context context) {
-        super(context, "test.db", null, 9);
+        super(context, "test.db", null, 13);
     }
 
 
@@ -34,12 +46,16 @@ public class TestSQLdbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(PET_TABLE);
         db.execSQL(SHOP_TABLE);
+        db.execSQL(OTHER_TABLE);
+        db.execSQL(INVENTORY_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists TestPet");
         db.execSQL("drop table if exists ShopInformation");
+        db.execSQL("drop table if exists MiscInfo");
+        db.execSQL("drop table if exists InventoryInfo");
         onCreate(db);
     }
 }

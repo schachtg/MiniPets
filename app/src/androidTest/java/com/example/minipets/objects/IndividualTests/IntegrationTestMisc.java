@@ -6,7 +6,7 @@ import android.database.Cursor;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.minipets.data_layer.TestSQLdbShop;
+import com.example.minipets.data_layer.TestSQLdbMisc;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,47 +23,28 @@ import static org.junit.Assert.assertNotEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class IntegrationTestShop {
+public class IntegrationTestMisc {
 
-    private TestSQLdbShop db;
+    private TestSQLdbMisc db;
 
     private Context app_context;
 
     @Before
     public void setUp(){
         app_context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new TestSQLdbShop(app_context);
+        db = new TestSQLdbMisc(app_context);
     }
 
     @Test
     public void insert_shop() {
-        // Context of the app under test.
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_shop(100);
+        long test = db.insert_misc(100, 0);
         assertNotEquals(-1, test);
     }
-
-
-
-    @Test
-    public void test_update(){
-        try {
-            db.open();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Cursor cursor = db.get();
-        cursor.moveToFirst();
-        int test = db.update(cursor.getInt(0), 50);
-        assertEquals(1, test);
-        assertEquals(100, cursor.getInt(1));
-    }
-
-
 
     @Test
     public void get_shop(){
@@ -72,20 +53,24 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.get_misc();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
+        assertEquals(1, cursor.getInt(2));
     }
 
     @Test
-    public void test_delete(){
+    public void test_update(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.get_misc();
         cursor.moveToFirst();
-        db.delete_shop(cursor.getInt(0));
+        int test = db.update_misc(cursor.getInt(0), 50, 1);
+        assertEquals(1, test);
+        assertEquals(50, cursor.getInt(1));
     }
+
 }
