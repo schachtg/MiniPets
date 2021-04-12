@@ -9,12 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import androidx.fragment.app.Fragment;
-
 import com.example.minipets.R;
 import com.example.minipets.enums.FoodItems;
 import com.example.minipets.enums.Outfits;
 import com.example.minipets.objects.Pet;
+
+import java.util.ArrayList;
 
 public class HomeLogic implements HomeInterface {
 
@@ -23,7 +23,8 @@ public class HomeLogic implements HomeInterface {
     protected ImageView outfitImg;    // Shows the pet's outfit
     Spinner inventoryList;  // Displays the user's inventory
     protected CountDownTimer countDownTimer;
-    protected String[] inventory;
+    private ArrayList<String> inventory;
+    InventoryDBLogic inventoryDBLogic;
 
 
     public void refreshPet(Pet thePet, View newView, Activity newActivity, View.OnClickListener newListener)
@@ -51,8 +52,9 @@ public class HomeLogic implements HomeInterface {
 
     public void refreshInventory(View newView, Activity newActivity, View.OnClickListener newListener)
     {
-        inventory = new String[]{"Inventory", "Feed: Chicken", "Feed: Fish", "Feed: Beef", "Outfit: None", "Outfit: Cowboy Hat", "Outfit: Pirate Hat", "Background: Light", "Background: Dark", "Background: Purple"};
-
+        inventory = new ArrayList<String>();
+        inventoryDBLogic = new InventoryDBLogic(newActivity);
+        inventory = inventoryDBLogic.init_inventory();
         inventoryList = newView.findViewById(R.id.inv_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(newActivity, android.R.layout.simple_spinner_item, inventory);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -95,6 +97,7 @@ public class HomeLogic implements HomeInterface {
                         break;
                 }
             } else if (splitText[0].equals("Feed")) {
+                inventoryDBLogic.decrease_count(item);
                 switch(splitText[1])
                 {
                     case "Chicken" : thePet.feed(FoodItems.CHICKEN, true);
