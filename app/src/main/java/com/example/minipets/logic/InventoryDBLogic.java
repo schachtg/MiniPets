@@ -37,8 +37,10 @@ public class InventoryDBLogic {
         else{
             temp.add("Inventory");
             temp.add("None");
+            temp.add("Field");
             insert_new_item(temp.get(0), 0, 0, "");
             insert_new_item(temp.get(1), 0, 0, "Outfit: ");
+            insert_new_item(temp.get(2), 0, 0, "Background: ");
         }
         return temp;
     }

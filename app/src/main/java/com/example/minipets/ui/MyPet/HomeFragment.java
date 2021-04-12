@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.minipets.R;
 import com.example.minipets.enums.Outfits;
 import com.example.minipets.enums.PetType;
+import com.example.minipets.logic.BackgroundDBLogic;
 import com.example.minipets.logic.HomeInterface;
 import com.example.minipets.logic.HomeLogic;
 import com.example.minipets.data_layer.PetFakeDatabase;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     PetDBLogic petDBLogic;
     protected HomeInterface homeLogic;
     InventoryDBLogic inventoryDBLogic;
+    BackgroundDBLogic backgroundDBLogic;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         thePet = new Pet("Chester", PetType.CAT, 50, Outfits.NONE);
         petDBLogic = new PetDBLogic(getActivity());
         inventoryDBLogic = new InventoryDBLogic(getActivity());
+        backgroundDBLogic = new BackgroundDBLogic(getActivity());
         thePet = petDBLogic.init_pet(thePet);
 
         // Sets up the inventory
@@ -71,6 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
 
         // Creates the pet images
         homeLogic.refreshPet(thePet, getView(), getActivity(), this);
+        bg_tracker = backgroundDBLogic.init_background();
         homeLogic.updateBackground(bg_tracker, getView(), getActivity());
 
         // Checks if user hasn't logged in recently, and penalizes if necessary
@@ -105,6 +109,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         });
 
         bg_tracker = homeLogic.selectItem(text, thePet, bg_tracker);
+        backgroundDBLogic.update_background((double)thePet.getHappiness(), bg_tracker);
         homeLogic.updateBackground(bg_tracker, getView(), getActivity());
         homeLogic.resetInventorySelection();
 
