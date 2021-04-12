@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.minipets.data_layer.TestSQLdbPet;
+import com.example.minipets.enums.PetType;
 import com.example.minipets.objects.Pet;
 
 import org.junit.After;
@@ -31,7 +32,7 @@ public class IntegrationTestPet {
     public void setUp(){
         app_context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new TestSQLdbPet(app_context);
-        test_pet = new Pet("test", "Cat");
+        test_pet = new Pet("test", PetType.CAT);
     }
 
     @Test
