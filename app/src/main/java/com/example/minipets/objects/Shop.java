@@ -12,7 +12,7 @@ public class Shop {
     private ImageView itemImg;   // ImageView which displays the item
     private int tokens; //token value used for purchase
     private ShopFakeDatabase DB;
-    public final int MAX_ITEMS = 5; //maximum number of shop items
+    public final int MAX_ITEMS = 7; //maximum number of shop items
 
 
     //constructor
@@ -26,6 +26,8 @@ public class Shop {
         availableItems[2] = new Stock("Beef", 3);
         availableItems[3] = new Stock("Frisbee", 5);
         availableItems[4] = new Stock("Ball", 3);
+        availableItems[5] = new Stock("Cowboy Hat", 5);
+        availableItems[6] = new Stock("Pirate Hat", 5);
     }
 
     //returns an array of the current available shop items
