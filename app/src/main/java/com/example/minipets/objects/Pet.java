@@ -21,7 +21,6 @@ public class Pet
     private int happiness;  // Represents how happy the pet is
     private PetType type;    // The type of pet (eg. cat or dog)
     private Outfits outfit;     // Id representing the outfit the pet's wearing
-    private boolean[] likedFoods;   // If the pet likes the food for some food id
     private ImageView reactionImg;  // ImageView which displays the pet's reaction
     private ImageView petImg;   // ImageView which displays the pet
     private ImageView outfitImg;
@@ -29,7 +28,6 @@ public class Pet
     private Date lastLogin;//checks last time user logged in
     private double diff;
 
-    public final int MAX_FOODS = 3; // How many different types of food there is
     public final int MAX_HAPPINESS = 100;    // The max that the pet's happiness can go
 
     private SQLiteHelper db;
@@ -42,7 +40,6 @@ public class Pet
         happiness = MAX_HAPPINESS/2;
         type = newType;
         outfit = Outfits.NONE;
-        likedFoods = new boolean[MAX_FOODS];
     }
 
     // Constructor
@@ -53,7 +50,6 @@ public class Pet
         happiness = newHappiness;
         type = newType;
         outfit = newOutfit;
-        likedFoods = new boolean[MAX_FOODS];
     }
 
     // Initializes the elements in the fragment
@@ -90,7 +86,7 @@ public class Pet
         }
         else if (reaction == Reactions.GROSS)
         {
-            reactionImg.setImageResource(R.drawable.sad);
+            reactionImg.setImageResource(R.drawable.gross_emote);
         }
         else if (reaction == Reactions.LIKE)
         {
@@ -104,30 +100,20 @@ public class Pet
     // Pass a foodItem id to have your pet eat the food
     public void feed(FoodItems foodItem, boolean giveReaction)
     {
-        int foodId = -1;
-        if(foodItem == FoodItems.CHICKEN)
-            foodId = 0;
-        else if(foodItem == FoodItems.FISH)
-            foodId = 1;
-        else if(foodItem == FoodItems.BEEF)
-            foodId = 2;
-
-        if(foodId >= 0 && foodId <= MAX_FOODS)
-        {
-            if(likedFoods[foodId])
-            {
-                if(giveReaction)
-                    react(Reactions.LIKE);
-                happiness += 10;
-            }
-            else
-            {
-                if(giveReaction)
-                    react(Reactions.GROSS);
-                happiness += 5;
-            }
-            if (happiness>MAX_HAPPINESS)
-                happiness=MAX_HAPPINESS;
+        if(foodItem == FoodItems.CHICKEN) {
+            if(giveReaction)
+                react(Reactions.GROSS);
+            happiness += 5;
+        }
+        else if(foodItem == FoodItems.FISH) {
+            if(giveReaction)
+                react(Reactions.LIKE);
+            happiness += 10;
+        }
+        else if(foodItem == FoodItems.BEEF) {
+            if(giveReaction)
+                react(Reactions.LIKE);
+            happiness += 15;
         }
     }
 
@@ -147,37 +133,6 @@ public class Pet
         {
             outfitImg.setImageResource(R.drawable.pirate_hat);
         }
-    }
-
-    public void setLikedFoods(FoodItems foodItem, boolean likes)
-    {
-        int foodId = -1;
-        if(foodItem == FoodItems.CHICKEN)
-            foodId = 0;
-        else if(foodItem == FoodItems.FISH)
-            foodId = 1;
-        else if(foodItem == FoodItems.BEEF)
-            foodId = 2;
-
-        if(foodId >= 0 && foodId < likedFoods.length)
-            likedFoods[foodId] = likes;
-    }
-
-    public boolean getLikedFood(FoodItems foodItem)
-    {
-        int foodId = -1;
-        boolean result = false;
-        if(foodItem == FoodItems.CHICKEN)
-            foodId = 0;
-        else if(foodItem == FoodItems.FISH)
-            foodId = 1;
-        else if(foodItem == FoodItems.BEEF)
-            foodId = 2;
-
-        if(foodId >= 0 && foodId < likedFoods.length)
-            result = likedFoods[foodId];
-
-        return result;
     }
 
     public Outfits getOutfit() {return outfit;}
