@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 
-public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface, SQLdbMiscInterface, SQLdbItemInterface{
+public class SQLdb implements SQLdbInterface{
 
     private Context context;
     private SQLiteDatabase db;
@@ -18,7 +18,7 @@ public class SQLdb implements SQLdbShopInterface, SQLdbPetInterface, SQLdbMiscIn
     }
 
     @Override
-    public SQLdbShopInterface open() throws SQLException {
+    public SQLdbInterface open() throws SQLException {
         this.dbHelper = new SQLiteHelper(this.context);
         this.db = this.dbHelper.getWritableDatabase();
         return this;

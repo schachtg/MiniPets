@@ -5,8 +5,6 @@ import android.content.Context;
 import com.example.minipets.objects.Pet;
 import com.example.minipets.ui.shop.DashboardFragment;
 
-import com.example.minipets.data_layer.TestSQLdbPet;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

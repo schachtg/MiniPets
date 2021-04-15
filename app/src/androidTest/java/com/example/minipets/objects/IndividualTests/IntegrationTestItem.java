@@ -6,7 +6,7 @@ import android.database.Cursor;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.minipets.data_layer.TestSQLdbItem;
+import com.example.minipets.data_layer.TestSQLdb;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,14 +25,14 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(AndroidJUnit4.class)
 public class IntegrationTestItem {
 
-    private TestSQLdbItem db;
+    private TestSQLdb db;
 
     private Context app_context;
 
     @Before
     public void setUp(){
         app_context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new TestSQLdbItem(app_context);
+        db = new TestSQLdb(app_context);
     }
 
     @Test

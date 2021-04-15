@@ -6,7 +6,7 @@ import android.database.Cursor;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.minipets.data_layer.TestSQLdbPet;
+import com.example.minipets.data_layer.TestSQLdb;
 import com.example.minipets.enums.PetType;
 import com.example.minipets.objects.Pet;
 
@@ -26,14 +26,14 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(AndroidJUnit4.class)
 public class IntegrationTestPet {
 
-    private TestSQLdbPet db;
+    private TestSQLdb db;
     private Pet test_pet;
     private Context app_context;
 
     @Before
     public void setUp(){
         app_context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new TestSQLdbPet(app_context);
+        db = new TestSQLdb(app_context);
         test_pet = new Pet("test", PetType.CAT);
     }
 

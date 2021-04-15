@@ -2,7 +2,6 @@ package com.example.minipets.objects.IndividualTests;
 
 
 
-import com.example.minipets.data_layer.TestSQLdbPet;
 import com.example.minipets.objects.Pet;
 
 import org.junit.After;
