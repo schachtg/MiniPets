@@ -1,17 +1,18 @@
-package com.example.minipets.ui.MyPet;
+package com.example.minipets.objects.IndividualTests;
 
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.minipets.R;
-import com.example.minipets.ui.CreatePet.CreatePet;
+import com.example.minipets.ui.MyPet.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -20,85 +21,42 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TestPetCreation {
+public class TestChangingOutfit {
 
     @Rule
-    public ActivityTestRule<CreatePet> mActivityTestRule = new ActivityTestRule<>(CreatePet.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testPetCreation() {
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.dogButton), withText("DOG"),
+    public void testChangingOutfit() {
+        ViewInteraction appCompatSpinner = onView(
+                allOf(withId(R.id.inv_list),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton.perform(click());
-
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.nameText), withText("Name"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
+                                        withId(R.id.nav_host_fragment),
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("espresso"));
+        appCompatSpinner.perform(click());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.nameText), withText("espresso"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        appCompatEditText2.perform(closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.nameText), withText("espresso"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        appCompatEditText3.perform(pressImeActionButton());
-
-        ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.submitButton), withText("SUBMIT"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
-                        isDisplayed()));
-        materialButton2.perform(click());
-
-        ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.button3), withText("FINISH"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton3.perform(click());
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(0);
+        appCompatCheckedTextView.perform(click());
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_dashboard), withContentDescription("Shop"),
@@ -110,6 +68,14 @@ public class TestPetCreation {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        DataInteraction linearLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.lvShopItems),
+                        childAtPosition(
+                                withClassName(is("android.widget.LinearLayout")),
+                                2)))
+                .atPosition(4);
+        linearLayout.perform(click());
+
         ViewInteraction bottomNavigationItemView2 = onView(
                 allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
                         childAtPosition(
@@ -119,6 +85,45 @@ public class TestPetCreation {
                                 0),
                         isDisplayed()));
         bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.inv_list),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_host_fragment),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatSpinner2.perform(click());
+
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(3);
+        appCompatCheckedTextView2.perform(click());
+
+        //CHECKING IF THE HAT IS BEING SAVED FOR THESE LAST TWO VIEWINTERACTIONS
+
+        ViewInteraction bottomNavigationItemView3 = onView(
+                allOf(withId(R.id.navigation_notifications), withContentDescription("Games"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                2),
+                        isDisplayed()));
+        bottomNavigationItemView3.perform(click());
+
+        ViewInteraction bottomNavigationItemView4 = onView(
+                allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                0),
+                        isDisplayed()));
+        bottomNavigationItemView4.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
