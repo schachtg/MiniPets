@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.minipets.R;
+import com.example.minipets.enums.Outfits;
 import com.example.minipets.enums.PetType;
 import com.example.minipets.logic.PetDBLogic;
 import com.example.minipets.objects.Pet;
@@ -52,7 +53,12 @@ public class CreatePet extends AppCompatActivity {
         if(!petName.getText().toString().equals("") && !petName.getText().toString().equals("Name")) {
             // TODO Store new pet attributes (Name: petName.getText().toString(), Type: type)
             thePet = new Pet(petName.getText().toString(), type);
-            dbLogic.init_pet(thePet);
+            if (dbLogic.get_size() != 0){
+                dbLogic.update_pet(petName.getText().toString(), type.toString(), 50, Outfits.NONE.toString());
+            }
+            else {
+                dbLogic.init_pet(thePet);
+            }
             nextActivity(TutorialActivity.class);
         }
         else
