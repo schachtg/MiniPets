@@ -1,4 +1,4 @@
-package com.example.minipets.objects.IndividualTests;
+package com.example.minipets.ui.MyPet;
 
 
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.minipets.R;
-import com.example.minipets.ui.MyPet.MainActivity;
+import com.example.minipets.ui.CreatePet.CreatePet;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -26,6 +26,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -35,7 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 public class TestPetCreation {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<CreatePet> mActivityTestRule = new ActivityTestRule<>(CreatePet.class);
 
     @Test
     public void testPetCreation() {
@@ -99,15 +100,25 @@ public class TestPetCreation {
                         isDisplayed()));
         materialButton3.perform(click());
 
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.imgPet),
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.navigation_dashboard), withContentDescription("Shop"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.nav_host_fragment),
+                                        withId(R.id.nav_view),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatImageView.perform(click());
+        bottomNavigationItemView2.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
