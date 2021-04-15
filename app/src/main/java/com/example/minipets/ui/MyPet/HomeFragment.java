@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         thePet.setLastLogin();
         switch(v.getId())
         {
-            case R.id.petImage:
+            case R.id.imgPet:
                 thePet.react(thePet.getMood());
                 break;
         }

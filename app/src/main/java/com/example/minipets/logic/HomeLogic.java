@@ -1,8 +1,6 @@
 package com.example.minipets.logic;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +29,7 @@ public class HomeLogic implements HomeInterface {
     public void refreshPet(Pet thePet, View newView, Activity newActivity, View.OnClickListener newListener)
     {
         reactionImg = (ImageView) newView.findViewById(R.id.reactionImage);
-        petImg = (ImageView) newView.findViewById(R.id.petImage);
+        petImg = (ImageView) newView.findViewById(R.id.imgPet);
         petImg.setOnClickListener(newListener);    // Sets function for when the pet is clicked
         outfitImg = (ImageView) newView.findViewById(R.id.outfitImage);
 
