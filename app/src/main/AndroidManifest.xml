@@ -13,7 +13,7 @@
             android:name=".ui.tutorial.TutorialActivity"
             android:label="@string/title_activity_tutorial"
             android:theme="@style/Theme.MiniPets.NoActionBar"></activity>
-        <activity android:name=".ui.CreatePet.CreatePet">
+        <activity android:name=".ui.StartScreenDecision.DecideStartScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.fetch.FetchActivity" />
+        <activity android:name=".ui.CreatePet.CreatePet"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MyPet.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

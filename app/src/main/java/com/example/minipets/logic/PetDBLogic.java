@@ -32,7 +32,7 @@ public class PetDBLogic {
             thePet = new Pet(cursor.getString(0), PetType.valueOf(cursor.getString(1)), cursor.getInt(2), Outfits.valueOf(cursor.getString(3)));
         }
         else {
-            thePet = new Pet("Chester", PetType.CAT, 50, Outfits.NONE);
+            thePet = new Pet(thePet.getName(), thePet.getType(), 50, Outfits.NONE);
             long insert = db.insert_pet(thePet.getName(), thePet.getType().toString(), thePet.getOutfit().toString(), thePet.getHappiness());
             System.out.println("are we actually hitting here?");
         }
@@ -42,4 +42,12 @@ public class PetDBLogic {
     public void update_pet(String name, String type, int happy, String outfit){
         db.update_pet(1,name, type, happy, outfit);
     }
+
+    public int get_size(){
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return db.get_pet().getCount();}
 }

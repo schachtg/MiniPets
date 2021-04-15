@@ -1,4 +1,4 @@
-package com.example.minipets;
+package com.example.minipets.objects.IndividualTests;
 
 
 import android.view.View;
@@ -7,12 +7,17 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.minipets.R;
+import com.example.minipets.ui.MyPet.MainActivity;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,7 +44,7 @@ public class TestChangeBackground {
     @Test
     public void testChangeBackground() {
         ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.inv_list),
+                Matchers.allOf(ViewMatchers.withId(R.id.inv_list),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_host_fragment),

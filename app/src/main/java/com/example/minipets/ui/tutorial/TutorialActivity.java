@@ -2,18 +2,14 @@ package com.example.minipets.ui.tutorial;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.minipets.MainActivity;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
 import com.example.minipets.R;
+import com.example.minipets.ui.MyPet.MainActivity;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 public class TutorialActivity extends AppCompatActivity {
 
