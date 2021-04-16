@@ -52,4 +52,20 @@ public class ShopDBLogic {
         temp += amount;
         update_shop(temp);
     }
+
+    public Boolean getPetForFetch(){
+        Boolean isDog = false;
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Cursor cursor = db.get_pet();
+        cursor.moveToFirst();
+        System.out.println(cursor.getString(1));
+        if (cursor.getString(1).equals("DOG")){
+            isDog = true;
+        }
+        return isDog;
+    }
 }

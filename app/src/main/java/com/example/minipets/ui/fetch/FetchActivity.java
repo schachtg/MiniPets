@@ -42,6 +42,11 @@ public class FetchActivity extends AppCompatActivity {
         dbLogic = new ShopDBLogic(this);
         //get our images
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
+        if (dbLogic.getPetForFetch()){
+            System.out.println("DID WE GET HERE");
+            this.pet_image.setImageResource(R.drawable.dog);
+        }
+
         this.pet_image.setPadding(0,0,0,0);
 
         //get the display metrics of this activity
