@@ -43,7 +43,7 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_shop(100);
+        long test = db.insertShop(100);
         assertNotEquals(-1, test);
     }
 

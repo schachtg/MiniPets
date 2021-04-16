@@ -30,7 +30,7 @@ public class ShopDBLogic {
             newShop.set_tokens(tokens);
         }
         else {
-            db.insert_shop(tokens);
+            db.insertShop(tokens);
             newShop.set_tokens(1000);
         }
     }

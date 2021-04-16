@@ -33,7 +33,7 @@ public class SQLdb implements SQLdbInterface{
     }
 
     @Override
-    public long insert_shop(int tok) {
+    public long insertShop(int tok) {
         this.db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SQLiteHelper.TOKENS, tok);
