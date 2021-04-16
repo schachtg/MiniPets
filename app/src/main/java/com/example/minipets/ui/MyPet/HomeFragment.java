@@ -67,7 +67,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         thePet = petDBLogic.initPet(thePet);
 
         // Sets up the inventory
-        //TODO Make this pull from database
         inventory = new ArrayList<String>();
         inventory = inventoryDBLogic.initInventory();
         homeLogic.refreshInventory(getView(), getActivity(), this);
