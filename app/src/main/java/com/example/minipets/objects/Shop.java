@@ -13,7 +13,7 @@ public class Shop {
     private int tokens; //token value used for purchase
     private ShopFakeDatabase DB;
     public final int MAX_ITEMS = 6; //maximum number of shop items
-
+    private Boolean wasBought = true;
 
     //constructor
     public Shop(){
@@ -68,9 +68,10 @@ public class Shop {
             }
             //updates tokens after purchase
             tokens = tokens - newItem.getCost();
+            wasBought = true;
         }
         else{
-
+            wasBought = false;
         }
     }
 
@@ -79,8 +80,10 @@ public class Shop {
         return this.tokens;
     }
 
-    public void set_tokens(int tok){
+    public void setTokens(int tok){
         tokens = tok;
     }
+
+    public Boolean getWasBought(){return wasBought;}
 
 }

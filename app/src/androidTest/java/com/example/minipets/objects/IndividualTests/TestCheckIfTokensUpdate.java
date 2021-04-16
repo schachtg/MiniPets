@@ -7,17 +7,15 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.example.minipets.ui.MyPet.MainActivity;
 import com.example.minipets.R;
+import com.example.minipets.ui.MyPet.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,15 +34,16 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CheckTokenUpdate {
+public class TestCheckIfTokensUpdate {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void checkTokenUpdate() {
+    public void testCheckIfTokensUpdate() {
+
         ViewInteraction bottomNavigationItemView = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.navigation_dashboard), withContentDescription("Shop"),
+                allOf(withId(R.id.navigation_dashboard), withContentDescription("Shop"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -58,7 +57,7 @@ public class CheckTokenUpdate {
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 2)))
-                .atPosition(5);
+                .atPosition(3);
         linearLayout.perform(click());
 
         ViewInteraction bottomNavigationItemView2 = onView(

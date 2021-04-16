@@ -36,29 +36,29 @@ public class IntegrationTestShop {
     }
 
     @Test
-    public void insert_shop() {
+    public void insertShop() {
         // Context of the app under test.
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_shop(100);
+        long test = db.insertShop(100);
         assertNotEquals(-1, test);
     }
 
 
 
     @Test
-    public void test_update(){
+    public void testUpdate(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
-        int test = db.update(cursor.getInt(0), 50);
+        int test = db.updateShop(cursor.getInt(0), 50);
         assertEquals(1, test);
         assertEquals(100, cursor.getInt(1));
     }
@@ -66,26 +66,26 @@ public class IntegrationTestShop {
 
 
     @Test
-    public void get_shop(){
+    public void getShop(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
     }
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
-        db.delete_shop(cursor.getInt(0));
+        db.deleteShop(cursor.getInt(0));
     }
 }

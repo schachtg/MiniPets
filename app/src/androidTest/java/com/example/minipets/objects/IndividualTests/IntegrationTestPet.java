@@ -38,27 +38,27 @@ public class IntegrationTestPet {
     }
 
     @Test
-    public void insert_pet() {
+    public void insertPet() {
         // Context of the app under test.
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_pet(test_pet.getName(), test_pet.getType().toString(), test_pet.getOutfit().toString(), test_pet.getHappiness());
+        long test = db.insertPet(test_pet.getName(), test_pet.getType().toString(), test_pet.getOutfit().toString(), test_pet.getHappiness());
         assertNotEquals(-1, test);
     }
 
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_pet();
+        Cursor cursor = db.getPet();
         cursor.moveToFirst();
-        db.delete_pet(cursor.getInt(0));
+        db.deletePet(cursor.getInt(0));
     }
 }

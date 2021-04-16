@@ -53,7 +53,7 @@ public class HomeLogic implements IHomeLogic {
     {
         inventory = new ArrayList<String>();
         inventoryDBLogic = new InventoryDBLogic(newActivity);
-        inventory = inventoryDBLogic.init_inventory();
+        inventory = inventoryDBLogic.initInventory();
         inventoryList = newView.findViewById(R.id.inv_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(newActivity, android.R.layout.simple_spinner_item, inventory);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,7 +92,7 @@ public class HomeLogic implements IHomeLogic {
                         break;
                 }
             } else if (splitText[0].equals("Feed")) {
-                inventoryDBLogic.decrease_count(item);
+                inventoryDBLogic.decreaseCount(item);
                 switch(splitText[1])
                 {
                     case "Chicken" : thePet.feed(FoodItems.CHICKEN, true);

@@ -7,7 +7,6 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -17,7 +16,6 @@ import com.example.minipets.ui.MyPet.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,8 +41,9 @@ public class TestChangeBackground {
 
     @Test
     public void testChangeBackground() {
+
         ViewInteraction appCompatSpinner = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.inv_list),
+                allOf(withId(R.id.inv_list),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_host_fragment),
@@ -52,6 +51,13 @@ public class TestChangeBackground {
                                 3),
                         isDisplayed()));
         appCompatSpinner.perform(click());
+
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(0);
+        appCompatCheckedTextView.perform(click());
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_dashboard), withContentDescription("Shop"),
@@ -91,12 +97,12 @@ public class TestChangeBackground {
                         isDisplayed()));
         appCompatSpinner2.perform(click());
 
-        DataInteraction appCompatCheckedTextView = onData(anything())
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
                 .atPosition(3);
-        appCompatCheckedTextView.perform(click());
+        appCompatCheckedTextView2.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

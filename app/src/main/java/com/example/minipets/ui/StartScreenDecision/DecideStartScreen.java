@@ -16,7 +16,7 @@ public class DecideStartScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbLogic = new PetDBLogic(this);
-        if (dbLogic.get_size() != 0){
+        if (dbLogic.getSize() != 0){
             nextActivity(MainActivity.class);
         }
         else{

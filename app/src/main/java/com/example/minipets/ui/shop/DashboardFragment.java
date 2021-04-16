@@ -48,8 +48,8 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         shopItems = newShop.getAvailableItems();
         dbLogic = new ShopDBLogic(getActivity());
         inventoryDBLogic = new InventoryDBLogic(getActivity());
-        dbLogic.init_shop(newShop, tokens);
-        dbLogic.update_shop(newShop.remTokens());
+        dbLogic.initShop(newShop, tokens);
+        dbLogic.updateShop(newShop.remTokens());
         ItemsListAdapter itemAdapter = new ItemsListAdapter(getActivity(), R.layout.adapter_view_layout, shopItems);
         lvShopItems.setAdapter(itemAdapter);
         lvShopItems.setOnItemClickListener(this);
@@ -63,15 +63,20 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         shopItems = newShop.getAvailableItems();
         newShop.addBoughtItems(shopItems[position]);
         newShop.itemsListBought();
-        inventoryDBLogic.insert_new_item(shopItems[position].getName(), shopItems[position].getCost(), shopItems[position].getCount(), shopItems[position].getType());
-        dbLogic.update_shop(newShop.remTokens());
-        Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
-        Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
-        Toast toast = new Toast(getActivity());
-        //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
-        toast.setText("Bought: "+shopItems[position].getName());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.show();
-        currTokens.setText("Tokens: "+newShop.remTokens());
+        inventoryDBLogic.insertNewItem(shopItems[position].getName(), shopItems[position].getCost(), shopItems[position].getCount(), shopItems[position].getType());
+        dbLogic.updateShop(newShop.remTokens());
+        if (newShop.getWasBought()) {
+            Toast.makeText(getActivity(), "Selected: " + shopItems[position].toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Tokens left " + newShop.remTokens(), Toast.LENGTH_SHORT).show();
+            Toast toast = new Toast(getActivity());
+            //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
+            toast.setText("Bought: " + shopItems[position].getName());
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else{
+            Toast.makeText(getActivity(), "You don't have the funds for that. Go play some Fetch", Toast.LENGTH_SHORT).show();
+        }
+        currTokens.setText("Tokens: " + newShop.remTokens());
     }
 }

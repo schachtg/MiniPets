@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
-import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.FetchLogic;
+import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.ShopDBLogic;
+import com.example.minipets.objects.Shop;
 
 public class FetchActivity extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class FetchActivity extends AppCompatActivity {
 
     protected ShopDBLogic dbLogic;
 
+    protected Shop tempShop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,8 +43,18 @@ public class FetchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fetch);
 
         dbLogic = new ShopDBLogic(this);
+        //This is covering an edgecase just incase the user never opens the shop.
+        if(!dbLogic.doesShopExist()) {
+            tempShop = new Shop();
+            dbLogic.initShop(tempShop, 1000);
+        }
         //get our images
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
+        if (dbLogic.getPetForFetch()){
+            System.out.println("DID WE GET HERE");
+            this.pet_image.setImageResource(R.drawable.dog);
+        }
+
         this.pet_image.setPadding(0,0,0,0);
 
         //get the display metrics of this activity
@@ -151,7 +164,7 @@ public class FetchActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         int tokens_gained = this.game_logic.gameIsClosing();
-        dbLogic.gain_tokens(tokens_gained);
+        dbLogic.gainTokens(tokens_gained);
         super.onPause();
     }
 }

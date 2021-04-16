@@ -52,7 +52,7 @@ Below is a general architecture for MiniPets for iteration one (more to be added
 
 ITERATION TWO ADDITIONS TO ABOVE
 
-
+```
 ┌─────────────────────────────────┐                  ┌───────────────────────────────┐                ┌───────────────────────────────┐
 │                                 │                  │                               │                │                               │
 │         UI Layer                │                  │        Logic layer            │                │         Data layer            │

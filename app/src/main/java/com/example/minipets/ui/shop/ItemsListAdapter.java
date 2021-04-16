@@ -30,7 +30,6 @@ public class ItemsListAdapter extends ArrayAdapter<ShopItem> {
         String name = getItem(pos).getName();
         int cost = getItem(pos).getCost();
         String type = getItem(pos).getType();
-        int happiness = 5;
 
         //creating a new shop item for the text view
         ShopItem newItem = new ShopItem(name, cost, type);
@@ -40,11 +39,9 @@ public class ItemsListAdapter extends ArrayAdapter<ShopItem> {
 
         TextView textViewName = (TextView) convertView.findViewById(R.id.textView1);
         TextView textViewCost = (TextView) convertView.findViewById(R.id.textView2);
-        TextView textViewHappiness = (TextView) convertView.findViewById(R.id.textView3);
 
         textViewName.setText(name);
         textViewCost.setText("Cost: "+String.valueOf(cost));
-        textViewHappiness.setText("Happiness: "+String.valueOf(happiness));
 
         return convertView;
     }

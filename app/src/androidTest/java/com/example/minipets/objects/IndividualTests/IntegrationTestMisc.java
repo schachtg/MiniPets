@@ -36,39 +36,39 @@ public class IntegrationTestMisc {
     }
 
     @Test
-    public void insert_shop() {
+    public void insertShop() {
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_misc(100, 0);
+        long test = db.insertMisc(100, 0);
         assertNotEquals(-1, test);
     }
 
     @Test
-    public void get_shop(){
+    public void getShop(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_misc();
+        Cursor cursor = db.getMisc();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
         assertEquals(1, cursor.getInt(2));
     }
 
     @Test
-    public void test_update(){
+    public void testUpdate(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_misc();
+        Cursor cursor = db.getMisc();
         cursor.moveToFirst();
-        int test = db.update_misc(cursor.getInt(0), 50, 1);
+        int test = db.updateMisc(cursor.getInt(0), 50, 1);
         assertEquals(1, test);
         assertEquals(50, cursor.getInt(1));
     }

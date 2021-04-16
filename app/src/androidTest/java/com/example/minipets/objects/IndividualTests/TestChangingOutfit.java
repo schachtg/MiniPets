@@ -7,17 +7,15 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.example.minipets.ui.MyPet.MainActivity;
 import com.example.minipets.R;
+import com.example.minipets.ui.MyPet.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,53 +24,23 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TestBuyingAndWearingCowboyHat {
+public class TestChangingOutfit {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testBuyingAndWearingCowboyHat() {
-        ViewInteraction bottomNavigationItemView = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.navigation_dashboard), withContentDescription("Shop"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0),
-                                1),
-                        isDisplayed()));
-        bottomNavigationItemView.perform(click());
-
-        DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.lvShopItems),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                2)))
-                .atPosition(3);
-        linearLayout.perform(click());
-
-        ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0),
-                                0),
-                        isDisplayed()));
-        bottomNavigationItemView2.perform(click());
-
+    public void testChangingOutfit() {
         ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.inv_list),
                         childAtPosition(
@@ -87,14 +55,75 @@ public class TestBuyingAndWearingCowboyHat {
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
-                .atPosition(3);
+                .atPosition(0);
         appCompatCheckedTextView.perform(click());
 
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.petImage),
-                        withParent(withParent(withId(R.id.nav_host_fragment))),
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.navigation_dashboard), withContentDescription("Shop"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                1),
                         isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        DataInteraction linearLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.lvShopItems),
+                        childAtPosition(
+                                withClassName(is("android.widget.LinearLayout")),
+                                2)))
+                .atPosition(4);
+        linearLayout.perform(click());
+
+        ViewInteraction bottomNavigationItemView2 = onView(
+                allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                0),
+                        isDisplayed()));
+        bottomNavigationItemView2.perform(click());
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.inv_list),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_host_fragment),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatSpinner2.perform(click());
+
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(3);
+        appCompatCheckedTextView2.perform(click());
+
+        //CHECKING IF THE HAT IS BEING SAVED FOR THESE LAST TWO VIEWINTERACTIONS
+
+        ViewInteraction bottomNavigationItemView3 = onView(
+                allOf(withId(R.id.navigation_notifications), withContentDescription("Games"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                2),
+                        isDisplayed()));
+        bottomNavigationItemView3.perform(click());
+
+        ViewInteraction bottomNavigationItemView4 = onView(
+                allOf(withId(R.id.navigation_home), withContentDescription("MyPet"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                0),
+                        isDisplayed()));
+        bottomNavigationItemView4.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

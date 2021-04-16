@@ -39,7 +39,7 @@ public class CreatePetLogic implements ICreatePetLogic {
     {
         if(!petName.getText().toString().equals("") && !petName.getText().toString().equals("Name")) {
             thePet = new Pet(petName.getText().toString(), type);
-            dbLogic.init_pet(thePet);
+            dbLogic.initPet(thePet);
             changeActivity(TutorialActivity.class);
         }
         else

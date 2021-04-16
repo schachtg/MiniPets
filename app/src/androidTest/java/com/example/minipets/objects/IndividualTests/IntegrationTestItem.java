@@ -36,38 +36,38 @@ public class IntegrationTestItem {
     }
 
     @Test
-    public void insert_item() {
+    public void insertItem() {
         // Context of the app under test.
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        long test = db.insert_item("bobby", 0, 10);
+        long test = db.insertItem("bobby", 0, 10);
         assertNotEquals(-1, test);
     }
 
     @Test
-    public void get_item(){
+    public void getItem(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_items();
+        Cursor cursor = db.getItems();
         cursor.moveToFirst();
         assertEquals("bobby", cursor.getString(1));
     }
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_items();
+        Cursor cursor = db.getItems();
         cursor.moveToFirst();
-        db.delete_item(cursor.getInt(0));
+        db.deleteItem(cursor.getInt(0));
     }
 }

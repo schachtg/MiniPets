@@ -23,16 +23,9 @@
         <TextView
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:id="@+id/textView2"
             android:text="TextView2"/>
-
-        <TextView
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:id="@+id/textView3"
-            android:text="TextView3"/>
     </LinearLayout>
 
 </LinearLayout>
