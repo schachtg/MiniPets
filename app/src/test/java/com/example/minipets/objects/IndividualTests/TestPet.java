@@ -3,7 +3,9 @@ package com.example.minipets.objects.IndividualTests;
 import android.content.Context;
 
 import com.example.minipets.enums.FoodItems;
+import com.example.minipets.enums.Outfits;
 import com.example.minipets.enums.PetType;
+import com.example.minipets.enums.Reactions;
 import com.example.minipets.objects.Pet;
 
 import org.junit.Before;
@@ -34,10 +36,10 @@ public class TestPet {
         assertNotNull(pet);
         assertNotNull(pet.getMood());
 
-        assertEquals("Brian B", pet.getName());
-        assertEquals("Cat", pet.getType());
-        assertEquals("Average", pet.getMood());
-        assertEquals("None", pet.getOutfit());
+        assertEquals("the pet's name should be Brian B", "Brian B", pet.getName());
+        assertEquals("the cat should be a cat", PetType.CAT, pet.getType());
+        assertEquals("the cat should be fine, not great, just fine", Reactions.AVERAGE, pet.getMood());
+        assertEquals("the pet should initially be naked", Outfits.NONE, pet.getOutfit());
 
 
         System.out.println("Finished testPet");
