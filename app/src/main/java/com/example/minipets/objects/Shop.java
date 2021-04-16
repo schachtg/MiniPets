@@ -22,7 +22,7 @@ public class Shop {
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
         availableItems[0] = new ShopItem("Chicken", 3, "Feed: ");
-        availableItems[1] =  new ShopItem("Fish", 6, "Feed: ");
+        availableItems[1] =  new ShopItem("Fish", 5, "Feed: ");
         availableItems[2] = new ShopItem("Beef", 10, "Feed: ");
         availableItems[3] = new ShopItem("Cowboy Hat", 500, "Outfit: ");
         availableItems[4] = new ShopItem("Pirate Hat", 500, "Outfit: ");
