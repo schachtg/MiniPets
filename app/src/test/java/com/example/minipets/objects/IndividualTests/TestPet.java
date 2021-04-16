@@ -2,22 +2,35 @@ package com.example.minipets.objects.IndividualTests;
 
 import android.content.Context;
 
+import com.example.minipets.enums.FoodItems;
+import com.example.minipets.enums.PetType;
 import com.example.minipets.objects.Pet;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
 
 public class TestPet {
     Context context;
+    Pet pet;
+
+
+    @Before
+    public void setUp(){
+        pet = new Pet("Brian B", PetType.CAT);
+    }
+
     @Test
     public void testPet(){
-        Pet pet;
-
         System.out.println("\nStarting testPet");
 
-        pet = new Pet("Brian B", "Cat");
+
         assertNotNull(pet);
         assertNotNull(pet.getMood());
 
@@ -30,59 +43,15 @@ public class TestPet {
         System.out.println("Finished testPet");
     }
 
+    //test feeding pet increases happyness
     @Test
-    public void testLikedFoods(){
-        Pet pet;
+    public void testFeedPet(){
+        int happy;
 
-        System.out.println("\nStarting testLikedFoods");
+        happy = pet.getHappiness();
+        pet.feed(FoodItems.CHICKEN, false);
 
-        pet = new Pet("Brian", "Cat");
-        boolean[] likes = {true, true, false};
-        pet.setLikedFoods("Chicken", true);
-        pet.setLikedFoods("Beef", true);
-        pet.setLikedFoods("Fish", false);
-
-        // Shouldn't be able to make pet like non existing food item
-        pet.setLikedFoods("Rocks", true);
-
-        assertEquals(pet.getLikedFood("Chicken"), true);
-        assertEquals(pet.getLikedFood("Beef"), true);
-        assertEquals(pet.getLikedFood("Fish"), false);
-        assertEquals(pet.getLikedFood("Rocks"), false);
-
-        System.out.println("Finished testSetLikedFoods");
-    }
-
-    @Test
-    public void testFeed(){
-        Pet pet;
-        int initialHappiness;
-
-        System.out.println("\nStarting testFeed");
-        pet = new Pet("Brian", "Cat");
-        initialHappiness = pet.getHappiness();
-        pet.setLikedFoods("Chicken", true);
-
-        //testing feeding pet a liked food
-        pet.feed("Chicken", false);
-        assertEquals(initialHappiness + 10, pet.getHappiness());
-        initialHappiness = pet.getHappiness();
-
-        //testing feeding pet a disliked food
-        pet.feed("Fish", false);
-        assertEquals(initialHappiness + 5, pet.getHappiness());
-        initialHappiness = pet.getHappiness();
-
-        //testing feeding pet a nonexistent food
-        pet.feed("Rocks", false);
-        assertEquals(initialHappiness, pet.getHappiness());
-        initialHappiness = pet.getHappiness();
-
-        //testing maxing out happiness
-        for(int i = 0; i < 100; i++)
-            pet.feed("Chicken", false);
-        assertEquals(pet.MAX_HAPPINESS, pet.getHappiness());
-
-        System.out.println("Finished testFeed");
+        assertNotEquals("the pet should still be happyer having eaten chicken", happy, pet.getHappiness());
+        assertTrue("the pet's happyness should have increased", pet.getHappiness() > happy);
     }
 }
