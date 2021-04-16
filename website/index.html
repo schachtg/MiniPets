@@ -78,29 +78,49 @@
 <a href="https://www.youtube.com/watch?v=jqjXPLEQBJc">To see a preview, click here!</a>
 <br /><br /></p>
 
-<h1><center>Our teams velocity.</center></h1>
-<h3><center>So ours was real wonky</center></h3>
+<h1><center>A Post-Mortem</center></h1>
 <p><br /><br /></p>
+<h3><center>The overall architecture of our project involves getting input from the user through the UI layer, then passing that input to the logic layer which interprets the users input and fetches the required data from the data layer. The data interpreted by the logic layer is then passed back to the UI layer which shows the user the requested effects or desired outcome.</center></h3>
+<p><br /><br /></p>
+<h3><center>Did any feature work better that expected?  Initially we had discussed about implementing changing the pet’s clothes by just tapping on the pet and different outfits display on the pet image, but this feature is now implemented by having a pet inventory and selecting the specific outfit the user wants the pet to wear. The pet inventory is filled by purchasing items from the shop
+<br /><br />
+<h3><center>Are there any outstanding bugs?  The fetch game could not finalize the dimensions of the pet the first time it starts. We couldn’t find a way to fix this cleanly. As a makeshift solution we added a button that the user must press to start playing fetch. This button is just giving the game time to figure out how big the pet is.</center></h3>
+<br /><br />
+
+<h1><center>Our teams velocity</center></h1>
+<center><img src="/pictures/velocityChart.png" alt="" /></center>
+<br /><br />
+<h3><center>The trend here shows that we went quite over what we estimated for the last two iterations mainly because we had features that had to be reworked over the last two iterations and our previous time estimates didn’t put that into account, In the last iteration we spent time refactoring our code and adding a functioning logic layer which added a lot of extra time to some of the previously completed features.</center></h3>
+<br /><br />
 
 <h1><center>Meet the team!</center></h1>
-
+<center><img width="100" src="/pictures/Alex.png" alt="" /></center>
 <h2><center>Alex</center></h2>
-<h3><center>blah</center></h3>
+<h3><center>I learned the importance of unit testing. Many infuriating bugs that set me back days of work could have been found immediately with unit tests. I just figured the bugs I had never would have occurred.</center></h3>
+<br /><br />
 
 <h2><center>Emmanuel</center></h2>
-<h3><center>blah</center></h3>
+<center><img width="100" src="/pictures/Emmanuel.png" alt="" /></center>
+<h3><center>What I learnt: I learnt how to better organize a project, I usually code and just hope it runs and fix issues afterwards but Ive learnt the importance of project architecture, planning and testing.</center></h3>
+<br /><br />
 
 <h2><center>Ethan</center></h2>
+<center><img width="100" src="/pictures/Ethan.png" alt="" /></center>
 <h3><center>Some things I learned was how to make a static html website, and how to more efficiently troubleshoot. At first jekyll was tough for me to get used to. For instance getting a theme to work. Installing it didn't immediately work as intended, but after a lot of troubleshooting, fixed it.</center></h3>
+<br /><br />
 
 <h2><center>Graham</center></h2>
-<h3><center>blah</center></h3>
+<center><img width="100" src="/pictures/Graham.png" alt="" /></center>
+<h3><center>Learned to break up code into UI, Logic, and Database layers. This allowed us to isolate each layer and prevent issues like changing the UI causing the logic to change.</center></h3>
+<br /><br />
 
 <h2><center>Jordan</center></h2>
-<h3><center>blah</center></h3>
+<center><img width="100" src="/pictures/Jordan.png" alt="" /></center>
+<h3><center>Something I learned personally was how to integrate a SQLite local database within an Android application. I have always used off-site, backend API's (Firebase) for database storage in other mobile application practices, so this was a great opportunity to learn something new.</center></h3>
 <hr />
 
 <div align="left">Minipets was created by Comp3350 Group 12</div>
+</center></h3>
 
 
       </section>
