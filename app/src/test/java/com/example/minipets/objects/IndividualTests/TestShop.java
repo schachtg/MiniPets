@@ -26,7 +26,7 @@ public class TestShop {
         assertEquals("Beef costs 10 and total price 10", shop.getAvailableItems()[2].toString());
         assertEquals("Cowboy Hat costs 500 and total price 500", shop.getAvailableItems()[3].toString());
         assertEquals("Pirate Hat costs 500 and total price 500", shop.getAvailableItems()[4].toString());
-        assertEquals("Beach costs 300 and total price 300", shop.getAvailableItems()[4].toString());
+        assertEquals("Beach costs 300 and total price 300", shop.getAvailableItems()[5].toString());
 
         System.out.println("Finished testShop");
     }
@@ -53,6 +53,7 @@ public class TestShop {
 
         System.out.println("\nStarting testAddBoughtItems");
         shop = new Shop();
+        shop.setTokens(20);
         shopItem = shop.getAvailableItems()[1];
 
         //testing adding the first item
