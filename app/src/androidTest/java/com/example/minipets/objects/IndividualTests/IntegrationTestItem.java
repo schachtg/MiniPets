@@ -54,6 +54,7 @@ public class IntegrationTestItem {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        long test = db.insertItem("bobby", 0, 10);
         Cursor cursor = db.getItems();
         cursor.moveToFirst();
         assertEquals("bobby", cursor.getString(1));

@@ -47,8 +47,6 @@ public class IntegrationTestShop {
         assertNotEquals(-1, test);
     }
 
-
-
     @Test
     public void testUpdate(){
         try {
@@ -56,10 +54,11 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        long test = db.insertShop(100);
         Cursor cursor = db.getShop();
         cursor.moveToFirst();
-        int test = db.updateShop(cursor.getInt(0), 50);
-        assertEquals(1, test);
+        int test2 = db.updateShop(cursor.getInt(0), 50);
+        assertEquals(1, test2);
         assertEquals(100, cursor.getInt(1));
     }
 
@@ -72,6 +71,7 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        long test = db.insertShop(100);
         Cursor cursor = db.getShop();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
