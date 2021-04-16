@@ -22,10 +22,11 @@ public class TestShop {
         assertNotNull(shop.getBoughtItems());
 
         assertEquals("Chicken costs 3 and total price 3", shop.getAvailableItems()[0].toString());
-        assertEquals("Fish costs 4 and total price 4", shop.getAvailableItems()[1].toString());
-        assertEquals("Beef costs 3 and total price 3", shop.getAvailableItems()[2].toString());
-        assertEquals("Frisbee costs 5 and total price 5", shop.getAvailableItems()[3].toString());
-        assertEquals("Ball costs 3 and total price 3", shop.getAvailableItems()[4].toString());
+        assertEquals("Fish costs 5 and total price 5", shop.getAvailableItems()[1].toString());
+        assertEquals("Beef costs 10 and total price 10", shop.getAvailableItems()[2].toString());
+        assertEquals("Cowboy Hat costs 500 and total price 500", shop.getAvailableItems()[3].toString());
+        assertEquals("Pirate Hat costs 500 and total price 500", shop.getAvailableItems()[4].toString());
+        assertEquals("Beach costs 300 and total price 300", shop.getAvailableItems()[4].toString());
 
         System.out.println("Finished testShop");
     }
@@ -37,7 +38,7 @@ public class TestShop {
         System.out.println("\nStarting testItemList");
 
         shop = new Shop();
-        String[] items = {"Chicken", "Fish", "Beef", "Frisbee", "Ball"};
+        String[] items = {"Chicken", "Fish", "Beef", "Cowboy Hat", "Pirate Hat", "Beach"};
         for(int i = 0; i < items.length; i++){
             assertEquals(items[i], shop.itemsList()[i]);
         }
