@@ -86,10 +86,31 @@ ITERATION TWO ADDITIONS TO ABOVE
 │                                 │                  │                               │                │                               │
 │                                 │                  │                               │                │                               │
 └─────────────────────────────────┘                  └───────────────────────────────┘                └───────────────────────────────┘
+```
 
+Final "finished" product's architecture. This just lists the classes that we have within our packages within our project (so yes the architecture)
 
-
-
-
-
-
+```
+┌────────────────────────────────────┐ ┌──────────────────────────────────┐   ┌─────────────────────────────┐
+│                                    │ │                                  │   │                             │
+│                                    │ │                                  │   │                             │
+│          UI Layer                  │ │        Logic Layer               │   │       Data Layer            │
+│                                    │ │                                  │   │                             │
+│        CreatePet                   │ │     BackgroundDBLogic            │   │     SQLdb                   │
+│                                    │ │                                  │   │                             │
+│        FetchActivity               │ │     CreatePetLogic               │   │     SQLdbHelper             │
+│                                    │ │                                  │   │                             │
+│        HomeFragment(pet)           │ │     FetchDirective               │   │                             │
+│                                    │ │                                  │   │                             │
+│        Shop(dashboard)             │ │     FetchLogic                   │   │                             │
+│                                    │ │                                  │   │                             │
+│        DecideStartScreen(helper)   │ │     HomeLogic                    │   │                             │
+│                                    │ │                                  │   │                             │
+│        TutorialActivity            │ │     InventoryDBLogic             │   │                             │
+│                                    │ │                                  │   │                             │
+│                                    │ │     PetDBLogic                   │   │                             │
+│                                    │ │                                  │   │                             │
+│                                    │ │     ShopDBLogic                  │   │                             │
+│                                    │ │                                  │   │                             │
+└────────────────────────────────────┘ └──────────────────────────────────┘   └─────────────────────────────┘
+```
