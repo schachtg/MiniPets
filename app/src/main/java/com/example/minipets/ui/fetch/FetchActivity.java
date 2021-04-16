@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.minipets.R;
-import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.FetchLogic;
+import com.example.minipets.logic.IFetchGameLogic;
 import com.example.minipets.logic.ShopDBLogic;
+import com.example.minipets.objects.Shop;
 
 public class FetchActivity extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class FetchActivity extends AppCompatActivity {
 
     protected ShopDBLogic dbLogic;
 
+    protected Shop tempShop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +43,11 @@ public class FetchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fetch);
 
         dbLogic = new ShopDBLogic(this);
+        //This is covering an edgecase just incase the user never opens the shop.
+        if(!dbLogic.doesShopExist()) {
+            tempShop = new Shop();
+            dbLogic.init_shop(tempShop, 1000);
+        }
         //get our images
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
         if (dbLogic.getPetForFetch()){

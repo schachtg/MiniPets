@@ -68,4 +68,17 @@ public class ShopDBLogic {
         }
         return isDog;
     }
+
+    public Boolean doesShopExist(){
+        Boolean exists = false;
+        try {
+            db.open();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (db.get().getCount()>0){
+            exists = true;
+        }
+        return exists;
+    }
 }

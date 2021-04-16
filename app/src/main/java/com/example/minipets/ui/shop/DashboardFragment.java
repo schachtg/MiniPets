@@ -65,13 +65,18 @@ public class DashboardFragment extends Fragment implements AdapterView.OnItemCli
         newShop.itemsListBought();
         inventoryDBLogic.insert_new_item(shopItems[position].getName(), shopItems[position].getCost(), shopItems[position].getCount(), shopItems[position].getType());
         dbLogic.update_shop(newShop.remTokens());
-        Toast.makeText(getActivity(), "Selected: "+shopItems[position].toString(), Toast.LENGTH_SHORT ).show();
-        Toast.makeText(getActivity(), "Tokens left "+newShop.remTokens(), Toast.LENGTH_SHORT ).show();
-        Toast toast = new Toast(getActivity());
-        //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
-        toast.setText("Bought: "+shopItems[position].getName());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.show();
-        currTokens.setText("Tokens: "+newShop.remTokens());
+        if (newShop.getWasBought()) {
+            Toast.makeText(getActivity(), "Selected: " + shopItems[position].toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Tokens left " + newShop.remTokens(), Toast.LENGTH_SHORT).show();
+            Toast toast = new Toast(getActivity());
+            //toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 10);
+            toast.setText("Bought: " + shopItems[position].getName());
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else{
+            Toast.makeText(getActivity(), "You don't have the funds for that. Go play some Fetch", Toast.LENGTH_SHORT).show();
+        }
+        currTokens.setText("Tokens: " + newShop.remTokens());
     }
 }
