@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.minipets.data_layer.TestSQLdb;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,5 +71,10 @@ public class IntegrationTestItem {
         Cursor cursor = db.getItems();
         cursor.moveToFirst();
         db.deleteItem(cursor.getInt(0));
+    }
+
+    @After
+    public void cleanUp(){
+        db.close();
     }
 }

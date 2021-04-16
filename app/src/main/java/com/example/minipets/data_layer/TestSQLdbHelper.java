@@ -38,7 +38,7 @@ public class TestSQLdbHelper extends SQLiteOpenHelper {
 
 
     public TestSQLdbHelper(@Nullable Context context) {
-        super(context, "test.db", null, 19);
+        super(context, "test.db", null, 26);
     }
 
 

@@ -10,6 +10,7 @@ import com.example.minipets.data_layer.TestSQLdb;
 import com.example.minipets.enums.PetType;
 import com.example.minipets.objects.Pet;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,5 +61,10 @@ public class IntegrationTestPet {
         Cursor cursor = db.getPet();
         cursor.moveToFirst();
         db.deletePet(cursor.getInt(0));
+    }
+
+    @After
+    public void cleanUp(){
+        db.close();
     }
 }
