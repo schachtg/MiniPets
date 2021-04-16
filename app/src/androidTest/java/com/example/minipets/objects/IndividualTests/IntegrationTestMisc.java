@@ -53,6 +53,7 @@ public class IntegrationTestMisc {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        long test = db.insertMisc(100, 0);
         Cursor cursor = db.getMisc();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
@@ -66,6 +67,7 @@ public class IntegrationTestMisc {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        db.insertMisc(100, 0);
         Cursor cursor = db.getMisc();
         cursor.moveToFirst();
         int test = db.updateMisc(cursor.getInt(0), 50, 1);
