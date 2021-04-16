@@ -63,9 +63,9 @@ public class InventoryDBLogic {
             db.insertItem(type + name , cost, count);
         }
         else {
-            int increase_count = cursor.getInt(3) + 1;
+            int increaseCount = cursor.getInt(3) + 1;
             System.out.println("Value before updating!: " + cursor.getInt(3));
-            int test =db.updateItem(cursor.getInt(0), type+name, cost, increase_count);
+            int test =db.updateItem(cursor.getInt(0), type+name, cost, increaseCount);
             System.out.println("Value after updating!: " + cursor.getInt(3));
         }
     }
@@ -88,10 +88,10 @@ public class InventoryDBLogic {
                 break;
             }
         }
-        int new_count = cursor.getInt(3) - 1;
-        if (new_count > 0){
-            System.out.println("this is the new count: " + new_count);
-            db.updateItem(cursor.getInt(0), item, cursor.getInt(2), new_count);
+        int newCount = cursor.getInt(3) - 1;
+        if (newCount > 0){
+            System.out.println("this is the new count: " + newCount);
+            db.updateItem(cursor.getInt(0), item, cursor.getInt(2), newCount);
         }
         else{
             db.deleteItem(cursor.getInt(0));
