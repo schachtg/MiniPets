@@ -36,7 +36,7 @@ public class IntegrationTestShop {
     }
 
     @Test
-    public void insert_shop() {
+    public void insertShop() {
         // Context of the app under test.
         try {
             db.open();
@@ -50,7 +50,7 @@ public class IntegrationTestShop {
 
 
     @Test
-    public void test_update(){
+    public void testUpdate(){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -66,7 +66,7 @@ public class IntegrationTestShop {
 
 
     @Test
-    public void get_shop(){
+    public void getShop(){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -78,7 +78,7 @@ public class IntegrationTestShop {
     }
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {

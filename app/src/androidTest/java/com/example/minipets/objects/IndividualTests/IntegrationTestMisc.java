@@ -36,7 +36,7 @@ public class IntegrationTestMisc {
     }
 
     @Test
-    public void insert_shop() {
+    public void insertShop() {
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -47,7 +47,7 @@ public class IntegrationTestMisc {
     }
 
     @Test
-    public void get_shop(){
+    public void getShop(){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -60,7 +60,7 @@ public class IntegrationTestMisc {
     }
 
     @Test
-    public void test_update(){
+    public void testUpdate(){
         try {
             db.open();
         } catch (SQLException throwables) {

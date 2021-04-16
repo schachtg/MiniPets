@@ -36,7 +36,7 @@ public class IntegrationTestItem {
     }
 
     @Test
-    public void insert_item() {
+    public void insertItem() {
         // Context of the app under test.
         try {
             db.open();
@@ -48,7 +48,7 @@ public class IntegrationTestItem {
     }
 
     @Test
-    public void get_item(){
+    public void getItem(){
         try {
             db.open();
         } catch (SQLException throwables) {
@@ -60,7 +60,7 @@ public class IntegrationTestItem {
     }
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {

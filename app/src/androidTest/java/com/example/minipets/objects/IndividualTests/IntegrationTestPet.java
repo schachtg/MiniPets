@@ -38,7 +38,7 @@ public class IntegrationTestPet {
     }
 
     @Test
-    public void insert_pet() {
+    public void insertPet() {
         // Context of the app under test.
         try {
             db.open();
@@ -51,7 +51,7 @@ public class IntegrationTestPet {
 
 
     @Test
-    public void test_delete(){
+    public void testDelete(){
         try {
             db.open();
         } catch (SQLException throwables) {
