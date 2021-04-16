@@ -111,8 +111,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         bg_tracker = homeLogic.selectItem(text, thePet, bg_tracker);
         backgroundDBLogic.updateBackground((double)thePet.getHappiness(), bg_tracker);
         homeLogic.updateBackground(bg_tracker, getView(), getActivity());
-        homeLogic.resetInventorySelection();
-        //homeLogic.refreshInventory(getView(),getActivity(), this);
+
+        if(!text.equals("Inventory")) {
+            homeLogic.resetInventorySelection();
+            homeLogic.refreshInventory(getView(), getActivity(), this);
+        }
 
     }
 
