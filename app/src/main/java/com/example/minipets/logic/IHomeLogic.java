@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import com.example.minipets.objects.Pet;
 
-public interface HomeInterface {
+public interface IHomeLogic {
     public void refreshPet(Pet thePet, View newView, Activity newActivity, View.OnClickListener newListener);
     public void refreshInventory(View newView, Activity newActivity, View.OnClickListener newListener);
     public void updateBackground(int bg, View newView, Activity newActivity);
