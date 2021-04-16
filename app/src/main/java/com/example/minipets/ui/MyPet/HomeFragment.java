@@ -17,7 +17,7 @@ import com.example.minipets.R;
 import com.example.minipets.enums.Outfits;
 import com.example.minipets.enums.PetType;
 import com.example.minipets.logic.BackgroundDBLogic;
-import com.example.minipets.logic.HomeInterface;
+import com.example.minipets.logic.IHomeLogic;
 import com.example.minipets.logic.HomeLogic;
 import com.example.minipets.data_layer.PetFakeDatabase;
 import com.example.minipets.data_layer.SQLdb;
@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
     MutableLiveData<Integer> listen_background = new MutableLiveData<>(); //listens for a change in background
     protected int bg_tracker = 0;
     PetDBLogic petDBLogic;
-    protected HomeInterface homeLogic;
+    protected IHomeLogic homeLogic;
     InventoryDBLogic inventoryDBLogic;
     BackgroundDBLogic backgroundDBLogic;
 

@@ -15,7 +15,7 @@ import com.example.minipets.objects.Pet;
 
 import java.util.ArrayList;
 
-public class HomeLogic implements HomeInterface {
+public class HomeLogic implements IHomeLogic {
 
     protected ImageView reactionImg;  // Shows the pet's reaction image
     protected ImageView petImg;   // Shows the pet's image
@@ -89,8 +89,6 @@ public class HomeLogic implements HomeInterface {
                     case "Cowboy Hat" : thePet.setOutfit(Outfits.COWBOY_HAT);
                         break;
                     case "Pirate Hat" : thePet.setOutfit(Outfits.PIRATE_HAT);
-                        break;
-                    case "Sunglasses" : thePet.setOutfit(Outfits.SUNGLASSES);
                         break;
                 }
             } else if (splitText[0].equals("Feed")) {

@@ -11,57 +11,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.minipets.R;
 import com.example.minipets.enums.PetType;
+import com.example.minipets.logic.CreatePetLogic;
+import com.example.minipets.logic.ICreatePetLogic;
 import com.example.minipets.logic.PetDBLogic;
 import com.example.minipets.objects.Pet;
 import com.example.minipets.ui.tutorial.TutorialActivity;
 
 public class CreatePet extends AppCompatActivity {
 
-    protected ImageView petImg;
-    protected EditText petName;
-    protected PetType type = PetType.CAT;
-    protected Pet thePet;
-    PetDBLogic dbLogic;
+    protected ICreatePetLogic createPetLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_pet);
 
-        // TODO If pet is already created then nextActivity(MainActivity.class);
-        dbLogic = new PetDBLogic(this);
-        petImg = (ImageView) findViewById(R.id.imgPet);
-        petName = (EditText) findViewById(R.id.nameText);
+        createPetLogic = new CreatePetLogic(this, (ImageView) findViewById(R.id.imgPet), findViewById(R.id.nameText));
 
     }
 
     public void onClickCat(View v)
     {
-        petImg.setImageResource(R.drawable.cat);
-        type = PetType.CAT;
+        createPetLogic.changePetButton(PetType.CAT, R.drawable.cat);
     }
 
     public void onClickDog(View v)
     {
-        petImg.setImageResource(R.drawable.dog);
-        type = PetType.DOG;
+        createPetLogic.changePetButton(PetType.DOG, R.drawable.dog);
     }
 
     public void onClickSubmit(View v)
     {
-        if(!petName.getText().toString().equals("") && !petName.getText().toString().equals("Name")) {
-            // TODO Store new pet attributes (Name: petName.getText().toString(), Type: type)
-            thePet = new Pet(petName.getText().toString(), type);
-            dbLogic.init_pet(thePet);
-            nextActivity(TutorialActivity.class);
-        }
-        else
-            Toast.makeText(getApplicationContext(),"Please Enter a name", Toast.LENGTH_SHORT).show();
-    }
-
-    public void nextActivity(Class c)
-    {
-        Intent newActivity = new Intent(this, c);
-        startActivity(newActivity);
+        createPetLogic.submitButton();
     }
 }
