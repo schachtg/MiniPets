@@ -80,7 +80,7 @@ public class Shop {
         return this.tokens;
     }
 
-    public void set_tokens(int tok){
+    public void setTokens(int tok){
         tokens = tok;
     }
 

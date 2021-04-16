@@ -53,11 +53,11 @@ public class CreatePet extends AppCompatActivity {
         if(!petName.getText().toString().equals("") && !petName.getText().toString().equals("Name")) {
             // TODO Store new pet attributes (Name: petName.getText().toString(), Type: type)
             thePet = new Pet(petName.getText().toString(), type);
-            if (dbLogic.get_size() != 0){
-                dbLogic.update_pet(petName.getText().toString(), type.toString(), 50, Outfits.NONE.toString());
+            if (dbLogic.getSize() != 0){
+                dbLogic.updatePet(petName.getText().toString(), type.toString(), 50, Outfits.NONE.toString());
             }
             else {
-                dbLogic.init_pet(thePet);
+                dbLogic.initPet(thePet);
             }
             nextActivity(TutorialActivity.class);
         }

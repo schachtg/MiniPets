@@ -56,9 +56,9 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
-        int test = db.update(cursor.getInt(0), 50);
+        int test = db.updateShop(cursor.getInt(0), 50);
         assertEquals(1, test);
         assertEquals(100, cursor.getInt(1));
     }
@@ -72,7 +72,7 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
         assertEquals(50, cursor.getInt(1));
     }
@@ -84,8 +84,8 @@ public class IntegrationTestShop {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
-        db.delete_shop(cursor.getInt(0));
+        db.deleteShop(cursor.getInt(0));
     }
 }

@@ -16,25 +16,25 @@ public class BackgroundDBLogic {
         db = new SQLdb(con);
     }
 
-    public int init_background() {
+    public int initBackground() {
         int temp = 0;
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if (db.get_misc().getCount() > 0) {
-            Cursor cursor = db.get_misc();
+        if (db.getMisc().getCount() > 0) {
+            Cursor cursor = db.getMisc();
             cursor.moveToFirst();
             temp = cursor.getInt(2);
         }
         else{
-            db.insert_misc(100, temp);
+            db.insertMisc(100, temp);
         }
         return temp;
     }
 
-    public void update_background(double time_away, int background){
-        db.update_misc(1, time_away, background);
+    public void updateBackground(double time_away, int background){
+        db.updateMisc(1, time_away, background);
     }
 }

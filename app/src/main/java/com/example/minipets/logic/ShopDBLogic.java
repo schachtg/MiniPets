@@ -17,40 +17,40 @@ public class ShopDBLogic {
         db = new SQLdb(con);
     }
 
-    public void init_shop(Shop newShop, int tokens){
+    public void initShop(Shop newShop, int tokens){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if(db.get().getCount()>0){
-            Cursor cursor = db.get();
+        if(db.getShop().getCount()>0){
+            Cursor cursor = db.getShop();
             cursor.moveToFirst();
             tokens = cursor.getInt(1);
-            newShop.set_tokens(tokens);
+            newShop.setTokens(tokens);
         }
         else {
             db.insertShop(tokens);
-            newShop.set_tokens(1000);
+            newShop.setTokens(1000);
         }
     }
 
-    public void update_shop(int tokens){
-        db.update(1, tokens);
+    public void updateShop(int tokens){
+        db.updateShop(1, tokens);
         System.out.println(tokens);
     }
 
-    public void gain_tokens(int amount){
+    public void gainTokens(int amount){
         try {
             db.open();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get();
+        Cursor cursor = db.getShop();
         cursor.moveToFirst();
         int temp = cursor.getInt(1);
         temp += amount;
-        update_shop(temp);
+        updateShop(temp);
     }
 
     public Boolean getPetForFetch(){
@@ -60,7 +60,7 @@ public class ShopDBLogic {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Cursor cursor = db.get_pet();
+        Cursor cursor = db.getPet();
         cursor.moveToFirst();
         System.out.println(cursor.getString(1));
         if (cursor.getString(1).equals("DOG")){
@@ -76,7 +76,7 @@ public class ShopDBLogic {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if (db.get().getCount()>0){
+        if (db.getShop().getCount()>0){
             exists = true;
         }
         return exists;

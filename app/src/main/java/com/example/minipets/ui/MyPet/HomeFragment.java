@@ -64,17 +64,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         petDBLogic = new PetDBLogic(getActivity());
         inventoryDBLogic = new InventoryDBLogic(getActivity());
         backgroundDBLogic = new BackgroundDBLogic(getActivity());
-        thePet = petDBLogic.init_pet(thePet);
+        thePet = petDBLogic.initPet(thePet);
 
         // Sets up the inventory
         //TODO Make this pull from database
         inventory = new ArrayList<String>();
-        inventory = inventoryDBLogic.init_inventory();
+        inventory = inventoryDBLogic.initInventory();
         homeLogic.refreshInventory(getView(), getActivity(), this);
 
         // Creates the pet images
         homeLogic.refreshPet(thePet, getView(), getActivity(), this);
-        bg_tracker = backgroundDBLogic.init_background();
+        bg_tracker = backgroundDBLogic.initBackground();
         homeLogic.updateBackground(bg_tracker, getView(), getActivity());
 
         // Checks if user hasn't logged in recently, and penalizes if necessary
@@ -103,13 +103,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Adap
         listen.observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                petDBLogic.update_pet(thePet.getName(), thePet.getType().toString(), thePet.getHappiness(), thePet.getOutfit().toString());
+                petDBLogic.updatePet(thePet.getName(), thePet.getType().toString(), thePet.getHappiness(), thePet.getOutfit().toString());
                 thePet.setLastLogin();
             }
         });
 
         bg_tracker = homeLogic.selectItem(text, thePet, bg_tracker);
-        backgroundDBLogic.update_background((double)thePet.getHappiness(), bg_tracker);
+        backgroundDBLogic.updateBackground((double)thePet.getHappiness(), bg_tracker);
         homeLogic.updateBackground(bg_tracker, getView(), getActivity());
         homeLogic.resetInventorySelection();
         //homeLogic.refreshInventory(getView(),getActivity(), this);

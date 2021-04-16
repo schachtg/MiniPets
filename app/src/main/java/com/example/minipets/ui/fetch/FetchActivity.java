@@ -46,7 +46,7 @@ public class FetchActivity extends AppCompatActivity {
         //This is covering an edgecase just incase the user never opens the shop.
         if(!dbLogic.doesShopExist()) {
             tempShop = new Shop();
-            dbLogic.init_shop(tempShop, 1000);
+            dbLogic.initShop(tempShop, 1000);
         }
         //get our images
         this.pet_image = (ImageView) findViewById(R.id.pet_target);
@@ -164,7 +164,7 @@ public class FetchActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         int tokens_gained = this.game_logic.gameIsClosing();
-        dbLogic.gain_tokens(tokens_gained);
+        dbLogic.gainTokens(tokens_gained);
         super.onPause();
     }
 }
