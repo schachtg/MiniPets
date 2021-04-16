@@ -113,4 +113,4 @@ Final "finished" product's architecture. This just lists the classes that we hav
 │                                    │ │     ShopDBLogic                  │   │                             │
 │                                    │ │                                  │   │                             │
 └────────────────────────────────────┘ └──────────────────────────────────┘   └─────────────────────────────┘
-
+```
