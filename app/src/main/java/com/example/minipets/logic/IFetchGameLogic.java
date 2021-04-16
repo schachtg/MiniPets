@@ -4,8 +4,8 @@ import com.example.minipets.ui.fetch.IFetchDirective;
 
 public interface IFetchGameLogic {
     public IFetchDirective getNewDirective();
-    public void definePetState(int petWidth, int petHeight, int x_pos, int y_pos);
-    public boolean clickDetected(int x_pos, int y_pos);
+    public void definePetState(int petWidth, int petHeight, int xPos, int yPos);
+    public boolean clickDetected(int xPos, int yPos);
     public int getPoints();
     public int gameIsClosing();
 }
