@@ -21,9 +21,9 @@ public class Shop {
         boughtItems = new ArrayList(MAX_ITEMS);
         DB = new ShopFakeDatabase(this);
         //initializing list of available items
-        availableItems[0] = new ShopItem("Chicken", 5, "Feed: ");
-        availableItems[1] =  new ShopItem("Fish", 4, "Feed: ");
-        availableItems[2] = new ShopItem("Beef", 3, "Feed: ");
+        availableItems[0] = new ShopItem("Chicken", 3, "Feed: ");
+        availableItems[1] =  new ShopItem("Fish", 6, "Feed: ");
+        availableItems[2] = new ShopItem("Beef", 10, "Feed: ");
         availableItems[3] = new ShopItem("Cowboy Hat", 500, "Outfit: ");
         availableItems[4] = new ShopItem("Pirate Hat", 500, "Outfit: ");
         availableItems[5] = new ShopItem("Beach", 300, "Background: ");
