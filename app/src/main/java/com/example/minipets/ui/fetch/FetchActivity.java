@@ -128,7 +128,6 @@ public class FetchActivity extends AppCompatActivity {
             int x_pos = (int) event.getX();
             int y_pos = (int) event.getY();
 
-            //TODO error check here. if gamelogic DNE need to log or throw an error
             petWasClicked = this.game_logic.clickDetected(x_pos, y_pos);
 
             if(petWasClicked){
@@ -150,7 +149,6 @@ public class FetchActivity extends AppCompatActivity {
             this.points.setText(String.format("Points: %d", this.game_logic.getPoints()));
         }
         else{
-            //TODO need to throw an exception or log an error
 
             //we cold call the start button's handler function to try to restart the program
             //but that could infinately recurse, so let's just reset this UI
